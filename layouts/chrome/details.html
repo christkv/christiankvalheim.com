@@ -1,0 +1,35 @@
+{{ $baseurl := .Site.BaseUrl }}
+    <div>
+        <section id="datecount">
+          <h4 id="date"> {{ .Date.Format "Mon Jan 2, 2006" }} </h4>
+          <h5 id="wc"> {{ .FuzzyWordCount }} Words </h5>
+        </section>
+        <ul id="categories">
+          {{ range .Params.topics }}
+            <li><a href="{{ $baseurl }}/topics/{{ . | urlize }}">{{ . }}</a> </li>
+          {{ end }}
+        </ul>
+        <ul id="tags">
+          {{ range .Params.tags }}
+            <li> <a href="{{ $baseurl }}/tags/{{ . | urlize }}">{{ . }}</a> </li>
+          {{ end }}
+        </ul>
+    </div>
+
+    <div>
+        <section id="prev">
+            &nbsp;{{if .Prev}}<a class="previous" href="{{.Prev.Permalink}}"><i class="icon-arrow-left"></i> {{.Prev.Title}}</a><br>{{end}}
+        </section><section id="next">
+            &nbsp;{{if .Next}}<a class="next" href="{{.Next.Permalink}}">{{.Next.Title}} <i class="icon-arrow-right"></i></a>{{end}}
+        </section>
+    </div>
+
+    <div>
+        <section id="author">
+             <h4>About the Author:</h4> 
+                Christian Kvalheim is a Driver Team Lead and Evangalist for <a href="http://mongodb.com">MongoDB</a>. He is a open
+                source contributor and author of the&nbsp;<a
+                href="github.com/mongodb/node-mongodb-native"> MongoDB Node.js driver</a>. You can find him on <a href="http://twitter.com/christkv">Twitter</a> and&nbsp;
+                <a href="http://github.com/christkv">Github</a>.
+        </section>
+    </div>

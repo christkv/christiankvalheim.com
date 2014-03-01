@@ -1,8 +1,8 @@
 {
-  "disqus_url" : "http://christiankvalheim.com/post/a_basic_introduction_to_mongodb_part_1/",
+  "disqus_url" : "http://christiankvalheim.com/post/a_basic_introduction_to_mongodb/",
   "disqus_identifier" : "1912 http://christiankvalheim.com/?p=1912",
   "disqus_title" : "MongoDB Driver days hackathon round up",
-  "Title": "A Basic introduction to Mongo DB Part 1",
+  "Title": "A Basic introduction to Mongo DB",
   "Description": "A Basic introduction on using the Node.js driver with MongoDB",
   "Keywords": [
     "Development",
@@ -27,7 +27,7 @@
     "MongoDB",
     "Personal"
   ],
-  "Slug": "a_basic_introduction_to_mongodb_part_1",
+  "Slug": "a_basic_introduction_to_mongodb",
   "Section": "post"
 }
 # A Basic introduction to Mongo DB

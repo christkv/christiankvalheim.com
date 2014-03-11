@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
       <title>Personal on Christian Kvalheim </title>
-    <link>http://localhost:1313/topics/personal/index.xml</link>
+    <link>http://christiankvalheim.com/topics/personal/index.xml</link>
     <language>en-us</language>
     <author>Christian Kvalheim</author>
     <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
@@ -10,10 +10,10 @@
     
     <item>
       <title>A Basic introduction to Mongo DB</title>
-      <link>http://localhost:1313/post/a_basic_introduction_to_mongodb</link>
+      <link>http://christiankvalheim.com/post/a_basic_introduction_to_mongodb</link>
       <pubDate>Mon, 28 Feb 2011 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/post/a_basic_introduction_to_mongodb</guid>
+      <guid>http://christiankvalheim.com/post/a_basic_introduction_to_mongodb</guid>
       <description>
 
 &lt;h1 id=&#34;toc_0&#34;&gt;A Basic introduction to Mongo DB&lt;/h1&gt;

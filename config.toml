@@ -1,7 +1,0 @@
-baseurl = "http://christiankvalheim.com/"
-title = "Christian Kvalheim"
-
-[indexes]
-    tag = "tags"
-    topic = "topics"
-

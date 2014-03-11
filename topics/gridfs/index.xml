@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Gridfs on Christian Kvalheim </title>
+    <link>http://localhost:1313/topics/gridfs/index.xml</link>
+    <language>en-us</language>
+    <author>Christian Kvalheim</author>
+    <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
+    <updated>Wed, 02 Mar 2011 00:00:00 UTC</updated>
+    
+    <item>
+      <title>A primer for GridFS using the Mongo DB driver</title>
+      <link>http://localhost:1313/post/a_primer_for_gridfs_using_the_mongodb_driver</link>
+      <pubDate>Wed, 02 Mar 2011 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/a_primer_for_gridfs_using_the_mongodb_driver</guid>
+      <description>
+
+&lt;h1 id=&#34;toc_0&#34;&gt;A primer for GridFS using the Mongo DB driver&lt;/h1&gt;
+
+&lt;p&gt;In the first tutorial we targeted general usage of the database. But Mongo DB is much more than this. One of the additional very useful features is to act as a file storage system. This is accomplish in Mongo by having a file collection and a chunks collection where each document in the chunks collection makes up a &lt;strong&gt;Block&lt;/strong&gt; of the file. In this tutorial we will look at how to use the GridFS functionality and what functions are available.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;A simple example&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s dive straight into a simple example on how to write a file to the grid using the simplified Grid class.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient,
+  Grid = mongo.Grid;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err);
+
+  var grid = new Grid(db, &#39;fs&#39;);    
+  var buffer = new Buffer(&amp;quot;Hello world&amp;quot;);
+  grid.put(buffer, {metadata:{category:&#39;text&#39;}, content_type: &#39;text&#39;}, function(err, fileInfo) {
+    if(!err) {
+      console.log(&amp;quot;Finished writing file to Mongo&amp;quot;);
+    }
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All right let&amp;rsquo;s dissect the example. The first thing you&amp;rsquo;ll notice is the statement&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var grid = new Grid(db, &#39;fs&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Since GridFS is actually a special structure stored as collections you&amp;rsquo;ll notice that we are using the db connection that we used in the previous tutorial to operate on collections and documents. The second parameter &lt;strong&gt;&amp;lsquo;fs&amp;rsquo;&lt;/strong&gt; allows you to change the collections you want to store the data in. In this example the collections would be &lt;strong&gt;fs_files&lt;/strong&gt; and &lt;strong&gt;fs_chunks&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Having a live grid instance we now go ahead and create some test data stored in a Buffer instance, although you can pass in a string instead. We then write our data to disk.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var buffer = new Buffer(&amp;quot;Hello world&amp;quot;);
+grid.put(buffer, {metadata:{category:&#39;text&#39;}, content_type: &#39;text&#39;}, function(err, fileInfo) {
+  if(!err) {
+    console.log(&amp;quot;Finished writing file to Mongo&amp;quot;);
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s deconstruct the call we just made. The &lt;strong&gt;put&lt;/strong&gt; call will write the data you passed in as one or more chunks. The second parameter is a hash of options for the Grid class. In this case we wish to annotate the file we are writing to Mongo DB with some metadata and also specify a content type. Each file entry in GridFS has support for metadata documents which might be very useful if you are for example storing images in you Mongo DB and need to store all the data associated with the image.&lt;/p&gt;
+
+&lt;p&gt;One important thing is to take not that the put method return a document containing a &lt;strong&gt;_id&lt;/strong&gt;, this is an &lt;strong&gt;ObjectID&lt;/strong&gt; identifier that you&amp;rsquo;ll need to use if you wish to retrieve the file contents later.&lt;/p&gt;
+
+&lt;p&gt;Right so we have written out first file, let&amp;rsquo;s look at the other two simple functions supported by the Grid class.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient,
+  Grid = mongo.Grid;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err);
+
+  var grid = new Grid(db, &#39;fs&#39;);    
+  var buffer = new Buffer(&amp;quot;Hello world&amp;quot;);
+  grid.put.(buffer, {metadata:{category:&#39;text&#39;}, content_type: &#39;text&#39;}, function(err, fileInfo) {        
+    grid.get(fileInfo._id, function(err, data) {
+      console.log(&amp;quot;Retrieved data: &amp;quot; + data.toString());
+      grid.delete(fileInfo._id, function(err, result) {
+      });        
+    });
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s have a look at the two operations &lt;strong&gt;get&lt;/strong&gt; and &lt;strong&gt;delete&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;grid.get(fileInfo._id, function(err, data) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;strong&gt;get&lt;/strong&gt; method takes an ObjectID as the first argument and as we can se in the code we are using the one provided in &lt;strong&gt;fileInfo._id&lt;/strong&gt;. This will read all the chunks for the file and return it as a Buffer object.&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;delete&lt;/strong&gt; method also takes an ObjectID as the first argument but will delete the file entry and the chunks associated with the file in Mongo.&lt;/p&gt;
+
+&lt;p&gt;This &lt;strong&gt;api&lt;/strong&gt; is the simplest one you can use to interact with GridFS but it&amp;rsquo;s not suitable for all kinds of files. One of it&amp;rsquo;s main drawbacks is you are trying to write large files to Mongo. This api will require you to read the entire file into memory when writing and reading from Mongo which most likely is not feasible if you have to store large files like Video or RAW Pictures. Luckily this is not the only way to work with GridFS. That&amp;rsquo;s not to say this api is not useful. If you are storing tons of small files the memory usage vs the simplicity might be a worthwhile tradeoff. Let&amp;rsquo;s dive into some of the more advanced ways of using GridFS.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;Advanced GridFS or how not to run out of memory&lt;/h2&gt;
+
+&lt;p&gt;As we just said controlling memory consumption for you file writing and reading is key if you want to scale up the application. That means not reading in entire files before either writing or reading from Mongo DB. The good news is, it&amp;rsquo;s supported. Let&amp;rsquo;s throw some code out there straight away and look at how to do chunk sized streaming writes and reads.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var fileId = new ObjectID();
+var gridStore = new GridStore(db, fileId, &amp;quot;w&amp;quot;, {root:&#39;fs&#39;});
+gridStore.chunkSize = 1024 * 256;
+
+gridStore.open(function(err, gridStore) {
+ Step(
+   function writeData() {
+     var group = this.group();
+
+     for(var i = 0; i &amp;lt; 1000000; i += 5000) {
+       gridStore.write(new Buffer(5000), group());
+     }   
+   },
+
+   function doneWithWrite() {
+     gridStore.close(function(err, result) {
+       console.log(&amp;quot;File has been written to GridFS&amp;quot;);
+     });
+   }
+ )
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before we jump into picking apart the code let&amp;rsquo;s look at&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var gridStore = new GridStore(db, fileId, &amp;quot;w&amp;quot;, {root:&#39;fs&#39;});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice the parameter &lt;strong&gt;&amp;ldquo;w&amp;rdquo;&lt;/strong&gt; this is important. It tells the driver that you are planning to write a new file. The parameters you can use here are.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;r&amp;rdquo;&lt;/strong&gt; - read only. This is the default mode&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;w&amp;rdquo;&lt;/strong&gt; - write in truncate mode. Existing data will be overwritten&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;w+&amp;rdquo;&lt;/strong&gt; - write in edit mode&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Right so there is a fair bit to digest here. We are simulating writing a file that&amp;rsquo;s about 1MB big to  Mongo DB using GridFS. To do this we are writing it in chunks of 5000 bytes. So to not live with a difficult callback setup we are using the Step library with its&amp;rsquo; group functionality to ensure that we are notified when all of the writes are done. After all the writes are done Step will invoke the next function (or step) called &lt;strong&gt;doneWithWrite&lt;/strong&gt; where we finish up by closing the file that flushes out any remaining data to Mongo DB and updates the file document.&lt;/p&gt;
+
+&lt;p&gt;As we are doing it in chunks of 5000 bytes we will notice that memory consumption is low. This is the trick to write large files to GridFS. In pieces. Also notice this line.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gridStore.chunkSize = 1024 * 256;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This allows you to adjust how big the chunks are in bytes that Mongo DB will write. You can tune the Chunk Size to your needs. If you need to write large files to GridFS it might be worthwhile to trade of memory for CPU by setting a larger Chunk Size.&lt;/p&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s see how the actual streaming read works.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;new GridStore(db, fileId, &amp;quot;r&amp;quot;).open(function(err, gridStore) {
+  var stream = gridStore.stream(true);
+
+  stream.on(&amp;quot;data&amp;quot;, function(chunk) {
+    console.log(&amp;quot;Chunk of file data&amp;quot;);
+  });
+
+  stream.on(&amp;quot;end&amp;quot;, function() {
+    console.log(&amp;quot;EOF of file&amp;quot;);
+  });
+
+  stream.on(&amp;quot;close&amp;quot;, function() {
+    console.log(&amp;quot;Finished reading the file&amp;quot;);
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Right let&amp;rsquo;s have a quick lock at the streaming functionality supplied with the driver &lt;strong&gt;(make sure you are using 0.9.6-12 or higher as there is a bug fix for custom chunksizes that you need)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var stream = gridStore.stream(true);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This opens a stream to our file, you can pass in a boolean parameter to tell the driver to close the file automatically when it reaches the end. This will fire the &lt;strong&gt;close&lt;/strong&gt; event automatically. Otherwise you&amp;rsquo;ll have to handle cleanup when you receive the &lt;strong&gt;end&lt;/strong&gt; event. Let&amp;rsquo;s have a look at the events supported.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  stream.on(&amp;quot;data&amp;quot;, function(chunk) {
+    console.log(&amp;quot;Chunk of file data&amp;quot;);
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;strong&gt;data&lt;/strong&gt; event is called for each chunk read. This means that it&amp;rsquo;s by the chunk size of the written file. So if you file is 1MB big and the file has chunkSize 256K then you&amp;rsquo;ll get 4 calls to the event handler for &lt;strong&gt;data&lt;/strong&gt;. The chunk returned is a &lt;strong&gt;Buffer&lt;/strong&gt; object.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  stream.on(&amp;quot;end&amp;quot;, function() {
+    console.log(&amp;quot;EOF of file&amp;quot;);
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;strong&gt;end&lt;/strong&gt; event is called when the driver reaches the end of data for the file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  stream.on(&amp;quot;close&amp;quot;, function() {
+    console.log(&amp;quot;Finished reading the file&amp;quot;);
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;strong&gt;close&lt;/strong&gt; event is only called if you the &lt;strong&gt;autoclose&lt;/strong&gt; parameter on the &lt;strong&gt;gridStore.stream&lt;/strong&gt; method as shown above. If it&amp;rsquo;s false or not set handle cleanup of the streaming in the &lt;strong&gt;end&lt;/strong&gt; event handler.&lt;/p&gt;
+
+&lt;p&gt;Right that&amp;rsquo;s it for writing to GridFS in an efficient Manner. I&amp;rsquo;ll outline some other useful function on the Gridstore object.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Other useful methods on the Gridstore object&lt;/h2&gt;
+
+&lt;p&gt;There are some other methods that are useful&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gridStore.writeFile(filename/filedescriptor, function(err fileInfo) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;writeFile&lt;/strong&gt; takes either a file name or a file descriptor and writes it to GridFS. It does this in chunks to ensure the Eventloop is not tied up.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gridStore.read(length, function(err, data) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;read/readBuffer&lt;/strong&gt; lets you read a #length number of bytes from the current position in the file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gridStore.seek(position, seekLocation, function(err, gridStore) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;seek&lt;/strong&gt; lets you navigate the file to read from different positions inside the chunks. The seekLocation allows you to specify how to seek. It can be one of three values.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;GridStore.IO_SEEK_SET Seek mode where the given length is absolute&lt;/li&gt;
+&lt;li&gt;GridStore.IO_SEEK_CUR Seek mode where the given length is an offset to the current read/write head&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;GridStore.IO_SEEK_END Seek mode where the given length is an offset to the end of the file&lt;/p&gt;
+
+&lt;p&gt;GridStore.list(dbInstance, collectionName, {id:true}, function(err, files) {})&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;list&lt;/strong&gt; lists all the files in the collection in GridFS. If you have a lot of files the current version will not work very well as it&amp;rsquo;s getting all files into memory first. You can have it return either the filenames or the ids for the files using option.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gridStore.unlink(function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;unlink&lt;/strong&gt; deletes the file from Mongo DB, that&amp;rsquo;s to say all the file info and all the chunks.&lt;/p&gt;
+
+&lt;p&gt;This should be plenty to get you on your way building your first GridFS based application. As in the previous article the following links might be useful for you. Good luck and have fun.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_4&#34;&gt;Links and stuff&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/tree/master/examples&#34;&gt;The driver examples, good starting point for basic usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/tree/master/test&#34;&gt;All the integration tests, they have tons of different usage cases&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

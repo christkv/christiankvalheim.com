@@ -1,7 +1,0 @@
----
-indexes:
-    tag: "tags"
-    topic: "topics"
-baseurl: "http://christiankvalheim.com/"
-title: "Christian Kvalheim"
-...

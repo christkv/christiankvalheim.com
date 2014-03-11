@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Blogging on Christian Kvalheim </title>
+    <link>http://localhost:1313/tags/blogging/index.xml</link>
+    <language>en-us</language>
+    <author>Christian Kvalheim</author>
+    <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
+    <updated>Thu, 04 Jul 2013 00:00:00 UTC</updated>
+    
+    <item>
+      <title>MongoDB Native: The Official Node.js MongoDB driver</title>
+      <link>http://localhost:1313/project/hugo</link>
+      <pubDate>Thu, 04 Jul 2013 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/project/hugo</guid>
+      <description>
+
+&lt;figure class=&#34;hid&#34;&gt;
+    
+        &lt;img src=&#34;/media/hugo.png&#34; alt=&#34;Hugo Website&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;p&gt;
+        Hugo Website
+        
+            
+        
+        &lt;/p&gt;  
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+&lt;p&gt;Hugo is a static site generator written in GoLang. It is optimized for
+speed, easy use and configurability. Hugo takes a directory with content and
+templates and renders them into a full html website.&lt;/p&gt;
+
+&lt;p&gt;Hugo makes use of markdown files with front matter for meta data.&lt;br /&gt;
+Written in GoLang for speed, Hugo is significantly faster than most
+other static site generators.&lt;/p&gt;
+
+&lt;p&gt;A typical website of moderate size can be
+rendered in a fraction of a second. A good rule of thumb is that Hugo
+takes around 1 millisecond for each piece of content.
+It&amp;rsquo;s so fast that it will render the site in
+less time than it takes to switch to your browser and reload.&lt;/p&gt;
+
+&lt;p&gt;Hugo is made to be very flexible. Define your own content types. Define
+your own indexes. Build your own templates, shortcodes and more.
+It is written to work well with any
+kind of website including blogs, tumbles and docs.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;http://hugo.spf13.com&#34;&gt;Hugo has his own site&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_0&#34;&gt;Installing Hugo&lt;/h2&gt;
+
+&lt;p&gt;Hugo is written in GoLang with support for Windows, Linux, FreeBSD and OSX.&lt;/p&gt;
+
+&lt;p&gt;The latest release can be found at &lt;a href=&#34;https://github.com/spf13/hugo/releases&#34;&gt;hugo releases&lt;/a&gt;.
+We currently build for Windows, Linux, FreeBSD and OS X for x64
+and 386 architectures.&lt;/p&gt;
+
+&lt;p&gt;Installation is very easy. Simply download the appropriate version for your
+platform from &lt;a href=&#34;https://github.com/spf13/hugo/releases&#34;&gt;hugo releases&lt;/a&gt;.
+Once downloaded it can be run from anywhere. You don&amp;rsquo;t need to install
+it into a global location. This works well for shared hosts and other systems
+where you don&amp;rsquo;t have a privileged account.&lt;/p&gt;
+
+&lt;p&gt;Ideally you should install it somewhere in your path for easy use. &lt;code&gt;/usr/local/bin&lt;/code&gt;
+is the most probable location.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;The Hugo executible has no external dependencies.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Installing from source&lt;/h2&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;Dependencies&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Git&lt;/li&gt;
+&lt;li&gt;Go 1.1+&lt;/li&gt;
+&lt;li&gt;Mercurial&lt;/li&gt;
+&lt;li&gt;Bazaar&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_3&#34;&gt;Clone locally (for contributors):&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/spf13/hugo
+cd hugo
+go get
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Because go expects all of your libraries to be found in either $GOROOT or $GOPATH,
+it&amp;rsquo;s helpful to symlink the project to one of the following paths:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;ln -s /path/to/your/hugo $GOPATH/src/github.com/spf13/hugo&lt;/li&gt;
+&lt;li&gt;ln -s /path/to/your/hugo $GOROOT/src/pkg/github.com/spf13/hugo&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_4&#34;&gt;Get directly from Github:&lt;/h3&gt;
+
+&lt;p&gt;If you only want to build from source, it&amp;rsquo;s even easier.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;go get github.com/spf13/hugo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_5&#34;&gt;Building Hugo&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /path/to/hugo
+go build -o hugo main.go
+mv hugo /usr/local/bin/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_6&#34;&gt;Running Hugo&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;cd /path/to/hugo
+go install github.com/spf13/hugo/hugolibs
+go run main.go
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Complete documentation is available at &lt;a href=&#34;http://hugo.spf13.com&#34;&gt;Hugo Documentation&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_7&#34;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;Hugo is released under the Simple Public License. See &lt;a href=&#34;https://github.com/spf13/hugo/blob/master/LICENSE.md&#34;&gt;LICENSE.md&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

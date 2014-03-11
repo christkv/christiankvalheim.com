@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Development on Christian Kvalheim </title>
+    <link>http://localhost:1313/tags/development/index.xml</link>
+    <language>en-us</language>
+    <author>Christian Kvalheim</author>
+    <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
+    <updated>Fri, 11 Apr 2014 00:00:00 UTC</updated>
+    
+    <item>
+      <title>MongoDB Native: The Official Node.js MongoDB driver</title>
+      <link>http://localhost:1313/project/mongodb-native</link>
+      <pubDate>Fri, 11 Apr 2014 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/project/mongodb-native</guid>
+      <description>
+
+&lt;p&gt;The Node.js MongoDB driver was started in 2009 and has grown to become one of the most popular database drivers for the Node.js Platform.&lt;/p&gt;
+
+&lt;p&gt;MongoDB is a document database that allows the storage of documents in json format. It&amp;rsquo;s main benefits come from it&amp;rsquo;s ability to store unstructured data while maintaining traditional databases ability to query and index the document efficiently. MongoDb also provides a whole scaling up path.&lt;/p&gt;
+
+&lt;p&gt;A whole ecosystem has sprung out on top of the driver including ODM mappers such as Mongoose and whole frameworks such as Meteor (a fantastic real time framework). The driver is constantly evolving and there are some future spin-off projects planned around the driver.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;td&gt;what&lt;/td&gt;
+&lt;td&gt;where&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;documentation&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://mongodb.github.io/node-mongodb-native/&#34;&gt;http://mongodb.github.io/node-mongodb-native/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;apidoc&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://mongodb.github.io/node-mongodb-native/&#34;&gt;http://mongodb.github.io/node-mongodb-native/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;source&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native&#34;&gt;https://github.com/mongodb/node-mongodb-native&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;mongodb&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://www.mongodb.org/&#34;&gt;http://www.mongodb.org/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&#34;toc_0&#34;&gt;Bugs / Feature Requests&lt;/h3&gt;
+
+&lt;p&gt;Think you’ve found a bug? Want to see a new feature in node-mongodb-native? Please open a
+case in our issue management tool, JIRA:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create an account and login &lt;a href=&#34;https://jira.mongodb.org&#34;&gt;https://jira.mongodb.org&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Navigate to the NODE project &lt;a href=&#34;https://jira.mongodb.org/browse/NODE&#34;&gt;https://jira.mongodb.org/browse/NODE&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;Create Issue&lt;/strong&gt; - Please provide as much information as possible about the issue type and how to reproduce it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bug reports in JIRA for all driver projects (i.e. NODE, PYTHON, CSHARP, JAVA) and the
+Core Server (i.e. SERVER) project are &lt;strong&gt;public&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_1&#34;&gt;Questions and Bug Reports&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;mailing list: &lt;a href=&#34;https://groups.google.com/forum/#!forum/node-mongodb-native&#34;&gt;https://groups.google.com/forum/#!forum/node-mongodb-native&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;jira: &lt;a href=&#34;http://jira.mongodb.org/&#34;&gt;http://jira.mongodb.org/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;toc_2&#34;&gt;Change Log&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://jira.mongodb.org/browse/NODE&#34;&gt;http://jira.mongodb.org/browse/NODE&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Install&lt;/h2&gt;
+
+&lt;p&gt;To install the most recent release from npm, run:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install mongodb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That may give you a warning telling you that bugs[&amp;lsquo;web&amp;rsquo;] should be bugs[&amp;lsquo;url&amp;rsquo;], it would be safe to ignore it (this has been fixed in the development version)&lt;/p&gt;
+
+&lt;p&gt;To install the latest from the repository, run::&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install path/to/node-mongodb-native
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_4&#34;&gt;Live Examples&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://runnable.com/node-mongodb-native&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://runnable.com/external/styles/assets/runnablebtn.png&#34; style=&#34;width:67px;height:25px;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_5&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;This is a node.js driver for MongoDB. It&amp;rsquo;s a port (or close to a port) of the library for ruby at &lt;a href=&#34;http://github.com/mongodb/mongo-ruby-driver/&#34;&gt;http://github.com/mongodb/mongo-ruby-driver/&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A simple example of inserting a document.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, function(err, db) {
+    if(err) throw err;
+
+    var collection = db.collection(&#39;test_insert&#39;);
+    collection.insert({a:2}, function(err, docs) {
+      
+      collection.count(function(err, count) {
+        console.log(format(&amp;quot;count = %s&amp;quot;, count));
+      });
+
+      // Locate all the entries using find
+      collection.find().toArray(function(err, results) {
+        console.dir(results);
+        // Let&#39;s close the db
+        db.close();
+      });
+    });
+  })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_6&#34;&gt;Data types&lt;/h2&gt;
+
+&lt;p&gt;To store and retrieve the non-JSON MongoDb primitives (&lt;a href=&#34;http://www.mongodb.org/display/DOCS/Object+IDs&#34;&gt;ObjectID&lt;/a&gt;, Long, Binary, &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Timestamp+data+type&#34;&gt;Timestamp&lt;/a&gt;, &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Database+References#DatabaseReferences-DBRef&#34;&gt;DBRef&lt;/a&gt;, Code).&lt;/p&gt;
+
+&lt;p&gt;In particular, every document has a unique &lt;code&gt;_id&lt;/code&gt; which can be almost any type, and by default a 12-byte ObjectID is created. ObjectIDs can be represented as 24-digit hexadecimal strings, but you must convert the string back into an ObjectID before you can use it in the database. For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  // Get the objectID type
+  var ObjectID = require(&#39;mongodb&#39;).ObjectID;
+
+  var idString = &#39;4e4e1638c85e808431000003&#39;;
+  collection.findOne({_id: new ObjectID(idString)}, console.log)  // ok
+  collection.findOne({_id: idString}, console.log)  // wrong! callback gets undefined
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here are the constructors the non-Javascript BSON primitive types:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  // Fetch the library
+  var mongo = require(&#39;mongodb&#39;);
+  // Create new instances of BSON types
+  new mongo.Long(numberString)
+  new mongo.ObjectID(hexString)
+  new mongo.Timestamp()  // the actual unique number is generated on insert.
+  new mongo.DBRef(collectionName, id, dbName)
+  new mongo.Binary(buffer)  // takes a string or Buffer
+  new mongo.Code(code, [context])
+  new mongo.Symbol(string)
+  new mongo.MinKey()
+  new mongo.MaxKey()
+  new mongo.Double(number)  // Force double storage
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_7&#34;&gt;The C/C++ bson parser/serializer&lt;/h3&gt;
+
+&lt;p&gt;If you are running a version of this library has the C/C++ parser compiled, to enable the driver to use the C/C++ bson parser pass it the option native_parser:true like below&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  // using native_parser:
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;
+    , {db: {native_parser: true}}, function(err, db) {})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The C++ parser uses the js objects both for serialization and deserialization.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_8&#34;&gt;GitHub information&lt;/h2&gt;
+
+&lt;p&gt;The source code is available at &lt;a href=&#34;http://github.com/mongodb/node-mongodb-native&#34;&gt;http://github.com/mongodb/node-mongodb-native&lt;/a&gt;.
+You can either clone the repository or download a tarball of the latest release.&lt;/p&gt;
+
+&lt;p&gt;Once you have the source you can test the driver by running&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ make test
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;in the main directory. You will need to have a mongo instance running on localhost for the integration tests to pass.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_9&#34;&gt;Examples&lt;/h2&gt;
+
+&lt;p&gt;For examples look in the examples/ directory. You can execute the examples using node.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd examples
+$ node queries.js
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_10&#34;&gt;GridStore&lt;/h2&gt;
+
+&lt;p&gt;The GridStore class allows for storage of binary files in mongoDB using the mongoDB defined files and chunks collection definition.&lt;/p&gt;
+
+&lt;p&gt;For more information have a look at &lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/blob/master/docs/gridfs.md&#34;&gt;Gridstore&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_11&#34;&gt;Replicasets&lt;/h2&gt;
+
+&lt;p&gt;For more information about how to connect to a replicaset have a look at the extensive documentation &lt;a href=&#34;http://mongodb.github.com/node-mongodb-native/&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_12&#34;&gt;Primary Key Factories&lt;/h3&gt;
+
+&lt;p&gt;Defining your own primary key factory allows you to generate your own series of id&amp;rsquo;s
+(this could f.ex be to use something like ISBN numbers). The generated the id needs to be a 12 byte long &amp;ldquo;string&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Simple example below&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;    
+
+  // Custom factory (need to provide a 12 byte array);
+  CustomPKFactory = function() {}
+  CustomPKFactory.prototype = new Object();
+  CustomPKFactory.createPk = function() {
+    return new ObjectID(&amp;quot;aaaaaaaaaaaa&amp;quot;);
+  }
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, {&#39;pkFactory&#39;:CustomPKFactory}, function(err, db) {
+    if(err) throw err;
+
+    db.dropDatabase(function(err, done) {
+      
+      db.createCollection(&#39;test_custom_key&#39;, function(err, collection) {
+        
+        collection.insert({&#39;a&#39;:1}, function(err, docs) {
+          
+          collection.find({&#39;_id&#39;:new ObjectID(&amp;quot;aaaaaaaaaaaa&amp;quot;)}).toArray(function(err, items) {
+            console.dir(items);
+            // Let&#39;s close the db
+            db.close();
+          });
+        });
+      });
+    });
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_13&#34;&gt;Documentation&lt;/h2&gt;
+
+&lt;p&gt;If this document doesn&amp;rsquo;t answer your questions, see the source of
+&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/blob/master/lib/mongodb/collection.js&#34;&gt;Collection&lt;/a&gt;
+or &lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/blob/master/lib/mongodb/cursor.js&#34;&gt;Cursor&lt;/a&gt;,
+or the documentation at MongoDB for query and update formats.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_14&#34;&gt;Find&lt;/h3&gt;
+
+&lt;p&gt;The find method is actually a factory method to create
+Cursor objects. A Cursor lazily uses the connection the first time
+you call &lt;code&gt;nextObject&lt;/code&gt;, &lt;code&gt;each&lt;/code&gt;, or &lt;code&gt;toArray&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The basic operation on a cursor is the &lt;code&gt;nextObject&lt;/code&gt; method
+that fetches the next matching document from the database. The convenience
+methods &lt;code&gt;each&lt;/code&gt; and &lt;code&gt;toArray&lt;/code&gt; call &lt;code&gt;nextObject&lt;/code&gt; until the cursor is exhausted.&lt;/p&gt;
+
+&lt;p&gt;Signatures:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  var cursor = collection.find(query, [fields], options);
+  cursor.sort(fields).limit(n).skip(m).
+
+  cursor.nextObject(function(err, doc) {});
+  cursor.each(function(err, doc) {});
+  cursor.toArray(function(err, docs) {});
+
+  cursor.rewind()  // reset the cursor to its initial state.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Useful chainable methods of cursor. These can optionally be options of &lt;code&gt;find&lt;/code&gt; instead of method calls:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.limit(n).skip(m)&lt;/code&gt; to control paging.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.sort(fields)&lt;/code&gt; Order by the given fields. There are several equivalent syntaxes:&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.sort({field1: -1, field2: 1})&lt;/code&gt; descending by field1, then ascending by field2.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.sort([[&#39;field1&#39;, &#39;desc&#39;], [&#39;field2&#39;, &#39;asc&#39;]])&lt;/code&gt; same as above&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.sort([[&#39;field1&#39;, &#39;desc&#39;], &#39;field2&#39;])&lt;/code&gt; same as above&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.sort(&#39;field1&#39;)&lt;/code&gt; ascending by field1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Other options of &lt;code&gt;find&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;fields&lt;/code&gt; the fields to fetch (to avoid transferring the entire document)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tailable&lt;/code&gt; if true, makes the cursor &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Tailable+Cursors&#34;&gt;tailable&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;batchSize&lt;/code&gt; The number of the subset of results to request the database
+to return for every request. This should initially be greater than 1 otherwise
+the database will automatically close the cursor. The batch size can be set to 1
+with &lt;code&gt;batchSize(n, function(err){})&lt;/code&gt; after performing the initial query to the database.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hint&lt;/code&gt; See &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Optimization#Optimization-Hint&#34;&gt;Optimization: hint&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;explain&lt;/code&gt; turns this into an explain query. You can also call
+&lt;code&gt;explain()&lt;/code&gt; on any cursor to fetch the explanation.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;snapshot&lt;/code&gt; prevents documents that are updated while the query is active
+from being returned multiple times. See more
+&lt;a href=&#34;http://www.mongodb.org/display/DOCS/How+to+do+Snapshotted+Queries+in+the+Mongo+Database&#34;&gt;details about query snapshots&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;timeout&lt;/code&gt; if false, asks MongoDb not to time out this cursor after an
+inactivity period.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For information on how to create queries, see the
+&lt;a href=&#34;http://www.mongodb.org/display/DOCS/Querying&#34;&gt;MongoDB section on querying&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;    
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, function(err, db) {
+    if(err) throw err;
+
+    var collection = db
+      .collection(&#39;test&#39;)
+      .find({})
+      .limit(10)
+      .toArray(function(err, docs) {
+        console.dir(docs);
+    });
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_15&#34;&gt;Insert&lt;/h3&gt;
+
+&lt;p&gt;Signature:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  collection.insert(docs, options, [callback]);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where &lt;code&gt;docs&lt;/code&gt; can be a single document or an array of documents.&lt;/p&gt;
+
+&lt;p&gt;Useful options:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;safe:true&lt;/code&gt; Should always set if you have a callback.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;See also: &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Inserting&#34;&gt;MongoDB docs for insert&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;    
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, function(err, db) {
+    if(err) throw err;
+    
+    db.collection(&#39;test&#39;).insert({hello: &#39;world&#39;}, {w:1}, function(err, objects) {
+      if (err) console.warn(err.message);
+      if (err &amp;amp;&amp;amp; err.message.indexOf(&#39;E11000 &#39;) !== -1) {
+        // this _id was already inserted in the database
+      }
+    });
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that there&amp;rsquo;s no reason to pass a callback to the insert or update commands
+unless you use the &lt;code&gt;safe:true&lt;/code&gt; option. If you don&amp;rsquo;t specify &lt;code&gt;safe:true&lt;/code&gt;, then
+your callback will be called immediately.&lt;/p&gt;
+
+&lt;h3 id=&#34;toc_16&#34;&gt;Update: update and insert (upsert)&lt;/h3&gt;
+
+&lt;p&gt;The update operation will update the first document that matches your query
+(or all documents that match if you use &lt;code&gt;multi:true&lt;/code&gt;).
+If &lt;code&gt;safe:true&lt;/code&gt;, &lt;code&gt;upsert&lt;/code&gt; is not set, and no documents match, your callback will return 0 documents updated.&lt;/p&gt;
+
+&lt;p&gt;See the &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Updating&#34;&gt;MongoDB docs&lt;/a&gt; for
+the modifier (&lt;code&gt;$inc&lt;/code&gt;, &lt;code&gt;$set&lt;/code&gt;, &lt;code&gt;$push&lt;/code&gt;, etc.) formats.&lt;/p&gt;
+
+&lt;p&gt;Signature:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  collection.update(criteria, objNew, options, [callback]);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Useful options:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;safe:true&lt;/code&gt; Should always set if you have a callback.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;multi:true&lt;/code&gt; If set, all matching documents are updated, not just the first.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;upsert:true&lt;/code&gt; Atomically inserts the document if no documents matched.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Example for &lt;code&gt;update&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;    
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, function(err, db) {
+    if(err) throw err;
+
+    db.collection(&#39;test&#39;).update({hi: &#39;here&#39;}, {$set: {hi: &#39;there&#39;}}, {w:1}, function(err) {
+      if (err) console.warn(err.message);
+      else console.log(&#39;successfully updated&#39;);
+    });
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_17&#34;&gt;Find and modify&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;findAndModify&lt;/code&gt; is like &lt;code&gt;update&lt;/code&gt;, but it also gives the updated document to
+your callback. But there are a few key differences between findAndModify and
+update:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The signatures differ.&lt;/li&gt;
+&lt;li&gt;You can only findAndModify a single item, not multiple items.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Signature:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;    collection.findAndModify(query, sort, update, options, callback)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The sort parameter is used to specify which object to operate on, if more than
+one document matches. It takes the same format as the cursor sort (see
+Connection.find above).&lt;/p&gt;
+
+&lt;p&gt;See the
+&lt;a href=&#34;http://www.mongodb.org/display/DOCS/findAndModify+Command&#34;&gt;MongoDB docs for findAndModify&lt;/a&gt;
+for more details.&lt;/p&gt;
+
+&lt;p&gt;Useful options:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;remove:true&lt;/code&gt; set to a true to remove the object before returning&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;new:true&lt;/code&gt; set to true if you want to return the modified object rather than the original. Ignored for remove.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;upsert:true&lt;/code&gt; Atomically inserts the document if no documents matched.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Example for &lt;code&gt;findAndModify&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;    
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, function(err, db) {
+    if(err) throw err;
+    db.collection(&#39;test&#39;).findAndModify({hello: &#39;world&#39;}, [[&#39;_id&#39;,&#39;asc&#39;]], {$set: {hi: &#39;there&#39;}}, {}, function(err, object) {
+      if (err) console.warn(err.message);
+      else console.dir(object);  // undefined if no matching object exists.
+    });
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;toc_18&#34;&gt;Save&lt;/h3&gt;
+
+&lt;p&gt;The &lt;code&gt;save&lt;/code&gt; method is a shorthand for upsert if the document contains an
+&lt;code&gt;_id&lt;/code&gt;, or an insert if there is no &lt;code&gt;_id&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_19&#34;&gt;Release Notes&lt;/h2&gt;
+
+&lt;p&gt;See HISTORY&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_20&#34;&gt;Credits&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://github.com/mongodb/mongo-ruby-driver/&#34;&gt;10gen&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://code.google.com/closure/library/&#34;&gt;Google Closure Library&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://jsfromhell.com/classes/binary-parser&#34;&gt;Jonas Raoni Soares Silva&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;toc_21&#34;&gt;Contributors&lt;/h2&gt;
+
+&lt;p&gt;Aaron Heckmann, Christoph Pojer, Pau Ramon Revilla, Nathan White, Emmerman, Seth LaForge, Boris Filipov, Stefan Schärmeli, Tedde Lundgren, renctan, Sergey Ukustov, Ciaran Jessup, kuno, srimonti, Erik Abele, Pratik Daga, Slobodan Utvic, Kristina Chodorow, Yonathan Randolph, Brian Noguchi, Sam Epstein, James Harrison Fisher, Vladimir Dronnikov, Ben Hockey, Henrik Johansson, Simon Weare, Alex Gorbatchev, Shimon Doodkin, Kyle Mueller, Eran Hammer-Lahav, Marcin Ciszak, François de Metz, Vinay Pulim, nstielau, Adam Wiggins, entrinzikyl, Jeremy Selier, Ian Millington, Public Keating, andrewjstone, Christopher Stott, Corey Jewett, brettkiefer, Rob Holland, Senmiao Liu, heroic, gitfy&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_22&#34;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;Copyright 2009 - 2013 MongoDb Inc.&lt;/p&gt;
+
+&lt;p&gt;Licensed under the Apache License, Version 2.0 (the &amp;ldquo;License&amp;rdquo;);
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;   http://www.apache.org/licenses/LICENSE-2.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an &amp;ldquo;AS IS&amp;rdquo; BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,7 +6,263 @@
     <language>en-us</language>
     <author>Christian Kvalheim</author>
     <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
-    <updated>Sun, 19 Feb 2012 00:00:00 UTC</updated>
+    <updated>Sun, 16 Mar 2014 00:00:00 UTC</updated>
+    
+    <item>
+      <title>Mongo Driver and Mongo DB 2.6 Features</title>
+      <link>http://christiankvalheim.com/post/an_introduction_to_1_4_and_2_6</link>
+      <pubDate>Sun, 16 Mar 2014 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://christiankvalheim.com/post/an_introduction_to_1_4_and_2_6</guid>
+      <description>
+
+&lt;h1 id=&#34;toc_0&#34;&gt;Mongo Driver and Mongo DB 2.6 Features&lt;/h1&gt;
+
+&lt;p&gt;MongoDB 2.6 introduces some new powerful features that are reflected in the 1.4 driver release. These include.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Aggregation cursors&lt;/li&gt;
+&lt;li&gt;Per query timeouts &lt;strong&gt;maxTimeMS&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Ordered and Unordered bulk operations&lt;/li&gt;
+&lt;li&gt;A parallelCollectionScan command for fast reading of an entire collection&lt;/li&gt;
+&lt;li&gt;Integrated text search in the query language&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Moreover the driver includes a whole slew of minor and major bug fixes and features. Some of the more noteworthy features include.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Better support for domains in node.js&lt;/li&gt;
+&lt;li&gt;Reconnect events for replicaset and mongos connections&lt;/li&gt;
+&lt;li&gt;Replicaset emits &amp;ldquo;joined&amp;rdquo; and &amp;ldquo;left&amp;rdquo; events when new server join or leave the set&lt;/li&gt;
+&lt;li&gt;Added &lt;strong&gt;bufferMaxEntries&lt;/strong&gt; entry to allow tuning on how long driver keeps waiting for servers to come back up (default is until memory exhaustion)&lt;/li&gt;
+&lt;li&gt;Upgraded BSON parser to rely on 0.2.6 returning to using &lt;strong&gt;nan&lt;/strong&gt; package&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at the main things in 2.6 features one by one.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_1&#34;&gt;Aggregation cursors&lt;/h2&gt;
+
+&lt;p&gt;The addition off aggregation cursors to MongoDB 2.6 now means that applications can disregard the previous max result limit of 16MB. Let&amp;rsquo;s look at a simple use of the aggregation cursor.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get an aggregation cursor
+  var cursor = db.collection(&#39;data&#39;).aggregate([
+      {$match: {}}
+    ], {
+        allowDiskUsage: true
+      , cursor: {batchSize: 1000}   
+    });
+
+  // Use cursor as stream
+  cursor.on(&#39;data&#39;, function(data) {
+    console.dir(data);
+  });
+
+  cursor.on(&#39;end&#39;, function() {
+    db.close();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As one can see the cursor implements the &lt;strong&gt;Readable&lt;/strong&gt; stream interface for 0.10.X or higher. For 2.4 the driver will emulate the cursor behavior by wrapping the result document.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_2&#34;&gt;maxTimeMS&lt;/h2&gt;
+
+&lt;p&gt;One feature that has requested often is the ability to timeout individual queries. In MongoDB 2.6 it&amp;rsquo;s finally arrived and is known as the &lt;strong&gt;maxTimeMS&lt;/strong&gt; option. Let&amp;rsquo;s take a look at a simple usage of the property with a query.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get an aggregation cursor
+  var cursor = db.collection(&#39;data&#39;)
+    .find(&amp;quot;$where&amp;quot;: &amp;quot;sleep(1000) || true&amp;quot;)
+    .maxTimeMS(50);
+
+  // Get alll the items
+  cursor.toArray(function(err, items) {
+    console.dir(err);
+    console.dir(items);
+    db.close();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is a bit of a contrived example using sleep to force the query to wait a second. With the &lt;strong&gt;maxTimeMS&lt;/strong&gt; set to 50 milliseconds the query will be aborted before the full second is up.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_3&#34;&gt;Ordered/Unordered bulk operations&lt;/h2&gt;
+
+&lt;p&gt;Under the covers MongoDB is moving away from the combination of a write operation + get last error (GLE) and towards a write commands api. These new commands allow for the execution of bulk insert/update/remove operations. The bulk api&amp;rsquo;s are abstractions on top of this that server to make it easy to build bulk operations. Bulk operations come in two main flavors.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Ordered bulk operations. These operations execute all the operation in order and error out on the first write error.&lt;/li&gt;
+&lt;li&gt;Unordered bulk operations. These operations execute all the operations in parallel and aggregates up all the errors. Unordered bulk operations do not guarantee order of execution.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at two simple examples using ordered and unordered operations.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get the collection
+  var col = db.collection(&#39;batch_write_ordered_ops&#39;);
+  // Initialize the Ordered Batch
+  var batch = col.initializeOrderedBulkOp();
+
+  // Add some operations to be executed in order
+  batch.insert({a:1});
+  batch.find({a:1}).updateOne({$set: {b:1}});
+  batch.find({a:2}).upsert().updateOne({$set: {b:2}});
+  batch.insert({a:3});
+  batch.find({a:3}).remove({a:3});
+
+  // Execute the operations
+  batch.execute(function(err, result) {
+    console.dir(err);
+    console.dir(result);    
+    db.close();
+  });
+});
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get the collection
+  var col = db.collection(&#39;batch_write_ordered_ops&#39;);
+  // Initialize the Ordered Batch
+  var batch = col.initializeUnorderedBulkOp();
+
+  // Add some operations to be executed in order
+  batch.insert({a:1});
+  batch.find({a:1}).updateOne({$set: {b:1}});
+  batch.find({a:2}).upsert().updateOne({$set: {b:2}});
+  batch.insert({a:3});
+  batch.find({a:3}).remove({a:3});
+
+  // Execute the operations
+  batch.execute(function(err, result) {
+    console.dir(err);
+    console.dir(result);    
+    db.close();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For older servers than 2.6 the API will downconvert the operations. However it&amp;rsquo;s not possible to downconvert 100% so there might be slight edge cases where it cannot correctly report the right numbers.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_4&#34;&gt;parallelCollectionScan&lt;/h2&gt;
+
+&lt;p&gt;The &lt;strong&gt;parallelCollectionScan&lt;/strong&gt; command is a special command targeted at reading out an entire collection using &lt;strong&gt;numCursors&lt;/strong&gt; parallel cursors.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get an aggregation cursor
+  db.collection(&#39;data&#39;).parallelCollectionScan({numCursors:3}, function(err, cursors) {
+    var results = [];
+
+    for(var i = 0; i &amp;lt; cursors.length; i++) {
+      cursors[i].get(function(err, items) {
+        test.equal(err, null);
+
+        // Add docs to results array
+        results = results.concat(items);
+        numCursors = numCursors - 1;
+
+        // No more cursors let&#39;s ensure we got all results
+        if(numCursors == 0) {
+          test.equal(docs.length, results.length);
+
+          db.close();
+          test.done();
+        }
+      });
+    }
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This optimizes the IO throughput from a collection.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_5&#34;&gt;Integrated text search in the query language&lt;/h2&gt;
+
+&lt;p&gt;Text indexes are now integrated into the main query language and enabled by default. A simple example.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get the collection
+  var collection = db.collection(&#39;textSearchWithSort&#39;);
+  collection.ensureIndex({s: &#39;text&#39;}, function(err, result) {
+    test.equal(null, err);
+
+    collection.insert([
+        {s: &#39;spam&#39;}
+      , {s: &#39;spam eggs and spam&#39;}
+      , {s: &#39;sausage and eggs&#39;}], function(err, result) {
+        test.equal(null, err);
+
+        collection.find(
+            {$text: {$search: &#39;spam&#39;}}
+          , {fields: {_id: false, s: true, score: {$meta: &#39;textScore&#39;}}}
+        ).sort({score: {$meta: &#39;textScore&#39;}}).toArray(function(err, items) {
+          test.equal(null, err);
+          test.equal(&amp;quot;spam eggs and spam&amp;quot;, items[0].s);
+          db.close();
+          test.done();
+        });
+      });
+  });      
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_6&#34;&gt;Emitting Reconnect and Joined/Left events&lt;/h2&gt;
+
+&lt;p&gt;The Replicaset and Mongos now emits events for servers joining and leaving the replicaset. This let&amp;rsquo;s applications more easily monitor the changes in the driver over time. &lt;strong&gt;Reconnect&lt;/strong&gt; in the context of a Replicaset or Mongos means that the driver is starting to replay buffered operations.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017,localhost:27027/test&amp;quot;, function(err, db) {
+  db.serverConfig.on(&#39;joined&#39;, function(err, server) {
+    console.log(&amp;quot;server joined&amp;quot;);
+    console.dir(server);
+  });
+
+  db.serverConfig.on(&#39;left&#39;, function(err, server) {
+    console.log(&amp;quot;server left&amp;quot;);
+    console.dir(server);
+  });
+
+  db.serverConfig.on(&#39;reconnect&#39;, function() {
+    console.log(&amp;quot;server reconnected&amp;quot;);
+  }); 
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;toc_7&#34;&gt;bufferMaxEntries&lt;/h2&gt;
+
+&lt;p&gt;Buffered Max Entries allow for more fine grained control on how many operations that will be buffered before the driver errors out and stops attempting to reconnect.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, {
+    db: {bufferMaxEntries:0},
+  }, function(err, db) {
+    db.close();
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This example disables the command buffering completely and errors out the moment there is no connection available. The default value (for backward compatibility) is to buffer until memory runs out. Be aware that by setting a very low value you can cause some problems in failover scenarios in Replicasets as it might take a little but of time before f.ex a new Primary is elected and steps up to accept writes. Setting &lt;strong&gt;bufferMaxEntries&lt;/strong&gt; to 0 in this case will cause the driver to error out instead of falling over correctly.&lt;/p&gt;
+
+&lt;h2 id=&#34;toc_8&#34;&gt;Fsync and journal Write Concerns note&lt;/h2&gt;
+
+&lt;p&gt;MongoDB from version 2.6 and higher disallows the combination of &lt;strong&gt;journal&lt;/strong&gt; and &lt;strong&gt;fsync&lt;/strong&gt;. Combining them will cause an error while on 2.4 &lt;strong&gt;fsync&lt;/strong&gt; was ignored when provided with &lt;strong&gt;journal&lt;/strong&gt;. The following semantics apply.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;j: If true block until write operations have been committed to the journal. Cannot be used in combination with &lt;code&gt;fsync&lt;/code&gt;. Prior to MongoDB 2.6 this option was ignored if the server was running without journaling. Starting with MongoDB 2.6 write operations will fail with an exception if this option is used when the server is running without journaling.&lt;/li&gt;
+&lt;li&gt;fsync: If true and the server is running without journaling, blocks until the server has synced all data files to disk. If the server is running with journaling, this acts the same as the &lt;code&gt;j&lt;/code&gt; option, blocking until write operations have been committed to the journal. Cannot be used in combination with &lt;code&gt;j&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>The wonderful world of GEO spatial indexes in MongoDB</title>

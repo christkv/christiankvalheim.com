@@ -1,0 +1,4 @@
+[submodule "public"]
+	path = public
+	url = git@github.com:mongodb/node-mongodb-native.git
+	branch = gh-pages

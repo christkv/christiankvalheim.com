@@ -1,6 +1,6 @@
 {
   "disqus_url" : "http://christiankvalheim.com/post/the_wonderful_world_of_geo_spatial_indexes_in_mongodb/",
-  "disqus_identifier" : "1913 http://christiankvalheim.com/?p=1913",
+  "disqus_identifier" : "1914 http://christiankvalheim.com/?p=1914",
   "disqus_title" : "The wonderful world of GEO spatial indexes in MongoDB",
   "Title": "The wonderful world of GEO spatial indexes in MongoDB",
   "Description": "The wonderful world of GEO spatial indexes in MongoDB",

@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
       <title>Projects on Christian Kvalheim </title>
-    <link>http://christiankvalheim.com/project/index.xml</link>
+    <link>http://localhost:1313/project/index.xml</link>
     <language>en-us</language>
     <author>Christian Kvalheim</author>
     <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
@@ -10,10 +10,10 @@
     
     <item>
       <title>MongoDB Native: The Official Node.js MongoDB driver</title>
-      <link>http://christiankvalheim.com/project/mongodb-native</link>
+      <link>http://localhost:1313/project/mongodb-native</link>
       <pubDate>Wed, 01 Sep 2010 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://christiankvalheim.com/project/mongodb-native</guid>
+      <guid>http://localhost:1313/project/mongodb-native</guid>
       <description>
 
 &lt;p&gt;The Node.js MongoDB driver was started in 2009 and has grown to become one of the most popular database drivers for the Node.js Platform.&lt;/p&gt;

@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
       <title>Presentations on Christian Kvalheim </title>
-    <link>http://localhost:1313/topics/presentations/index.xml</link>
+    <link>http://christiankvalheim.com/topics/presentations/index.xml</link>
     <language>en-us</language>
     <author>Christian Kvalheim</author>
     <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
@@ -10,10 +10,10 @@
     
     <item>
       <title>Lessons from 4 years of driver develoment</title>
-      <link>http://localhost:1313/presentation/four_years_of_node_and_mongodb</link>
+      <link>http://christiankvalheim.com/presentation/four_years_of_node_and_mongodb</link>
       <pubDate>Tue, 01 Oct 2013 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/presentation/four_years_of_node_and_mongodb</guid>
+      <guid>http://christiankvalheim.com/presentation/four_years_of_node_and_mongodb</guid>
       <description>&lt;figure &gt;
     
         &lt;img src=&#34;/media/jsconf2013.jpg&#34; alt=&#34;postgres con&#34; /&gt;
@@ -42,10 +42,10 @@
     
     <item>
       <title>How does mongodb store my data</title>
-      <link>http://localhost:1313/presentation/how_does_mongodb_store_my_data</link>
+      <link>http://christiankvalheim.com/presentation/how_does_mongodb_store_my_data</link>
       <pubDate>Tue, 10 Apr 2012 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/presentation/how_does_mongodb_store_my_data</guid>
+      <guid>http://christiankvalheim.com/presentation/how_does_mongodb_store_my_data</guid>
       <description>&lt;figure &gt;
     
         &lt;img src=&#34;/media/fosdem2013.png&#34; alt=&#34;postgres con&#34; /&gt;

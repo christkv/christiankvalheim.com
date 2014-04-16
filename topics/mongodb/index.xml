@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
       <title>Mongodb on Christian Kvalheim </title>
-    <link>http://localhost:1313/topics/mongodb/index.xml</link>
+    <link>http://christiankvalheim.com/topics/mongodb/index.xml</link>
     <language>en-us</language>
     <author>Christian Kvalheim</author>
     <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
@@ -10,10 +10,10 @@
     
     <item>
       <title>The New Bulk API</title>
-      <link>http://localhost:1313/post/the_new_bulk_api</link>
+      <link>http://christiankvalheim.com/post/the_new_bulk_api</link>
       <pubDate>Wed, 16 Apr 2014 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/post/the_new_bulk_api</guid>
+      <guid>http://christiankvalheim.com/post/the_new_bulk_api</guid>
       <description>
 
 &lt;h1 id=&#34;toc_0&#34;&gt;The New Bulk API&lt;/h1&gt;
@@ -275,10 +275,10 @@ remove bulk operation
     
     <item>
       <title>Mongo Driver and Mongo DB 2.6 Features</title>
-      <link>http://localhost:1313/post/an_introduction_to_1_4_and_2_6</link>
+      <link>http://christiankvalheim.com/post/an_introduction_to_1_4_and_2_6</link>
       <pubDate>Sun, 16 Mar 2014 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/post/an_introduction_to_1_4_and_2_6</guid>
+      <guid>http://christiankvalheim.com/post/an_introduction_to_1_4_and_2_6</guid>
       <description>
 
 &lt;h1 id=&#34;toc_0&#34;&gt;Mongo Driver and Mongo DB 2.6 Features&lt;/h1&gt;
@@ -531,10 +531,10 @@ MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, {
     
     <item>
       <title>Lessons from 4 years of driver develoment</title>
-      <link>http://localhost:1313/presentation/four_years_of_node_and_mongodb</link>
+      <link>http://christiankvalheim.com/presentation/four_years_of_node_and_mongodb</link>
       <pubDate>Tue, 01 Oct 2013 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/presentation/four_years_of_node_and_mongodb</guid>
+      <guid>http://christiankvalheim.com/presentation/four_years_of_node_and_mongodb</guid>
       <description>&lt;figure &gt;
     
         &lt;img src=&#34;/media/jsconf2013.jpg&#34; alt=&#34;postgres con&#34; /&gt;
@@ -563,10 +563,10 @@ MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, {
     
     <item>
       <title>How does mongodb store my data</title>
-      <link>http://localhost:1313/presentation/how_does_mongodb_store_my_data</link>
+      <link>http://christiankvalheim.com/presentation/how_does_mongodb_store_my_data</link>
       <pubDate>Tue, 10 Apr 2012 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/presentation/how_does_mongodb_store_my_data</guid>
+      <guid>http://christiankvalheim.com/presentation/how_does_mongodb_store_my_data</guid>
       <description>&lt;figure &gt;
     
         &lt;img src=&#34;/media/fosdem2013.png&#34; alt=&#34;postgres con&#34; /&gt;
@@ -586,10 +586,10 @@ MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, {
     
     <item>
       <title>The wonderful world of GEO spatial indexes in MongoDB</title>
-      <link>http://localhost:1313/post/the_wonderful_world_of_geo_spatial_indexes_in_mongodb</link>
+      <link>http://christiankvalheim.com/post/the_wonderful_world_of_geo_spatial_indexes_in_mongodb</link>
       <pubDate>Sun, 19 Feb 2012 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/post/the_wonderful_world_of_geo_spatial_indexes_in_mongodb</guid>
+      <guid>http://christiankvalheim.com/post/the_wonderful_world_of_geo_spatial_indexes_in_mongodb</guid>
       <description>
 
 &lt;h1 id=&#34;toc_0&#34;&gt;The wonderful world of GEO spatial indexes in MongoDB&lt;/h1&gt;
@@ -852,10 +852,10 @@ MongoClient.connect(&amp;quot;mongodb://localhost:27017/geodb&amp;quot;, functio
     
     <item>
       <title>A primer for GridFS using the Mongo DB driver</title>
-      <link>http://localhost:1313/post/a_primer_for_gridfs_using_the_mongodb_driver</link>
+      <link>http://christiankvalheim.com/post/a_primer_for_gridfs_using_the_mongodb_driver</link>
       <pubDate>Wed, 02 Mar 2011 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/post/a_primer_for_gridfs_using_the_mongodb_driver</guid>
+      <guid>http://christiankvalheim.com/post/a_primer_for_gridfs_using_the_mongodb_driver</guid>
       <description>
 
 &lt;h1 id=&#34;toc_0&#34;&gt;A primer for GridFS using the Mongo DB driver&lt;/h1&gt;
@@ -1086,10 +1086,10 @@ gridStore.open(function(err, gridStore) {
     
     <item>
       <title>A Basic introduction to Mongo DB</title>
-      <link>http://localhost:1313/post/a_basic_introduction_to_mongodb</link>
+      <link>http://christiankvalheim.com/post/a_basic_introduction_to_mongodb</link>
       <pubDate>Mon, 28 Feb 2011 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/post/a_basic_introduction_to_mongodb</guid>
+      <guid>http://christiankvalheim.com/post/a_basic_introduction_to_mongodb</guid>
       <description>
 
 &lt;h1 id=&#34;toc_0&#34;&gt;A Basic introduction to Mongo DB&lt;/h1&gt;
@@ -1413,10 +1413,10 @@ stream.on(&amp;quot;end&amp;quot;, function() {});
     
     <item>
       <title>MongoDB Native: The Official Node.js MongoDB driver</title>
-      <link>http://localhost:1313/project/mongodb-native</link>
+      <link>http://christiankvalheim.com/project/mongodb-native</link>
       <pubDate>Wed, 01 Sep 2010 00:00:00 UTC</pubDate>
       <author>Christian Kvalheim</author>
-      <guid>http://localhost:1313/project/mongodb-native</guid>
+      <guid>http://christiankvalheim.com/project/mongodb-native</guid>
       <description>
 
 &lt;p&gt;The Node.js MongoDB driver was started in 2009 and has grown to become one of the most popular database drivers for the Node.js Platform.&lt;/p&gt;

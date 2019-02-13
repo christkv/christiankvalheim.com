@@ -1,0 +1,28 @@
+baseurl = "https://example.com"
+languageCode = "en"
+title = "Christian Kvalheim"
+theme = "charaka-hugo-theme"
+copyright = "&copy; <a href=\"https://github.com/christkv\">Christian Kvalheim</a> 2019"
+disqusShortname = ""
+googleAnalytics = ""
+
+[params]
+
+[params.highlight]
+  style = "zenburn"
+
+[[params.social]]
+  url = "about"
+  fa_icon = "fas fa-info" 
+
+[[params.social]]
+  url = "https://github.com/christkv"
+  fa_icon = "fab fa-github"
+
+[[params.social]]
+  url = "https://www.linkedin.com/in/christkv/"
+  fa_icon = "fab fa-linkedin-in"
+
+[[params.social]]
+  url = "https://twitter.com/christkv"
+  fa_icon = "fab fa-twitter"

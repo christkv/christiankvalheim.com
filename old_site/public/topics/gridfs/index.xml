@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Gridfs on Christian Kvalheim </title>
+    <link>http://localhost:1313/topics/gridfs/</link>
+    <language>en-us</language>
+    <author>Christian Kvalheim</author>
+    <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    
+    <item>
+      <title>A primer for GridFS using the Mongo DB driver</title>
+      <link>http://localhost:1313/post/a_primer_for_gridfs_using_the_mongodb_driver/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/a_primer_for_gridfs_using_the_mongodb_driver/</guid>
+      <description>
+
+&lt;h1 id=&#34;a-primer-for-gridfs-using-the-mongo-db-driver:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;A primer for GridFS using the Mongo DB driver&lt;/h1&gt;
+
+&lt;p&gt;In the first tutorial we targeted general usage of the database. But Mongo DB is much more than this. One of the additional very useful features is to act as a file storage system. This is accomplish in Mongo by having a file collection and a chunks collection where each document in the chunks collection makes up a &lt;strong&gt;Block&lt;/strong&gt; of the file. In this tutorial we will look at how to use the GridFS functionality and what functions are available.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-simple-example:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;A simple example&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s dive straight into a simple example on how to write a file to the grid using the simplified Grid class.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient,
+  Grid = mongo.Grid;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err);
+
+  var grid = new Grid(db, &#39;fs&#39;);    
+  var buffer = new Buffer(&amp;quot;Hello world&amp;quot;);
+  grid.put(buffer, {metadata:{category:&#39;text&#39;}, content_type: &#39;text&#39;}, function(err, fileInfo) {
+    if(!err) {
+      console.log(&amp;quot;Finished writing file to Mongo&amp;quot;);
+    }
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All right let&amp;rsquo;s dissect the example. The first thing you&amp;rsquo;ll notice is the statement&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var grid = new Grid(db, &#39;fs&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Since GridFS is actually a special structure stored as collections you&amp;rsquo;ll notice that we are using the db connection that we used in the previous tutorial to operate on collections and documents. The second parameter &lt;strong&gt;&amp;lsquo;fs&amp;rsquo;&lt;/strong&gt; allows you to change the collections you want to store the data in. In this example the collections would be &lt;strong&gt;fs_files&lt;/strong&gt; and &lt;strong&gt;fs_chunks&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Having a live grid instance we now go ahead and create some test data stored in a Buffer instance, although you can pass in a string instead. We then write our data to disk.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var buffer = new Buffer(&amp;quot;Hello world&amp;quot;);
+grid.put(buffer, {metadata:{category:&#39;text&#39;}, content_type: &#39;text&#39;}, function(err, fileInfo) {
+  if(!err) {
+    console.log(&amp;quot;Finished writing file to Mongo&amp;quot;);
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s deconstruct the call we just made. The &lt;strong&gt;put&lt;/strong&gt; call will write the data you passed in as one or more chunks. The second parameter is a hash of options for the Grid class. In this case we wish to annotate the file we are writing to Mongo DB with some metadata and also specify a content type. Each file entry in GridFS has support for metadata documents which might be very useful if you are for example storing images in you Mongo DB and need to store all the data associated with the image.&lt;/p&gt;
+
+&lt;p&gt;One important thing is to take not that the put method return a document containing a &lt;strong&gt;_id&lt;/strong&gt;, this is an &lt;strong&gt;ObjectID&lt;/strong&gt; identifier that you&amp;rsquo;ll need to use if you wish to retrieve the file contents later.&lt;/p&gt;
+
+&lt;p&gt;Right so we have written out first file, let&amp;rsquo;s look at the other two simple functions supported by the Grid class.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient,
+  Grid = mongo.Grid;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err);
+
+  var grid = new Grid(db, &#39;fs&#39;);    
+  var buffer = new Buffer(&amp;quot;Hello world&amp;quot;);
+  grid.put.(buffer, {metadata:{category:&#39;text&#39;}, content_type: &#39;text&#39;}, function(err, fileInfo) {        
+    grid.get(fileInfo._id, function(err, data) {
+      console.log(&amp;quot;Retrieved data: &amp;quot; + data.toString());
+      grid.delete(fileInfo._id, function(err, result) {
+      });        
+    });
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s have a look at the two operations &lt;strong&gt;get&lt;/strong&gt; and &lt;strong&gt;delete&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;grid.get(fileInfo._id, function(err, data) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;strong&gt;get&lt;/strong&gt; method takes an ObjectID as the first argument and as we can se in the code we are using the one provided in &lt;strong&gt;fileInfo._id&lt;/strong&gt;. This will read all the chunks for the file and return it as a Buffer object.&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;delete&lt;/strong&gt; method also takes an ObjectID as the first argument but will delete the file entry and the chunks associated with the file in Mongo.&lt;/p&gt;
+
+&lt;p&gt;This &lt;strong&gt;api&lt;/strong&gt; is the simplest one you can use to interact with GridFS but it&amp;rsquo;s not suitable for all kinds of files. One of it&amp;rsquo;s main drawbacks is you are trying to write large files to Mongo. This api will require you to read the entire file into memory when writing and reading from Mongo which most likely is not feasible if you have to store large files like Video or RAW Pictures. Luckily this is not the only way to work with GridFS. That&amp;rsquo;s not to say this api is not useful. If you are storing tons of small files the memory usage vs the simplicity might be a worthwhile tradeoff. Let&amp;rsquo;s dive into some of the more advanced ways of using GridFS.&lt;/p&gt;
+
+&lt;h2 id=&#34;advanced-gridfs-or-how-not-to-run-out-of-memory:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;Advanced GridFS or how not to run out of memory&lt;/h2&gt;
+
+&lt;p&gt;As we just said controlling memory consumption for you file writing and reading is key if you want to scale up the application. That means not reading in entire files before either writing or reading from Mongo DB. The good news is, it&amp;rsquo;s supported. Let&amp;rsquo;s throw some code out there straight away and look at how to do chunk sized streaming writes and reads.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var fileId = new ObjectID();
+var gridStore = new GridStore(db, fileId, &amp;quot;w&amp;quot;, {root:&#39;fs&#39;});
+gridStore.chunkSize = 1024 * 256;
+
+gridStore.open(function(err, gridStore) {
+ Step(
+   function writeData() {
+     var group = this.group();
+
+     for(var i = 0; i &amp;lt; 1000000; i += 5000) {
+       gridStore.write(new Buffer(5000), group());
+     }   
+   },
+
+   function doneWithWrite() {
+     gridStore.close(function(err, result) {
+       console.log(&amp;quot;File has been written to GridFS&amp;quot;);
+     });
+   }
+ )
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before we jump into picking apart the code let&amp;rsquo;s look at&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var gridStore = new GridStore(db, fileId, &amp;quot;w&amp;quot;, {root:&#39;fs&#39;});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice the parameter &lt;strong&gt;&amp;ldquo;w&amp;rdquo;&lt;/strong&gt; this is important. It tells the driver that you are planning to write a new file. The parameters you can use here are.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;r&amp;rdquo;&lt;/strong&gt; - read only. This is the default mode&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;w&amp;rdquo;&lt;/strong&gt; - write in truncate mode. Existing data will be overwritten&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&amp;ldquo;w+&amp;rdquo;&lt;/strong&gt; - write in edit mode&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Right so there is a fair bit to digest here. We are simulating writing a file that&amp;rsquo;s about 1MB big to  Mongo DB using GridFS. To do this we are writing it in chunks of 5000 bytes. So to not live with a difficult callback setup we are using the Step library with its&amp;rsquo; group functionality to ensure that we are notified when all of the writes are done. After all the writes are done Step will invoke the next function (or step) called &lt;strong&gt;doneWithWrite&lt;/strong&gt; where we finish up by closing the file that flushes out any remaining data to Mongo DB and updates the file document.&lt;/p&gt;
+
+&lt;p&gt;As we are doing it in chunks of 5000 bytes we will notice that memory consumption is low. This is the trick to write large files to GridFS. In pieces. Also notice this line.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gridStore.chunkSize = 1024 * 256;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This allows you to adjust how big the chunks are in bytes that Mongo DB will write. You can tune the Chunk Size to your needs. If you need to write large files to GridFS it might be worthwhile to trade of memory for CPU by setting a larger Chunk Size.&lt;/p&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s see how the actual streaming read works.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;new GridStore(db, fileId, &amp;quot;r&amp;quot;).open(function(err, gridStore) {
+  var stream = gridStore.stream(true);
+
+  stream.on(&amp;quot;data&amp;quot;, function(chunk) {
+    console.log(&amp;quot;Chunk of file data&amp;quot;);
+  });
+
+  stream.on(&amp;quot;end&amp;quot;, function() {
+    console.log(&amp;quot;EOF of file&amp;quot;);
+  });
+
+  stream.on(&amp;quot;close&amp;quot;, function() {
+    console.log(&amp;quot;Finished reading the file&amp;quot;);
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Right let&amp;rsquo;s have a quick lock at the streaming functionality supplied with the driver &lt;strong&gt;(make sure you are using 0.9.6-12 or higher as there is a bug fix for custom chunksizes that you need)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var stream = gridStore.stream(true);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This opens a stream to our file, you can pass in a boolean parameter to tell the driver to close the file automatically when it reaches the end. This will fire the &lt;strong&gt;close&lt;/strong&gt; event automatically. Otherwise you&amp;rsquo;ll have to handle cleanup when you receive the &lt;strong&gt;end&lt;/strong&gt; event. Let&amp;rsquo;s have a look at the events supported.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  stream.on(&amp;quot;data&amp;quot;, function(chunk) {
+    console.log(&amp;quot;Chunk of file data&amp;quot;);
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;strong&gt;data&lt;/strong&gt; event is called for each chunk read. This means that it&amp;rsquo;s by the chunk size of the written file. So if you file is 1MB big and the file has chunkSize 256K then you&amp;rsquo;ll get 4 calls to the event handler for &lt;strong&gt;data&lt;/strong&gt;. The chunk returned is a &lt;strong&gt;Buffer&lt;/strong&gt; object.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  stream.on(&amp;quot;end&amp;quot;, function() {
+    console.log(&amp;quot;EOF of file&amp;quot;);
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;strong&gt;end&lt;/strong&gt; event is called when the driver reaches the end of data for the file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  stream.on(&amp;quot;close&amp;quot;, function() {
+    console.log(&amp;quot;Finished reading the file&amp;quot;);
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;strong&gt;close&lt;/strong&gt; event is only called if you the &lt;strong&gt;autoclose&lt;/strong&gt; parameter on the &lt;strong&gt;gridStore.stream&lt;/strong&gt; method as shown above. If it&amp;rsquo;s false or not set handle cleanup of the streaming in the &lt;strong&gt;end&lt;/strong&gt; event handler.&lt;/p&gt;
+
+&lt;p&gt;Right that&amp;rsquo;s it for writing to GridFS in an efficient Manner. I&amp;rsquo;ll outline some other useful function on the Gridstore object.&lt;/p&gt;
+
+&lt;h2 id=&#34;other-useful-methods-on-the-gridstore-object:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;Other useful methods on the Gridstore object&lt;/h2&gt;
+
+&lt;p&gt;There are some other methods that are useful&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gridStore.writeFile(filename/filedescriptor, function(err fileInfo) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;writeFile&lt;/strong&gt; takes either a file name or a file descriptor and writes it to GridFS. It does this in chunks to ensure the Eventloop is not tied up.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gridStore.read(length, function(err, data) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;read/readBuffer&lt;/strong&gt; lets you read a #length number of bytes from the current position in the file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gridStore.seek(position, seekLocation, function(err, gridStore) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;seek&lt;/strong&gt; lets you navigate the file to read from different positions inside the chunks. The seekLocation allows you to specify how to seek. It can be one of three values.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;GridStore.IO_SEEK_SET Seek mode where the given length is absolute&lt;/li&gt;
+&lt;li&gt;GridStore.IO_SEEK_CUR Seek mode where the given length is an offset to the current read/write head&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;GridStore.IO_SEEK_END Seek mode where the given length is an offset to the end of the file&lt;/p&gt;
+
+&lt;p&gt;GridStore.list(dbInstance, collectionName, {id:true}, function(err, files) {})&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;list&lt;/strong&gt; lists all the files in the collection in GridFS. If you have a lot of files the current version will not work very well as it&amp;rsquo;s getting all files into memory first. You can have it return either the filenames or the ids for the files using option.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gridStore.unlink(function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;unlink&lt;/strong&gt; deletes the file from Mongo DB, that&amp;rsquo;s to say all the file info and all the chunks.&lt;/p&gt;
+
+&lt;p&gt;This should be plenty to get you on your way building your first GridFS based application. As in the previous article the following links might be useful for you. Good luck and have fun.&lt;/p&gt;
+
+&lt;h2 id=&#34;links-and-stuff:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;Links and stuff&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/tree/master/examples&#34;&gt;The driver examples, good starting point for basic usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/tree/master/test&#34;&gt;All the integration tests, they have tons of different usage cases&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Mongo Driver and Mongo DB 2.6 Features</title>
+      <link>http://localhost:1313/post/an_introduction_to_1_4_and_2_6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/an_introduction_to_1_4_and_2_6/</guid>
+      <description>
+
+&lt;h1 id=&#34;mongo-driver-and-mongo-db-2-6-features:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Mongo Driver and Mongo DB 2.6 Features&lt;/h1&gt;
+
+&lt;p&gt;MongoDB 2.6 introduces some new powerful features that are reflected in the 1.4 driver release. These include.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Aggregation cursors&lt;/li&gt;
+&lt;li&gt;Per query timeouts &lt;strong&gt;maxTimeMS&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Ordered and Unordered bulk operations&lt;/li&gt;
+&lt;li&gt;A parallelCollectionScan command for fast reading of an entire collection&lt;/li&gt;
+&lt;li&gt;Integrated text search in the query language&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Moreover the driver includes a whole slew of minor and major bug fixes and features. Some of the more noteworthy features include.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Better support for domains in node.js&lt;/li&gt;
+&lt;li&gt;Reconnect events for replicaset and mongos connections&lt;/li&gt;
+&lt;li&gt;Replicaset emits &amp;ldquo;joined&amp;rdquo; and &amp;ldquo;left&amp;rdquo; events when new server join or leave the set&lt;/li&gt;
+&lt;li&gt;Added &lt;strong&gt;bufferMaxEntries&lt;/strong&gt; entry to allow tuning on how long driver keeps waiting for servers to come back up (default is until memory exhaustion)&lt;/li&gt;
+&lt;li&gt;Upgraded BSON parser to rely on 0.2.6 returning to using &lt;strong&gt;nan&lt;/strong&gt; package&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at the main things in 2.6 features one by one.&lt;/p&gt;
+
+&lt;h2 id=&#34;aggregation-cursors:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Aggregation cursors&lt;/h2&gt;
+
+&lt;p&gt;The addition off aggregation cursors to MongoDB 2.6 now means that applications can disregard the previous max result limit of 16MB. Let&amp;rsquo;s look at a simple use of the aggregation cursor.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get an aggregation cursor
+  var cursor = db.collection(&#39;data&#39;).aggregate([
+      {$match: {}}
+    ], {
+        allowDiskUsage: true
+      , cursor: {batchSize: 1000}   
+    });
+
+  // Use cursor as stream
+  cursor.on(&#39;data&#39;, function(data) {
+    console.dir(data);
+  });
+
+  cursor.on(&#39;end&#39;, function() {
+    db.close();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As one can see the cursor implements the &lt;strong&gt;Readable&lt;/strong&gt; stream interface for 0.10.X or higher. For 2.4 the driver will emulate the cursor behavior by wrapping the result document.&lt;/p&gt;
+
+&lt;h2 id=&#34;maxtimems:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;maxTimeMS&lt;/h2&gt;
+
+&lt;p&gt;One feature that has requested often is the ability to timeout individual queries. In MongoDB 2.6 it&amp;rsquo;s finally arrived and is known as the &lt;strong&gt;maxTimeMS&lt;/strong&gt; option. Let&amp;rsquo;s take a look at a simple usage of the property with a query.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get an aggregation cursor
+  var cursor = db.collection(&#39;data&#39;)
+    .find(&amp;quot;$where&amp;quot;: &amp;quot;sleep(1000) || true&amp;quot;)
+    .maxTimeMS(50);
+
+  // Get alll the items
+  cursor.toArray(function(err, items) {
+    console.dir(err);
+    console.dir(items);
+    db.close();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is a bit of a contrived example using sleep to force the query to wait a second. With the &lt;strong&gt;maxTimeMS&lt;/strong&gt; set to 50 milliseconds the query will be aborted before the full second is up.&lt;/p&gt;
+
+&lt;h2 id=&#34;ordered-unordered-bulk-operations:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Ordered/Unordered bulk operations&lt;/h2&gt;
+
+&lt;p&gt;Under the covers MongoDB is moving away from the combination of a write operation + get last error (GLE) and towards a write commands api. These new commands allow for the execution of bulk insert/update/remove operations. The bulk api&amp;rsquo;s are abstractions on top of this that server to make it easy to build bulk operations. Bulk operations come in two main flavors.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Ordered bulk operations. These operations execute all the operation in order and error out on the first write error.&lt;/li&gt;
+&lt;li&gt;Unordered bulk operations. These operations execute all the operations in parallel and aggregates up all the errors. Unordered bulk operations do not guarantee order of execution.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at two simple examples using ordered and unordered operations.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get the collection
+  var col = db.collection(&#39;batch_write_ordered_ops&#39;);
+  // Initialize the Ordered Batch
+  var batch = col.initializeOrderedBulkOp();
+
+  // Add some operations to be executed in order
+  batch.insert({a:1});
+  batch.find({a:1}).updateOne({$set: {b:1}});
+  batch.find({a:2}).upsert().updateOne({$set: {b:2}});
+  batch.insert({a:3});
+  batch.find({a:3}).remove({a:3});
+
+  // Execute the operations
+  batch.execute(function(err, result) {
+    console.dir(err);
+    console.dir(result);    
+    db.close();
+  });
+});
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get the collection
+  var col = db.collection(&#39;batch_write_ordered_ops&#39;);
+  // Initialize the Ordered Batch
+  var batch = col.initializeUnorderedBulkOp();
+
+  // Add some operations to be executed in order
+  batch.insert({a:1});
+  batch.find({a:1}).updateOne({$set: {b:1}});
+  batch.find({a:2}).upsert().updateOne({$set: {b:2}});
+  batch.insert({a:3});
+  batch.find({a:3}).remove({a:3});
+
+  // Execute the operations
+  batch.execute(function(err, result) {
+    console.dir(err);
+    console.dir(result);    
+    db.close();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For older servers than 2.6 the API will downconvert the operations. However it&amp;rsquo;s not possible to downconvert 100% so there might be slight edge cases where it cannot correctly report the right numbers.&lt;/p&gt;
+
+&lt;h2 id=&#34;parallelcollectionscan:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;parallelCollectionScan&lt;/h2&gt;
+
+&lt;p&gt;The &lt;strong&gt;parallelCollectionScan&lt;/strong&gt; command is a special command targeted at reading out an entire collection using &lt;strong&gt;numCursors&lt;/strong&gt; parallel cursors.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get an aggregation cursor
+  db.collection(&#39;data&#39;).parallelCollectionScan({numCursors:3}, function(err, cursors) {
+    var results = [];
+
+    for(var i = 0; i &amp;lt; cursors.length; i++) {
+      cursors[i].get(function(err, items) {
+        test.equal(err, null);
+
+        // Add docs to results array
+        results = results.concat(items);
+        numCursors = numCursors - 1;
+
+        // No more cursors let&#39;s ensure we got all results
+        if(numCursors == 0) {
+          test.equal(docs.length, results.length);
+
+          db.close();
+          test.done();
+        }
+      });
+    }
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This optimizes the IO throughput from a collection.&lt;/p&gt;
+
+&lt;h2 id=&#34;integrated-text-search-in-the-query-language:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Integrated text search in the query language&lt;/h2&gt;
+
+&lt;p&gt;Text indexes are now integrated into the main query language and enabled by default. A simple example.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get the collection
+  var collection = db.collection(&#39;textSearchWithSort&#39;);
+  collection.ensureIndex({s: &#39;text&#39;}, function(err, result) {
+    test.equal(null, err);
+
+    collection.insert([
+        {s: &#39;spam&#39;}
+      , {s: &#39;spam eggs and spam&#39;}
+      , {s: &#39;sausage and eggs&#39;}], function(err, result) {
+        test.equal(null, err);
+
+        collection.find(
+            {$text: {$search: &#39;spam&#39;}}
+          , {fields: {_id: false, s: true, score: {$meta: &#39;textScore&#39;}}}
+        ).sort({score: {$meta: &#39;textScore&#39;}}).toArray(function(err, items) {
+          test.equal(null, err);
+          test.equal(&amp;quot;spam eggs and spam&amp;quot;, items[0].s);
+          db.close();
+          test.done();
+        });
+      });
+  });      
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;emitting-reconnect-and-joined-left-events:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Emitting Reconnect and Joined/Left events&lt;/h2&gt;
+
+&lt;p&gt;The Replicaset and Mongos now emits events for servers joining and leaving the replicaset. This let&amp;rsquo;s applications more easily monitor the changes in the driver over time. &lt;strong&gt;Reconnect&lt;/strong&gt; in the context of a Replicaset or Mongos means that the driver is starting to replay buffered operations.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017,localhost:27027/test&amp;quot;, function(err, db) {
+  db.serverConfig.on(&#39;joined&#39;, function(err, server) {
+    console.log(&amp;quot;server joined&amp;quot;);
+    console.dir(server);
+  });
+
+  db.serverConfig.on(&#39;left&#39;, function(err, server) {
+    console.log(&amp;quot;server left&amp;quot;);
+    console.dir(server);
+  });
+
+  db.serverConfig.on(&#39;reconnect&#39;, function() {
+    console.log(&amp;quot;server reconnected&amp;quot;);
+  }); 
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;buffermaxentries:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;bufferMaxEntries&lt;/h2&gt;
+
+&lt;p&gt;Buffered Max Entries allow for more fine grained control on how many operations that will be buffered before the driver errors out and stops attempting to reconnect.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, {
+    db: {bufferMaxEntries:0},
+  }, function(err, db) {
+    db.close();
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This example disables the command buffering completely and errors out the moment there is no connection available. The default value (for backward compatibility) is to buffer until memory runs out. Be aware that by setting a very low value you can cause some problems in failover scenarios in Replicasets as it might take a little but of time before f.ex a new Primary is elected and steps up to accept writes. Setting &lt;strong&gt;bufferMaxEntries&lt;/strong&gt; to 0 in this case will cause the driver to error out instead of falling over correctly.&lt;/p&gt;
+
+&lt;h2 id=&#34;fsync-and-journal-write-concerns-note:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Fsync and journal Write Concerns note&lt;/h2&gt;
+
+&lt;p&gt;MongoDB from version 2.6 and higher disallows the combination of &lt;strong&gt;journal&lt;/strong&gt; and &lt;strong&gt;fsync&lt;/strong&gt;. Combining them will cause an error while on 2.4 &lt;strong&gt;fsync&lt;/strong&gt; was ignored when provided with &lt;strong&gt;journal&lt;/strong&gt;. The following semantics apply.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;j: If true block until write operations have been committed to the journal. Cannot be used in combination with &lt;code&gt;fsync&lt;/code&gt;. Prior to MongoDB 2.6 this option was ignored if the server was running without journaling. Starting with MongoDB 2.6 write operations will fail with an exception if this option is used when the server is running without journaling.&lt;/li&gt;
+&lt;li&gt;fsync: If true and the server is running without journaling, blocks until the server has synced all data files to disk. If the server is running with journaling, this acts the same as the &lt;code&gt;j&lt;/code&gt; option, blocking until write operations have been committed to the journal. Cannot be used in combination with &lt;code&gt;j&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The New Bulk API</title>
+      <link>http://localhost:1313/post/the_new_bulk_api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/the_new_bulk_api/</guid>
+      <description>
+
+&lt;h1 id=&#34;the-new-bulk-api:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The New Bulk API&lt;/h1&gt;
+
+&lt;p&gt;One of the core new features in MongoDB 2.6 is the new bulk write operations. All the drivers include a new bulk api that allows applications to leverage these new operations using a fluid style API. Let&amp;rsquo;s explore the API and how it&amp;rsquo;s implemented in the Node.js driver.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-api:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The API&lt;/h2&gt;
+
+&lt;p&gt;The API have two core concepts. The &lt;strong&gt;ordered&lt;/strong&gt; and the &lt;strong&gt;unordered&lt;/strong&gt; bulk operation. The main difference is in the way the operations in a bulk are executed. In the case of an &lt;strong&gt;ordered&lt;/strong&gt; bulk operation every operation will be executed in the order they are added to the bulk operation. In the case of an &lt;strong&gt;unordered&lt;/strong&gt; bulk operation however there is no guarantee what order the operations are executed. Later we will look at how they both are implemented.&lt;/p&gt;
+
+&lt;h2 id=&#34;operations:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Operations&lt;/h2&gt;
+
+&lt;p&gt;You can initialize an &lt;strong&gt;ordered&lt;/strong&gt; or &lt;strong&gt;unordered&lt;/strong&gt; bulk operation in the following way.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var ordered = db.collection(&#39;documents&#39;).initializeOrderedBulkOp();
+var unordered = db.collection(&#39;documents&#39;).initializeUnorderedBulkOp();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once you have a bulk operation you can start adding operations to the bulk. The following operations are valid.&lt;/p&gt;
+
+&lt;h3 id=&#34;updateone-update-first-matching-document:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;updateOne (update first matching document)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 1 }).updateOne({$inc : {x : 1}});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;update-update-all-matching-documents:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;update (update all matching documents)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 1 }).update({$inc : {x : 2}});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;replaceone-replace-entire-document:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;replaceOne (replace entire document)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 1 }).replaceOne({ x : 2});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;updateone-or-upsert-update-first-existing-document-or-upsert:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;updateOne or upsert (update first existing document or upsert)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 2 }).upsert().updateOne({ $inc : { x : 1}});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;update-or-upsert-update-all-or-upsert:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;update or upsert (update all or upsert)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 2 }).upsert().update({ $inc : { x : 2}});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;replace-or-upsert-replace-first-document-or-upsert:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;replace or upsert (replace first document or upsert)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 2 }).upsert().replaceOne({ x : 3 });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;removeone-remove-the-first-document-matching:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;removeOne (remove the first document matching)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 2 }).removeOne();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;remove-remove-all-documents-matching:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;remove (remove all documents matching)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 1 }).remove();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;insert:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;insert&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.insert({ a : 5});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So what happens under the covers when you do start adding operations to a bulk operation. Let&amp;rsquo;s take a look at the new write operations.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-new-write-operations:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The New Write Operations&lt;/h2&gt;
+
+&lt;p&gt;MongoDB 2.6 introduces a completely new set of write operations. Before 2.6 all write operations where done using wire protocol messages at the socket level. From 2.6 this changes to using commands. So what does these commands look like.&lt;/p&gt;
+
+&lt;h3 id=&#34;insert-write-command:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Insert Write Command&lt;/h3&gt;
+
+&lt;p&gt;The insert write commands allow an application insert batches of documents. Let&amp;rsquo;s take a look at the command and it&amp;rsquo;s options.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    insert: &#39;collection name&#39;
+  , documents: [{ a : 1}, ...]
+  , writeConcern: {
+    w: 1, j: true, wtimeout: 1000
+  }
+  , ordered: true/false
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A couple of things to note. The &lt;strong&gt;documents&lt;/strong&gt; field contains an array of all the documents that are to be inserted. The &lt;strong&gt;writeConcern&lt;/strong&gt; field specifies what would have previously been a &lt;strong&gt;getLastError&lt;/strong&gt; command that would follow the pre 2.6 write operations. In other words there is always a response from a write operation in 2.6. This means that &lt;strong&gt;w:0&lt;/strong&gt; has different semantics than what one is used to in pre 2.6. In the context &lt;strong&gt;w:0&lt;/strong&gt; basically means only return an &lt;strong&gt;ack&lt;/strong&gt; without any information about the &lt;strong&gt;success&lt;/strong&gt; or &lt;strong&gt;failure&lt;/strong&gt; of insert operations.&lt;/p&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s quickly look at the update and remove write commands before we take a look at the results that are returned when executing these operations against 2.6.&lt;/p&gt;
+
+&lt;h3 id=&#34;update-write-command:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Update Write Command&lt;/h3&gt;
+
+&lt;p&gt;There are some slight differences in the update write command in comparison to the insert write command. Let&amp;rsquo;s take a look.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    update: &#39;collection name&#39;
+  , updates: [{ 
+        q: { a : 1 }
+      , u: { $inc : { x : 1}}
+      , multi: true/false
+      , upsert: true/false
+    }, ...]
+  , writeConcern: {
+    w: 1, j: true, wtimeout: 1000
+  }
+  , ordered: true/false
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We notice that the main difference here is that the updates array is an array of update operations where each entry in the array contains the &lt;strong&gt;q&lt;/strong&gt; field that specifies the selector for the update. The &lt;strong&gt;u&lt;/strong&gt; contains the update operation. &lt;strong&gt;multi&lt;/strong&gt; specifies if we will updateOne or updateAll documents that matches the selection. Finally &lt;strong&gt;upsert&lt;/strong&gt; tells the server if it will perform an upsert if the document is not found. Finally let&amp;rsquo;s look at the remove write command.&lt;/p&gt;
+
+&lt;h3 id=&#34;remove-write-command:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Remove Write Command&lt;/h3&gt;
+
+&lt;p&gt;The remove write command is very similar to the update write command. Let&amp;rsquo;s take a look at it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    delete: &#39;collection name&#39;
+  , deletes: [{ 
+        q: { a : 1 }
+      , limit: 0/1
+    }, ...]
+  , writeConcern: {
+    w: 1, j: true, wtimeout: 1000
+  }
+  , ordered: true/false
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Just an for updates we can see that the entries in the &lt;strong&gt;deletes&lt;/strong&gt; array contain documents with specific fields. The &lt;strong&gt;q&lt;/strong&gt; field is the selector that will match which documents will be removed. The &lt;strong&gt;limit&lt;/strong&gt; field sets the number of elements to be remove. Currently &lt;strong&gt;limit&lt;/strong&gt; only supports two values, 0 and 1. The value 0 for &lt;strong&gt;limit&lt;/strong&gt; removes all documents that match the selector. A value of 1 for &lt;strong&gt;limit&lt;/strong&gt; removes the first matching document only.&lt;/p&gt;
+
+&lt;p&gt;So how does the response look when executing the commands against the server.&lt;/p&gt;
+
+&lt;h3 id=&#34;write-command-results:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Write Command Results&lt;/h3&gt;
+
+&lt;p&gt;One of the best new aspects of the new write commands is that they can return information about each individual operation error in the batch. To avoid not having to transmit more information than necessary only information about errors are returned as well as the aggregated counts of successful operations. Let&amp;rsquo;s look at what a &lt;strong&gt;comprehensive&lt;/strong&gt;* result could look like.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;ok&amp;quot; : 1,
+  &amp;quot;n&amp;quot; : 0,
+  &amp;quot;nModified&amp;quot;: 1, (Applies only to update)
+  &amp;quot;nRemoved&amp;quot;: 1, (Applies only to removes)
+  &amp;quot;writeErrors&amp;quot; : [
+    {
+      &amp;quot;index&amp;quot; : 0,
+      &amp;quot;code&amp;quot; : 11000,
+      &amp;quot;errmsg&amp;quot; : &amp;quot;insertDocument :: caused by :: 11000 E11000 duplicate key error index: t1.t.$a_1  dup key: { : 1.0 }&amp;quot;
+    }
+  ],
+  writeConcernError: {
+    code : 22,
+    errInfo: { wtimeout : true },
+    errmsg: &amp;quot;Could not replicate operation within requested timeout&amp;quot;
+  }      
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The two most interesting fields here are &lt;strong&gt;writeErrors&lt;/strong&gt; and &lt;strong&gt;writeConcernError&lt;/strong&gt;. If we take a look at &lt;strong&gt;writeErrors&lt;/strong&gt; we can see how it&amp;rsquo;s an array of objects that include an &lt;strong&gt;index&lt;/strong&gt; field as well as a &lt;strong&gt;code&lt;/strong&gt; and &lt;strong&gt;errmsg&lt;/strong&gt;. The &lt;strong&gt;field&lt;/strong&gt; references the position of the failing document in the original &lt;strong&gt;documents&lt;/strong&gt;, &lt;strong&gt;updates&lt;/strong&gt; or &lt;strong&gt;deletes&lt;/strong&gt; array allowing the application to identify the original batch document that failed.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-effect-of-ordered-true-false:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The Effect of Ordered (true/false)&lt;/h3&gt;
+
+&lt;p&gt;The effect of setting &lt;strong&gt;ordered&lt;/strong&gt; to true or false have a direct implication on how a write command is processed. Most importantly if &lt;strong&gt;ordered&lt;/strong&gt; is set to &lt;strong&gt;true&lt;/strong&gt; the write operation will fail on the first write error (meaning the first error that fails to apply the operation to memory). If one sets &lt;strong&gt;ordered&lt;/strong&gt; to false however the operation will continue until all operations have been executed (potentially in parallel) and finally return all the results. &lt;strong&gt;writeConcernError&lt;/strong&gt; on the other hand does not stop the processing of a bulk operation as the document did not fail to be written to MongoDB, the writeConcern could not be applied.&lt;/p&gt;
+
+&lt;p&gt;It helps to think of &lt;strong&gt;writeErrors&lt;/strong&gt; as &lt;strong&gt;hard&lt;/strong&gt; errors and &lt;strong&gt;writeConcernError&lt;/strong&gt; as a soft error.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-special-case-of-w-0:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The Special Case of w:0&lt;/h3&gt;
+
+&lt;p&gt;The semantics for &lt;strong&gt;w:0&lt;/strong&gt; changed for the write commands over the old style pre 2.6 write operations that are a combination of a write wire message and a &lt;strong&gt;getLastError&lt;/strong&gt; command afterwards. In the old style &lt;strong&gt;w:0&lt;/strong&gt; just meant that the driver would not send a &lt;strong&gt;getLastError&lt;/strong&gt; command after the write operation. However all write commands respond and thus the old semantics for &lt;strong&gt;w:0&lt;/strong&gt; are not possible to retain. The compromise is to make &lt;strong&gt;w:0&lt;/strong&gt; mean I don&amp;rsquo;t care about the results of the command just send me an &lt;strong&gt;Ack&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;So if you execute.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    insert: &#39;collection name&#39;
+  , documents: [{ a : 1}, ...]
+  , writeConcern: {
+    w: 0
+  }
+  , ordered: true/false
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All you receive from the server is the result&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{ok : 1}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;the-implication-for-the-bulk-api:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The Implication For The Bulk API&lt;/h2&gt;
+
+&lt;p&gt;There are some implications to the fact that write commands are not mixed operations but either insert/update or removes. The Bulk API lets you mix operations and then merges the results back into a single result that simulates a mixed operations command in MongoDB. What does that mean in practice. Well let&amp;rsquo;s look at how node.js implements &lt;strong&gt;ordered&lt;/strong&gt; and &lt;strong&gt;unordered&lt;/strong&gt; bulk operations. Let&amp;rsquo;s use examples to show what happens.&lt;/p&gt;
+
+&lt;h3 id=&#34;ordered-operations:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Ordered Operations&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s take the following set off operations performed on a bulk&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var ordered = db.collection(&#39;documents&#39;).initializeOrderedBulkOp();
+ordered.insert({ a : 1 });
+ordered.find({ a : 1 }).update({ $inc: { x : 1 }});
+ordered.insert({ a: 2 });
+ordered.find({ a : 2 }).remove();
+ordered.insert({ a: 3 });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When running in ordered mode the bulk API guarantees the ordering of the operations and thus will execute this as 5 operations one after the other.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;insert bulk operation
+update bulk operation
+insert bulk operation
+remove bulk operation
+insert bulk operation
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We have now reduced the bulk API to performing single operations and your throughput suffers accordingly.&lt;/p&gt;
+
+&lt;p&gt;If we re-order our bulk operations in the following way.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var ordered = db.collection(&#39;documents&#39;).initializeOrderedBulkOp();
+ordered.insert({ a : 1 });
+ordered.insert({ a: 2 });
+ordered.insert({ a: 3 });
+ordered.find({ a : 1 }).update({ $inc: { x : 1 }});
+ordered.find({ a : 2 }).remove();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The execution is reduced to the following operations one after the other.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;insert bulk operation
+update bulk operation
+remove bulk operation
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Thus for ordered bulk operations the ordered of operations will impact the number of write commands that need to be executed and thus the throughput possible.&lt;/p&gt;
+
+&lt;h3 id=&#34;unordered-operations:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Unordered Operations&lt;/h3&gt;
+
+&lt;p&gt;Unordered operations have not guarantee about the execution order of operations. Let&amp;rsquo;s take the operations example from above.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var ordered = db.collection(&#39;documents&#39;).initializeOrderedBulkOp();
+ordered.insert({ a : 1 });
+ordered.find({ a : 1 }).update({ $inc: { x : 1 }});
+ordered.insert({ a: 2 });
+ordered.find({ a : 2 }).remove();
+ordered.insert({ a: 3 });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Node.js driver will collect the operations into separate type specific operations. So we get.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;insert bulk operation
+update bulk operation
+remove bulk operation
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In difference to the &lt;strong&gt;ordered&lt;/strong&gt; operation these bulks all get executed in parallel in Node.js and the results then merged when they have all finished.&lt;/p&gt;
+
+&lt;h2 id=&#34;takeaway:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Takeaway&lt;/h2&gt;
+
+&lt;p&gt;Due to MongoDb not currently implementing a mixed write operations command it&amp;rsquo;s important to keep this in mind when performing &lt;strong&gt;ordered&lt;/strong&gt; bulk operations to avoid the scenario above and take a hit on the write throughput. In the case of &lt;strong&gt;unordered&lt;/strong&gt; operations the missing mixed operations command does not impact the throughput.&lt;/p&gt;
+
+&lt;p&gt;One thing to note. Although the Bulk API actually supports downconversion to 2.4 the performance impact is considerable as all operations are reduced to single write operations with a &lt;strong&gt;getLastError&lt;/strong&gt;. It&amp;rsquo;s recommended to leverage this API primarily with 2.6 or higher.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

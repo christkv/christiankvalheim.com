@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Personal on Christian Kvalheim </title>
+    <link>http://localhost:1313/topics/personal/</link>
+    <language>en-us</language>
+    <author>Christian Kvalheim</author>
+    <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
+    <updated>Mon, 01 Jan 0001 00:00:00 UTC</updated>
+    
+    <item>
+      <title>A Basic introduction to Mongo DB</title>
+      <link>http://localhost:1313/post/a_basic_introduction_to_mongodb/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/a_basic_introduction_to_mongodb/</guid>
+      <description>
+
+&lt;h1 id=&#34;a-basic-introduction-to-mongo-db:1a71523213b4a585995d1ccbcc405a86&#34;&gt;A Basic introduction to Mongo DB&lt;/h1&gt;
+
+&lt;p&gt;Mongo DB has rapidly grown to become a popular database for web applications and is a perfect fit for Node.JS applications, letting you write Javascript for the client, backend and database layer. Its schemaless nature is a better match to our constantly evolving data structures in web applications, and the integrated support for location queries is a bonus that&amp;rsquo;s hard to ignore. Throw in Replica Sets for scaling, and we&amp;rsquo;re looking at really nice platform to grow your storage needs now and in the future.&lt;/p&gt;
+
+&lt;p&gt;Now to shamelessly plug my driver. It can be downloaded via npm, or fetched from the github repository. To install via npm, do the following:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;npm install mongodb&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;or go fetch it from github at &lt;a href=&#34;https://github.com/christkv/node-mongodb-native&#34;&gt;https://github.com/christkv/node-mongodb-native&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Once this business is taken care of, let&amp;rsquo;s move through the types available for the driver and then how to connect to your Mongo DB instance before facing the usage of some CRUD operations.&lt;/p&gt;
+
+&lt;h2 id=&#34;mongo-db-data-types:1a71523213b4a585995d1ccbcc405a86&#34;&gt;Mongo DB data types&lt;/h2&gt;
+
+&lt;p&gt;So there is an important thing to keep in mind when working with Mongo DB, and that is the slight mapping difference between types Mongo DB supports and native Javascript data types. Let&amp;rsquo;s have a look at the types supported out of the box and then how types are promoted by the driver to fit as close to native Javascript types as possible.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Float&lt;/strong&gt; is a 8 byte and is directly convertible to the Javascript type Number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Double class&lt;/strong&gt; a special class representing a float value, this is especially useful when using capped collections where you need to ensure your values are always floats.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integers&lt;/strong&gt; is a bit trickier due to the fact that Javascript represents all Numbers as 64 bit floats meaning that the maximum integer value is at a 53 bit. Mongo has two types for integers, a 32 bit and a 64 bit. The driver will try to fit the value into 32 bits if it can and promote it to 64 bits if it has to. Similarly it will deserialize attempting to fit it into 53 bits if it can. If it cannot it will return an instance of &lt;strong&gt;Long&lt;/strong&gt; to avoid loosing precession.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Long class&lt;/strong&gt; a special class that let&amp;rsquo;s you store 64 bit integers and also let&amp;rsquo;s you operate on the 64 bits integers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Date&lt;/strong&gt; maps directly to a Javascript Date&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RegExp&lt;/strong&gt; maps directly to a Javascript RegExp&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;String&lt;/strong&gt; maps directly to a Javascript String (encoded in utf8)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Binary class&lt;/strong&gt; a special class that let&amp;rsquo;s you store data in Mongo DB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Code class&lt;/strong&gt; a special class that let&amp;rsquo;s you store javascript functions in Mongo DB, can also provide a scope to run the method in&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ObjectID class&lt;/strong&gt; a special class that holds a MongoDB document identifier (the equivalent to a Primary key)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DbRef class&lt;/strong&gt; a special class that let&amp;rsquo;s you include a reference in a document pointing to another object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Symbol class&lt;/strong&gt; a special class that let&amp;rsquo;s you specify a symbol, not really relevant for javascript but for languages that supports the concept of symbols.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As we see the number type can be a little tricky due to the way integers are implemented in Javascript. The latest driver will do correct conversion up to 53 bit&amp;rsquo;s of complexity. If you need to handle big integers the recommendation is to use the Long class to operate on the numbers.&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-that-connection-to-the-database:1a71523213b4a585995d1ccbcc405a86&#34;&gt;Getting that connection to the database&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s get around to setting up a connection with the Mongo DB database. Jumping straight into the code let&amp;rsquo;s do direct connection and then look at the code.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(!err) {
+    console.log(&amp;quot;We are connected&amp;quot;);
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s have a quick look at how the connection code works. The &lt;strong&gt;Db.connect&lt;/strong&gt;
+method let&amp;rsquo;s use use a uri to connect to the Mongo database, where
+&lt;strong&gt;localhost:27017&lt;/strong&gt; is the server host and port and &lt;strong&gt;exampleDb&lt;/strong&gt; the db
+we wish to connect to. After the url notice the hash containing the
+&lt;strong&gt;auto_reconnect&lt;/strong&gt; key. Auto reconnect tells the driver to retry sending
+a command to the server if there is a failure during it&amp;rsquo;s execution.&lt;/p&gt;
+
+&lt;p&gt;Another useful option you can pass in is&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;poolSize&lt;/strong&gt;, this allows you to control how many tcp connections are
+opened in parallel. The default value for this is 5 but you can set it
+as high as you want. The driver will use a round-robin strategy to
+dispatch and read from the tcp connection.&lt;/p&gt;
+
+&lt;p&gt;We are up and running with a connection to the database. Let&amp;rsquo;s move on
+and look at what collections are and how they work.&lt;/p&gt;
+
+&lt;h2 id=&#34;mongo-db-and-collections:1a71523213b4a585995d1ccbcc405a86&#34;&gt;Mongo DB and Collections&lt;/h2&gt;
+
+&lt;p&gt;Collections are the equivalent of tables in traditional databases and contain all your documents. A database can have many collections. So how do we go about defining and using collections. Well there are a couple of methods that we can use. Let&amp;rsquo;s jump straight into code and then look at the code.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  db.collection(&#39;test&#39;, function(err, collection) {});
+
+  db.collection(&#39;test&#39;, {w:1}, function(err, collection) {});
+
+  db.createCollection(&#39;test&#39;, function(err, collection) {});
+
+  db.createCollection(&#39;test&#39;, {w:1}, function(err, collection) {});
+
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Three different ways of creating a collection object but slightly different in behavior. Let&amp;rsquo;s go through them and see what they do&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;db.collection(&#39;test&#39;, function(err, collection) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This function will not actually create a collection on the database until you actually insert the first document.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;db.collection(&#39;test&#39;, {strict:true}, function(err, collection) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice the &lt;strong&gt;{strict:true}&lt;/strong&gt; option. This option will make the driver check if the collection exists and issue an error if it does not.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;db.createCollection(&#39;test&#39;, function(err, collection) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This command will create the collection on the Mongo DB database before returning the collection object. If the collection already exists it will ignore the creation of the collection.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;db.createCollection(&#39;test&#39;, {strict:true}, function(err, collection) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;strong&gt;{strict:true}&lt;/strong&gt; option will make the method return an error if the collection already exists.&lt;/p&gt;
+
+&lt;p&gt;With an open db connection and a collection defined we are ready to do some CRUD operation on the data.&lt;/p&gt;
+
+&lt;h2 id=&#34;and-then-there-was-crud:1a71523213b4a585995d1ccbcc405a86&#34;&gt;And then there was CRUD&lt;/h2&gt;
+
+&lt;p&gt;So let&amp;rsquo;s get dirty with the basic operations for Mongo DB. The Mongo DB wire protocol is built around 4 main operations &lt;strong&gt;insert/update/remove/query&lt;/strong&gt;. Most operations on the database are actually queries with special json objects defining the operation on the database. But I&amp;rsquo;m getting ahead of myself. Let&amp;rsquo;s go back and look at insert first and do it with some code.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection(&#39;test&#39;);
+  var doc1 = {&#39;hello&#39;:&#39;doc1&#39;};
+  var doc2 = {&#39;hello&#39;:&#39;doc2&#39;};
+  var lotsOfDocs = [{&#39;hello&#39;:&#39;doc3&#39;}, {&#39;hello&#39;:&#39;doc4&#39;}];
+
+  collection.insert(doc1);
+
+  collection.insert(doc2, {w:1}, function(err, result) {});
+
+  collection.insert(lotsOfDocs, {w:1}, function(err, result) {});
+
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A couple of variations on the theme of inserting a document as we can see. To understand why it&amp;rsquo;s important to understand how Mongo DB works during inserts of documents.&lt;/p&gt;
+
+&lt;p&gt;Mongo DB has asynchronous &lt;strong&gt;insert/update/remove&lt;/strong&gt; operations. This means that when you issue an &lt;strong&gt;insert&lt;/strong&gt; operation its a fire and forget operation where the database does not reply with the status of the insert operation. To retrieve the status of the operation you have to issue a query to retrieve the last error status of the connection. To make it simpler to the developer the driver implements the &lt;strong&gt;{w:1}&lt;/strong&gt; options so that this is done automatically when inserting the document. &lt;strong&gt;{w:1}&lt;/strong&gt; becomes especially important when you do &lt;strong&gt;update&lt;/strong&gt; or &lt;strong&gt;remove&lt;/strong&gt; as otherwise it&amp;rsquo;s not possible to determine the amount of documents modified or removed.&lt;/p&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s go through the different types of inserts shown in the code above.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.insert(doc1);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Taking advantage of the async behavior and not needing confirmation about the persisting of the data to Mongo DB we just fire off the insert (we are doing live analytics, loosing a couple of records does not matter).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.insert(doc2, {w:1}, function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That document needs to stick. Using the &lt;strong&gt;{w:1}&lt;/strong&gt; option ensure you get the error back if the document fails to insert correctly.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.insert(lotsOfDocs, {w:1}, function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A batch insert of document with any errors being reported. This is much more efficient if you need to insert large batches of documents as you incur a lot less overhead.&lt;/p&gt;
+
+&lt;p&gt;Right that&amp;rsquo;s the basics of insert&amp;rsquo;s ironed out. We got some documents in there but want to update them as we need to change the content of a field. Let&amp;rsquo;s have a look at a simple example and then we will dive into how Mongo DB updates work and how to do them efficiently.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection(&#39;test&#39;);
+  var doc = {mykey:1, fieldtoupdate:1};
+
+  collection.insert(doc, {w:1}, function(err, result) {
+    collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {w:1}, function(err, result) {});
+  });
+
+  var doc2 = {mykey:2, docs:[{doc1:1}]};
+
+  collection.insert(doc2, {w:1}, function(err, result) {
+    collection.update({mykey:2}, {$push:{docs:{doc2:1}}}, {w:1}, function(err, result) {});
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Alright before we look at the code we want to understand how document updates work and how to do the efficiently. The most basic and less efficient way is to replace the whole document, this is not really the way to go if you want to change just a field in your document. Luckily Mongo DB provides a whole set of operations that let you modify just pieces of the document &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Atomic+Operations&#34;&gt;Atomic operations documentation&lt;/a&gt;. Basically outlined below.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;$inc - increment a particular value by a certain amount&lt;/li&gt;
+&lt;li&gt;$set - set a particular value&lt;/li&gt;
+&lt;li&gt;$unset - delete a particular field (v1.3+)&lt;/li&gt;
+&lt;li&gt;$push - append a value to an array&lt;/li&gt;
+&lt;li&gt;$pushAll - append several values to an array&lt;/li&gt;
+&lt;li&gt;$addToSet - adds value to the array only if its not in the array already&lt;/li&gt;
+&lt;li&gt;$pop - removes the last element in an array&lt;/li&gt;
+&lt;li&gt;$pull - remove a value(s) from an existing array&lt;/li&gt;
+&lt;li&gt;$pullAll - remove several value(s) from an existing array&lt;/li&gt;
+&lt;li&gt;$rename - renames the field&lt;/li&gt;
+&lt;li&gt;$bit - bitwise operations&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now that the operations are outline let&amp;rsquo;s dig into the specific cases show in the code example.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {w:1}, function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Right so this update will look for the document that has a field &lt;strong&gt;mykey&lt;/strong&gt; equal to &lt;strong&gt;1&lt;/strong&gt; and apply an update to the field &lt;strong&gt;fieldtoupdate&lt;/strong&gt; setting the value to &lt;strong&gt;2&lt;/strong&gt;. Since we are using the &lt;strong&gt;{w:1}&lt;/strong&gt; option the result parameter in the callback will return the value &lt;strong&gt;1&lt;/strong&gt; indicating that 1 document was modified by the update statement.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.update({mykey:2}, {$push:{docs:{doc2:1}}}, {w:1}, function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This updates adds another document to the field &lt;strong&gt;docs&lt;/strong&gt; in the document identified by &lt;strong&gt;{mykey:2}&lt;/strong&gt; using the atomic operation &lt;strong&gt;$push&lt;/strong&gt;. This allows you to modify keep such structures as queues in Mongo DB.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s have a look at the remove operation for the driver. As before let&amp;rsquo;s start with a piece of code.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection(&#39;test&#39;);
+  var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
+
+  collection.insert(docs, {w:1}, function(err, result) {
+
+    collection.remove({mykey:1});
+
+    collection.remove({mykey:2}, {w:1}, function(err, result) {});
+
+    collection.remove();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s examine the 3 remove variants and what they do.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.remove({mykey:1});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This leverages the fact that Mongo DB is asynchronous and that it does not return a result for &lt;strong&gt;insert/update/remove&lt;/strong&gt; to allow for &lt;strong&gt;synchronous&lt;/strong&gt; style execution. This particular remove query will remove the document where &lt;strong&gt;mykey&lt;/strong&gt; equals &lt;strong&gt;1&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.remove({mykey:2}, {w:1}, function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This remove statement removes the document where &lt;strong&gt;mykey&lt;/strong&gt; equals &lt;strong&gt;2&lt;/strong&gt; but since we are using &lt;strong&gt;{w:1}&lt;/strong&gt; it will back to Mongo DB to get the status of the remove operation and return the number of documents removed in the result variable.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.remove();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This last one will remove all documents in the collection.&lt;/p&gt;
+
+&lt;h2 id=&#34;time-to-query:1a71523213b4a585995d1ccbcc405a86&#34;&gt;Time to Query&lt;/h2&gt;
+
+&lt;p&gt;Queries is of course a fundamental part of interacting with a database and Mongo DB is no exception. Fortunately for us it has a rich query interface with cursors and close to SQL concepts for slicing and dicing your datasets. To build queries we have lots of operators to choose from &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Advanced+Queries&#34;&gt;Mongo DB advanced queries&lt;/a&gt;. There are literarily tons of ways to search and ways to limit the query. Let&amp;rsquo;s look at some simple code for dealing with queries in different ways.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection(&#39;test&#39;);
+  var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
+
+  collection.insert(docs, {w:1}, function(err, result) {
+
+    collection.find().toArray(function(err, items) {});
+
+    var stream = collection.find({mykey:{$ne:2}}).stream();
+    stream.on(&amp;quot;data&amp;quot;, function(item) {});
+    stream.on(&amp;quot;end&amp;quot;, function() {});
+
+    collection.findOne({mykey:1}, function(err, item) {});
+
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before we start picking apart the code there is one thing that needs to be understood, the &lt;strong&gt;find&lt;/strong&gt; method does not execute the actual query. It builds an instance of &lt;strong&gt;Cursor&lt;/strong&gt; that you then use to retrieve the data. This lets you manage how you retrieve the data from Mongo DB and keeps state about your current Cursor state on Mongo DB. Now let&amp;rsquo;s pick apart the queries we have here and look at what they do.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.find().toArray(function(err, items) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This query will fetch all the document in the collection and return them as an array of items. Be careful with the function &lt;strong&gt;toArray&lt;/strong&gt; as it might cause a lot of memory usage as it will instantiate all the document into memory before returning the final array of items. If you have a big resultset you could run into memory issues.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var stream = collection.find({mykey:{$ne:2}}).stream();
+stream.on(&amp;quot;data&amp;quot;, function(item) {});
+stream.on(&amp;quot;end&amp;quot;, function() {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is the preferred way if you have to retrieve a lot of data for streaming, as data is deserialized a &lt;strong&gt;data&lt;/strong&gt; event is emitted. This keeps the resident memory usage low as the documents are streamed to you. Very useful if you are pushing documents out via websockets or some other streaming socket protocol. Once there is no more document the driver will emit the &lt;strong&gt;end&lt;/strong&gt; event to notify the application that it&amp;rsquo;s done.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.findOne({mykey:1}, function(err, item) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is special supported function to retrieve just one specific document bypassing the need for a cursor object.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s pretty much it for the quick intro on how to use the database. I have also included a list of links to where to go to find more information and also a sample crude location application I wrote using express JS and mongo DB.&lt;/p&gt;
+
+&lt;h2 id=&#34;links-and-stuff:1a71523213b4a585995d1ccbcc405a86&#34;&gt;Links and stuff&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/tree/master/examples&#34;&gt;The driver examples, good starting point for basic usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/tree/master/test&#34;&gt;All the integration tests, they have tons of different usage cases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.mongodb.org/display/DOCS/Advanced+Queries&#34;&gt;The Mongo DB wiki pages such as the advanced query link&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/christkv/mongodb-presentation&#34;&gt;A silly simple location based application using Express JS and Mongo DB&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Diagnosing driver installation problems</title>
+      <link>http://localhost:1313/post/diagnose_installation_problems/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/diagnose_installation_problems/</guid>
+      <description>
+
+&lt;h1 id=&#34;the-mongodb-driver-is-not-installing-correctly:cf9d2f89abcf189c7253a5fe5d47d5d6&#34;&gt;The MongoDB driver is not installing correctly&lt;/h1&gt;
+
+&lt;p&gt;Most of the problems are with the native BSON parser and there can be a multitude of reasons why it&amp;rsquo;s not installing correctly and the driver is falling back to the js implementation of the serializer. This post will hopefully help you track down what the problem is on your system. We will start looking at it from a checklist point of view.&lt;/p&gt;
+
+&lt;h2 id=&#34;build-essentials-linux-unix:cf9d2f89abcf189c7253a5fe5d47d5d6&#34;&gt;Build Essentials Linux/Unix&lt;/h2&gt;
+
+&lt;p&gt;If you don&amp;rsquo;t have the build essentials it won&amp;rsquo;t build. In the case of linux you will need gcc and g++, node.js with all the headers and python. The easiest way to figure out what&amp;rsquo;s missing is by trying to build the js-bson project. You can do this by performing the following steps.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/mongodb/js-bson.git
+cd js-bson
+npm install
+make test
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If all the steps complete you have the right toolchain installed. If you get node-gyp not found you need to install it globally by doing.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install -g node-gyp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If correctly compile and runs the tests you are golden. We can now try to install the mongod driver by performing the following command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd yourproject
+npm install mongod
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If it still fails the next step is to examine the npm log. Rerun the command but in this case in verbose mode.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm --loglevel verbose install mongodb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will print out all the steps npm is performing while trying to install the module.&lt;/p&gt;
+
+&lt;h2 id=&#34;build-essentials-windows:cf9d2f89abcf189c7253a5fe5d47d5d6&#34;&gt;Build Essentials Windows&lt;/h2&gt;
+
+&lt;p&gt;In windows there are pre-compiled binaries for bson. &lt;strong&gt;However&lt;/strong&gt; these only work on 0.10.x or earlier as 0.11.x contains the completely breaking v8 API. So if you want to run 0.11.x you will have to set up your own build toolchain. So far I&amp;rsquo;ve only had luck with the following combination.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Visual Studio c++ 2010 (do not use higher versions)
+Windows 7 64bit SDK
+Python 2.7 or higher
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Unfortunately you cannot easily use the make file under windows (I have not been able to do so correctly using MinGw).&lt;/p&gt;
+
+&lt;p&gt;Open visual studio command prompt. Ensure node.exe is in your path and install node-gyp.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install -g node-gyp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next you will have to build the project manually to test it. Use any tool you use with git and grab the repo.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/mongodb/js-bson.git
+cd js-bson
+npm install
+node-gyp rebuild
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This should rebuild the driver successfully if you have everything set up correctly.&lt;/p&gt;
+
+&lt;h2 id=&#34;other-possible-issues:cf9d2f89abcf189c7253a5fe5d47d5d6&#34;&gt;Other possible issues&lt;/h2&gt;
+
+&lt;p&gt;Your python installation might be hosed making gyp break. I always recommend that you test your deployment environment first by trying to build node itself on the server in question as this should unearth any issues with broken packages (and there are a lot of broken packages out there).&lt;/p&gt;
+
+&lt;p&gt;Another thing is to ensure your user has write permission to wherever the node modules are being installed.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

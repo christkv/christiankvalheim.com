@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://christiankvalheim.com/</loc>
+    <lastmod>2012-04-10T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://christiankvalheim.com/post/mongodb_transactions_vs_two_phase_commit/</loc>
+    <lastmod>2019-02-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://christiankvalheim.com/post/the_wonderful_world_of_geo_spatial_indexes_in_mongo/</loc>
+    <lastmod>2016-01-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://christiankvalheim.com/post/an_introduction_to_1_4_and_2_6/</loc>
+    <lastmod>2015-10-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://christiankvalheim.com/post/a_basic_introduction_to_mongodb/</loc>
+    <lastmod>2015-07-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://christiankvalheim.com/post/a_primer_for_gridfs_using_the_mongodb_driver/</loc>
+    <lastmod>2015-06-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://christiankvalheim.com/post/the_new_bulk_api/</loc>
+    <lastmod>2014-09-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://christiankvalheim.com/post/an_introduction_to_1_4_and_2_6/</loc>
+    <lastmod>2014-09-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://christiankvalheim.com/presentation/four_years_of_node_and_mongodb/</loc>
+    <lastmod>2013-10-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://christiankvalheim.com/presentation/how_does_mongodb_store_my_data</loc>
+    <lastmod>2012-04-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://christiankvalheim.com/project/mongodb-native/</loc>
+    <lastmod>2010-09-01T00:00:00+00:00</lastmod>
+  </url>
+  
+</urlset>

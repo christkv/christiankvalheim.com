@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<head>
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="description" content="">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="Development, MongoDB, Node.js, github, mongodb, js, Javascript, ">
+
+ 
+<meta property="og:type" content="article"/>
+<meta property="og:description" content=""/>
+<meta property="og:title" content="A Basic introduction to Mongo DB : christiankvalheim.com"/>
+<meta property="og:site_name" content="Christian Kvalheim"/>
+<meta property="og:image" content="" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="" />
+<meta property="og:image:height" content="" />
+<meta property="og:url" content="http://christiankvalheim.com/post/a_basic_introduction_to_mongodb/">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-07-26"/>
+<meta property="article:modified_time" content="2015-07-26"/>
+
+<meta property="article:tag" content="Development">
+<meta property="article:tag" content="MongoDB">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="github">
+<meta property="article:tag" content="mongodb">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="Javascript">
+
+
+
+<meta name="twitter:card" content="summary">
+
+<meta name="twitter:site" content="@christkv">
+<meta name="twitter:title" content="A Basic introduction to Mongo DB : christiankvalheim.com">
+<meta name="twitter:creator" content="@christkv">
+<meta name="twitter:description" content="">
+<meta name="twitter:image:src" content="">
+<meta name="twitter:domain" content="christiankvalheim.com">
+
+
+
+    <base href="http://christiankvalheim.com/">
+    <title> A Basic introduction to Mongo DB - christiankvalheim.com </title>
+    <link rel="canonical" href="http://christiankvalheim.com/post/a_basic_introduction_to_mongodb/">
+    
+
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One|Open+Sans:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
+		<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+</head>
+
+<body lang="en" itemscope itemtype="http://schema.org/Article">
+<header id="header">
+<figure>
+      <a href="/" border=0 id="logolink"><img src="./logo.png"></img></a>
+      </figure>
+    <div id="byline">by Christian Kvalheim</div>
+    <nav id="nav">
+            <ul id="mainnav">
+            <li>
+                <a href="/post/">
+                <span class="icon"> <i aria-hidden="true" class="icon-quill"></i></span>
+                <span> blog </span>
+            </a>
+            </li>
+            <li>
+            <a href="/project/">
+                <span class="icon"> <i aria-hidden="true" class="icon-console"></i></span>
+                <span> code </span>
+            </a>
+            </li>
+            <li>
+            <a href="/presentation/">
+                <span class="icon"> <i aria-hidden="true" class="icon-stats"></i></span>
+                <span> talks </span>
+            </a>
+            </li>
+        </ul>
+
+            <ul id="social">
+            <li id="share">
+                <span class="icon icon-bubbles"> </span>
+                <span class="title"> share </span>
+                <div class="dropdown share">
+                    <ul class="social">
+                      <li> <a href="https://twitter.com/intent/tweet?status=A%20Basic%20introduction%20to%20Mongo%20DB-http%3a%2f%2fchristiankvalheim.com%2fpost%2fa_basic_introduction_to_mongodb%2f" target="_blank" title="Follow me on Twitter" class="twitter"><span class="icon icon-twitter"></span>Twitter</a> </li>
+                        <li> <a href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fchristiankvalheim.com%2fpost%2fa_basic_introduction_to_mongodb%2f" target="_blank" title="Join me on Facebook" class="facebook"><span class="icon icon-facebook"></span>Facebook</a> </li>
+                        <li> <a href="https://plus.google.com/share?url=http%3a%2f%2fchristiankvalheim.com%2fpost%2fa_basic_introduction_to_mongodb%2f" target="_blank" title="Google+" class="googleplus"><span class="icon icon-google-plus"></span>Google+</a> </li>
+                        <li> <a href="http://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fchristiankvalheim.com%2fpost%2fa_basic_introduction_to_mongodb%2f&title=A%20Basic%20introduction%20to%20Mongo%20DB&source=spf13" target="_blank" title="LinkedIn" class="linkedin"><span class="icon icon-linkedin"></span>LinkedIn</a> </li>
+                        <li> <a href="http://del.icio.us/post?url=http%3a%2f%2fchristiankvalheim.com%2fpost%2fa_basic_introduction_to_mongodb%2f" target="_blank" title="Delicious" class="delicious"><span class="icon icon-delicious"></span>Delicious</a> </li>
+                        <li> <a href="http://www.reddit.com/submit?url=http%3a%2f%2fchristiankvalheim.com%2fpost%2fa_basic_introduction_to_mongodb%2f" target="_blank" title="Reddit" class="reddit"><span class="icon icon-reddit"></span>Reddit</a> </li>
+                        <li> <a href="http://www.stumbleupon.com/submit?url=http%3a%2f%2fchristiankvalheim.com%2fpost%2fa_basic_introduction_to_mongodb%2f" target="_blank" title="StumbleUpon" class="stumbleupon"><span class="icon icon-stumbleupon"></span>StumbleUpon</a> </li>
+                    </ul>
+                    <span class="subcount">sharing is caring</span>
+                </div>
+            </li>
+            <li id="follow">
+                <span class="icon icon-rocket"> </span>
+                <span class="title"> follow </span>
+                <div class="dropdown follow">
+                    <ul class="social">
+                        <li> <a href="http://christiankvalheim.com/index.xml" target="_blank" title="Subscribe by RSS" class="rss"><span class="icon icon-feed-2"></span>RSS</a> </li>
+                        <li> <a href="http://www.twitter.com/christkv" target="_blank" title="Follow me on Twitter" class="twitter"><span class="icon icon-twitter"></span>Twitter</a> </li>
+                        <li> <a href="http://www.linkedin.com/in/christkv" target="_blank" title="LinkedIn" class="linkedin"><span class="icon icon-linkedin"></span>LinkedIn</a> </li>
+                        <li> <a href="http://github.com/christkv" target="_blank" title="GitHub" class="github"><span class="icon icon-github"></span>GitHub</a> </li>
+                        <li> <a href="http://www.slideshare.net/christkv" target="_blank" title="SlideShare" class="slideshare"><span class="icon icon-slideshare"></span>SlideShare</a> </li>
+                    </ul>
+                    <span class="subcount">join 730+ followers and subscribers</span>
+                </div>
+            </li>
+        </ul>
+
+    </nav>
+</header>
+
+
+
+<section id="main">
+  <h1 itemprop="name" id="title">A Basic introduction to Mongo DB</h1>
+  <div>
+        <article itemprop="articleBody" id="content">
+           
+
+<h1 id="a-basic-introduction-to-mongo-db:1a71523213b4a585995d1ccbcc405a86">A Basic introduction to Mongo DB</h1>
+
+<p>Mongo DB has rapidly grown to become a popular database for web applications and is a perfect fit for Node.JS applications, letting you write Javascript for the client, backend and database layer. Its schemaless nature is a better match to our constantly evolving data structures in web applications, and the integrated support for location queries is a bonus that&rsquo;s hard to ignore. Throw in Replica Sets for scaling, and we&rsquo;re looking at really nice platform to grow your storage needs now and in the future.</p>
+
+<p>Now to shamelessly plug my driver. It can be downloaded via npm, or fetched from the github repository. To install via npm, do the following:</p>
+
+<p><code>npm install mongodb</code></p>
+
+<p>or go fetch it from github at <a href="https://github.com/christkv/node-mongodb-native">https://github.com/christkv/node-mongodb-native</a></p>
+
+<p>Once this business is taken care of, let&rsquo;s move through the types available for the driver and then how to connect to your Mongo DB instance before facing the usage of some CRUD operations.</p>
+
+<h2 id="mongo-db-data-types:1a71523213b4a585995d1ccbcc405a86">Mongo DB data types</h2>
+
+<p>So there is an important thing to keep in mind when working with Mongo DB, and that is the slight mapping difference between types Mongo DB supports and native Javascript data types. Let&rsquo;s have a look at the types supported out of the box and then how types are promoted by the driver to fit as close to native Javascript types as possible.</p>
+
+<ul>
+<li><strong>Float</strong> is a 8 byte and is directly convertible to the Javascript type Number</li>
+<li><strong>Double class</strong> a special class representing a float value, this is especially useful when using capped collections where you need to ensure your values are always floats.</li>
+<li><strong>Integers</strong> is a bit trickier due to the fact that Javascript represents all Numbers as 64 bit floats meaning that the maximum integer value is at a 53 bit. Mongo has two types for integers, a 32 bit and a 64 bit. The driver will try to fit the value into 32 bits if it can and promote it to 64 bits if it has to. Similarly it will deserialize attempting to fit it into 53 bits if it can. If it cannot it will return an instance of <strong>Long</strong> to avoid loosing precession.</li>
+<li><strong>Long class</strong> a special class that let&rsquo;s you store 64 bit integers and also let&rsquo;s you operate on the 64 bits integers.</li>
+<li><strong>Date</strong> maps directly to a Javascript Date</li>
+<li><strong>RegExp</strong> maps directly to a Javascript RegExp</li>
+<li><strong>String</strong> maps directly to a Javascript String (encoded in utf8)</li>
+<li><strong>Binary class</strong> a special class that let&rsquo;s you store data in Mongo DB</li>
+<li><strong>Code class</strong> a special class that let&rsquo;s you store javascript functions in Mongo DB, can also provide a scope to run the method in</li>
+<li><strong>ObjectID class</strong> a special class that holds a MongoDB document identifier (the equivalent to a Primary key)</li>
+<li><strong>DbRef class</strong> a special class that let&rsquo;s you include a reference in a document pointing to another object</li>
+<li><strong>Symbol class</strong> a special class that let&rsquo;s you specify a symbol, not really relevant for javascript but for languages that supports the concept of symbols.</li>
+</ul>
+
+<p>As we see the number type can be a little tricky due to the way integers are implemented in Javascript. The latest driver will do correct conversion up to 53 bit&rsquo;s of complexity. If you need to handle big integers the recommendation is to use the Long class to operate on the numbers.</p>
+
+<h2 id="getting-that-connection-to-the-database:1a71523213b4a585995d1ccbcc405a86">Getting that connection to the database</h2>
+
+<p>Let&rsquo;s get around to setting up a connection with the Mongo DB database. Jumping straight into the code let&rsquo;s do direct connection and then look at the code.</p>
+
+<pre><code>// Retrieve
+var MongoClient = require('mongodb').MongoClient;
+
+// Connect to the db
+MongoClient.connect(&quot;mongodb://localhost:27017/exampleDb&quot;, function(err, db) {
+  if(!err) {
+    console.log(&quot;We are connected&quot;);
+  }
+});
+</code></pre>
+
+<p>Let&rsquo;s have a quick look at how the connection code works. The <strong>Db.connect</strong>
+method let&rsquo;s use use a uri to connect to the Mongo database, where
+<strong>localhost:27017</strong> is the server host and port and <strong>exampleDb</strong> the db
+we wish to connect to. After the url notice the hash containing the
+<strong>auto_reconnect</strong> key. Auto reconnect tells the driver to retry sending
+a command to the server if there is a failure during it&rsquo;s execution.</p>
+
+<p>Another useful option you can pass in is</p>
+
+<p><strong>poolSize</strong>, this allows you to control how many tcp connections are
+opened in parallel. The default value for this is 5 but you can set it
+as high as you want. The driver will use a round-robin strategy to
+dispatch and read from the tcp connection.</p>
+
+<p>We are up and running with a connection to the database. Let&rsquo;s move on
+and look at what collections are and how they work.</p>
+
+<h2 id="mongo-db-and-collections:1a71523213b4a585995d1ccbcc405a86">Mongo DB and Collections</h2>
+
+<p>Collections are the equivalent of tables in traditional databases and contain all your documents. A database can have many collections. So how do we go about defining and using collections. Well there are a couple of methods that we can use. Let&rsquo;s jump straight into code and then look at the code.</p>
+
+<p><strong>the requires and and other initializing stuff omitted for brevity</strong></p>
+
+<pre><code>// Retrieve
+var MongoClient = require('mongodb').MongoClient;
+
+// Connect to the db
+MongoClient.connect(&quot;mongodb://localhost:27017/exampleDb&quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  db.collection('test', function(err, collection) {});
+
+  db.collection('test', {w:1}, function(err, collection) {});
+
+  db.createCollection('test', function(err, collection) {});
+
+  db.createCollection('test', {w:1}, function(err, collection) {});
+
+});
+</code></pre>
+
+<p>Three different ways of creating a collection object but slightly different in behavior. Let&rsquo;s go through them and see what they do</p>
+
+<pre><code>db.collection('test', function(err, collection) {});
+</code></pre>
+
+<p>This function will not actually create a collection on the database until you actually insert the first document.</p>
+
+<pre><code>db.collection('test', {strict:true}, function(err, collection) {});
+</code></pre>
+
+<p>Notice the <strong>{strict:true}</strong> option. This option will make the driver check if the collection exists and issue an error if it does not.</p>
+
+<pre><code>db.createCollection('test', function(err, collection) {});
+</code></pre>
+
+<p>This command will create the collection on the Mongo DB database before returning the collection object. If the collection already exists it will ignore the creation of the collection.</p>
+
+<pre><code>db.createCollection('test', {strict:true}, function(err, collection) {});
+</code></pre>
+
+<p>The <strong>{strict:true}</strong> option will make the method return an error if the collection already exists.</p>
+
+<p>With an open db connection and a collection defined we are ready to do some CRUD operation on the data.</p>
+
+<h2 id="and-then-there-was-crud:1a71523213b4a585995d1ccbcc405a86">And then there was CRUD</h2>
+
+<p>So let&rsquo;s get dirty with the basic operations for Mongo DB. The Mongo DB wire protocol is built around 4 main operations <strong>insert/update/remove/query</strong>. Most operations on the database are actually queries with special json objects defining the operation on the database. But I&rsquo;m getting ahead of myself. Let&rsquo;s go back and look at insert first and do it with some code.</p>
+
+<p><strong>the requires and and other initializing stuff omitted for brevity</strong></p>
+
+<pre><code>// Retrieve
+var MongoClient = require('mongodb').MongoClient;
+
+// Connect to the db
+MongoClient.connect(&quot;mongodb://localhost:27017/exampleDb&quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection('test');
+  var doc1 = {'hello':'doc1'};
+  var doc2 = {'hello':'doc2'};
+  var lotsOfDocs = [{'hello':'doc3'}, {'hello':'doc4'}];
+
+  collection.insert(doc1);
+
+  collection.insert(doc2, {w:1}, function(err, result) {});
+
+  collection.insert(lotsOfDocs, {w:1}, function(err, result) {});
+
+});
+</code></pre>
+
+<p>A couple of variations on the theme of inserting a document as we can see. To understand why it&rsquo;s important to understand how Mongo DB works during inserts of documents.</p>
+
+<p>Mongo DB has asynchronous <strong>insert/update/remove</strong> operations. This means that when you issue an <strong>insert</strong> operation its a fire and forget operation where the database does not reply with the status of the insert operation. To retrieve the status of the operation you have to issue a query to retrieve the last error status of the connection. To make it simpler to the developer the driver implements the <strong>{w:1}</strong> options so that this is done automatically when inserting the document. <strong>{w:1}</strong> becomes especially important when you do <strong>update</strong> or <strong>remove</strong> as otherwise it&rsquo;s not possible to determine the amount of documents modified or removed.</p>
+
+<p>Now let&rsquo;s go through the different types of inserts shown in the code above.</p>
+
+<pre><code>collection.insert(doc1);
+</code></pre>
+
+<p>Taking advantage of the async behavior and not needing confirmation about the persisting of the data to Mongo DB we just fire off the insert (we are doing live analytics, loosing a couple of records does not matter).</p>
+
+<pre><code>collection.insert(doc2, {w:1}, function(err, result) {});
+</code></pre>
+
+<p>That document needs to stick. Using the <strong>{w:1}</strong> option ensure you get the error back if the document fails to insert correctly.</p>
+
+<pre><code>collection.insert(lotsOfDocs, {w:1}, function(err, result) {});
+</code></pre>
+
+<p>A batch insert of document with any errors being reported. This is much more efficient if you need to insert large batches of documents as you incur a lot less overhead.</p>
+
+<p>Right that&rsquo;s the basics of insert&rsquo;s ironed out. We got some documents in there but want to update them as we need to change the content of a field. Let&rsquo;s have a look at a simple example and then we will dive into how Mongo DB updates work and how to do them efficiently.</p>
+
+<p><strong>the requires and and other initializing stuff omitted for brevity</strong></p>
+
+<pre><code>// Retrieve
+var MongoClient = require('mongodb').MongoClient;
+
+// Connect to the db
+MongoClient.connect(&quot;mongodb://localhost:27017/exampleDb&quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection('test');
+  var doc = {mykey:1, fieldtoupdate:1};
+
+  collection.insert(doc, {w:1}, function(err, result) {
+    collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {w:1}, function(err, result) {});
+  });
+
+  var doc2 = {mykey:2, docs:[{doc1:1}]};
+
+  collection.insert(doc2, {w:1}, function(err, result) {
+    collection.update({mykey:2}, {$push:{docs:{doc2:1}}}, {w:1}, function(err, result) {});
+  });
+});
+</code></pre>
+
+<p>Alright before we look at the code we want to understand how document updates work and how to do the efficiently. The most basic and less efficient way is to replace the whole document, this is not really the way to go if you want to change just a field in your document. Luckily Mongo DB provides a whole set of operations that let you modify just pieces of the document <a href="http://www.mongodb.org/display/DOCS/Atomic+Operations">Atomic operations documentation</a>. Basically outlined below.</p>
+
+<ul>
+<li>$inc - increment a particular value by a certain amount</li>
+<li>$set - set a particular value</li>
+<li>$unset - delete a particular field (v1.3+)</li>
+<li>$push - append a value to an array</li>
+<li>$pushAll - append several values to an array</li>
+<li>$addToSet - adds value to the array only if its not in the array already</li>
+<li>$pop - removes the last element in an array</li>
+<li>$pull - remove a value(s) from an existing array</li>
+<li>$pullAll - remove several value(s) from an existing array</li>
+<li>$rename - renames the field</li>
+<li>$bit - bitwise operations</li>
+</ul>
+
+<p>Now that the operations are outline let&rsquo;s dig into the specific cases show in the code example.</p>
+
+<pre><code>collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {w:1}, function(err, result) {});
+</code></pre>
+
+<p>Right so this update will look for the document that has a field <strong>mykey</strong> equal to <strong>1</strong> and apply an update to the field <strong>fieldtoupdate</strong> setting the value to <strong>2</strong>. Since we are using the <strong>{w:1}</strong> option the result parameter in the callback will return the value <strong>1</strong> indicating that 1 document was modified by the update statement.</p>
+
+<pre><code>collection.update({mykey:2}, {$push:{docs:{doc2:1}}}, {w:1}, function(err, result) {});
+</code></pre>
+
+<p>This updates adds another document to the field <strong>docs</strong> in the document identified by <strong>{mykey:2}</strong> using the atomic operation <strong>$push</strong>. This allows you to modify keep such structures as queues in Mongo DB.</p>
+
+<p>Let&rsquo;s have a look at the remove operation for the driver. As before let&rsquo;s start with a piece of code.</p>
+
+<p><strong>the requires and and other initializing stuff omitted for brevity</strong></p>
+
+<pre><code>// Retrieve
+var MongoClient = require('mongodb').MongoClient;
+
+// Connect to the db
+MongoClient.connect(&quot;mongodb://localhost:27017/exampleDb&quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection('test');
+  var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
+
+  collection.insert(docs, {w:1}, function(err, result) {
+
+    collection.remove({mykey:1});
+
+    collection.remove({mykey:2}, {w:1}, function(err, result) {});
+
+    collection.remove();
+  });
+});
+</code></pre>
+
+<p>Let&rsquo;s examine the 3 remove variants and what they do.</p>
+
+<pre><code>collection.remove({mykey:1});
+</code></pre>
+
+<p>This leverages the fact that Mongo DB is asynchronous and that it does not return a result for <strong>insert/update/remove</strong> to allow for <strong>synchronous</strong> style execution. This particular remove query will remove the document where <strong>mykey</strong> equals <strong>1</strong>.</p>
+
+<pre><code>collection.remove({mykey:2}, {w:1}, function(err, result) {});
+</code></pre>
+
+<p>This remove statement removes the document where <strong>mykey</strong> equals <strong>2</strong> but since we are using <strong>{w:1}</strong> it will back to Mongo DB to get the status of the remove operation and return the number of documents removed in the result variable.</p>
+
+<pre><code>collection.remove();
+</code></pre>
+
+<p>This last one will remove all documents in the collection.</p>
+
+<h2 id="time-to-query:1a71523213b4a585995d1ccbcc405a86">Time to Query</h2>
+
+<p>Queries is of course a fundamental part of interacting with a database and Mongo DB is no exception. Fortunately for us it has a rich query interface with cursors and close to SQL concepts for slicing and dicing your datasets. To build queries we have lots of operators to choose from <a href="http://www.mongodb.org/display/DOCS/Advanced+Queries">Mongo DB advanced queries</a>. There are literarily tons of ways to search and ways to limit the query. Let&rsquo;s look at some simple code for dealing with queries in different ways.</p>
+
+<p><strong>the requires and and other initializing stuff omitted for brevity</strong></p>
+
+<pre><code>// Retrieve
+var MongoClient = require('mongodb').MongoClient;
+
+// Connect to the db
+MongoClient.connect(&quot;mongodb://localhost:27017/exampleDb&quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection('test');
+  var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
+
+  collection.insert(docs, {w:1}, function(err, result) {
+
+    collection.find().toArray(function(err, items) {});
+
+    var stream = collection.find({mykey:{$ne:2}}).stream();
+    stream.on(&quot;data&quot;, function(item) {});
+    stream.on(&quot;end&quot;, function() {});
+
+    collection.findOne({mykey:1}, function(err, item) {});
+
+  });
+});
+</code></pre>
+
+<p>Before we start picking apart the code there is one thing that needs to be understood, the <strong>find</strong> method does not execute the actual query. It builds an instance of <strong>Cursor</strong> that you then use to retrieve the data. This lets you manage how you retrieve the data from Mongo DB and keeps state about your current Cursor state on Mongo DB. Now let&rsquo;s pick apart the queries we have here and look at what they do.</p>
+
+<pre><code>collection.find().toArray(function(err, items) {});
+</code></pre>
+
+<p>This query will fetch all the document in the collection and return them as an array of items. Be careful with the function <strong>toArray</strong> as it might cause a lot of memory usage as it will instantiate all the document into memory before returning the final array of items. If you have a big resultset you could run into memory issues.</p>
+
+<pre><code>var stream = collection.find({mykey:{$ne:2}}).stream();
+stream.on(&quot;data&quot;, function(item) {});
+stream.on(&quot;end&quot;, function() {});
+</code></pre>
+
+<p>This is the preferred way if you have to retrieve a lot of data for streaming, as data is deserialized a <strong>data</strong> event is emitted. This keeps the resident memory usage low as the documents are streamed to you. Very useful if you are pushing documents out via websockets or some other streaming socket protocol. Once there is no more document the driver will emit the <strong>end</strong> event to notify the application that it&rsquo;s done.</p>
+
+<pre><code>collection.findOne({mykey:1}, function(err, item) {});
+</code></pre>
+
+<p>This is special supported function to retrieve just one specific document bypassing the need for a cursor object.</p>
+
+<p>That&rsquo;s pretty much it for the quick intro on how to use the database. I have also included a list of links to where to go to find more information and also a sample crude location application I wrote using express JS and mongo DB.</p>
+
+<h2 id="links-and-stuff:1a71523213b4a585995d1ccbcc405a86">Links and stuff</h2>
+
+<ul>
+<li><a href="https://github.com/mongodb/node-mongodb-native/tree/master/examples">The driver examples, good starting point for basic usage</a></li>
+<li><a href="https://github.com/mongodb/node-mongodb-native/tree/master/test">All the integration tests, they have tons of different usage cases</a></li>
+<li><a href="http://www.mongodb.org/display/DOCS/Advanced+Queries">The Mongo DB wiki pages such as the advanced query link</a></li>
+<li><a href="https://github.com/christkv/mongodb-presentation">A silly simple location based application using Express JS and Mongo DB</a></li>
+</ul>
+
+        </article>
+  </div>
+</section>
+
+
+
+<aside id="meta">
+
+    <div>
+        <section id="datecount">
+          <h4 id="date"> Sun Jul 26, 2015 </h4>
+          <h5 id="wc"> 2500 Words </h5>
+        </section>
+        <ul id="categories">
+          
+            <li><a href="http://christiankvalheim.com//topics/mongodb">mongodb</a> </li>
+          
+        </ul>
+        <ul id="tags">
+          
+            <li> <a href="http://christiankvalheim.com//tags/mongodb">mongodb</a> </li>
+          
+            <li> <a href="http://christiankvalheim.com//tags/introduction">introduction</a> </li>
+          
+        </ul>
+    </div>
+
+    <div>
+        <section id="author">
+             <h4>About the Author:</h4> 
+                Christian Kvalheim is a Driver Team Lead and Evangalist for <a href="http://mongodb.com">MongoDB</a>. He is a open
+                source contributor and author of the&nbsp;<a
+                href="github.com/mongodb/node-mongodb-native"> MongoDB Node.js driver</a>. You can find him on <a href="http://twitter.com/christkv">Twitter</a> and&nbsp;
+                <a href="http://github.com/christkv">Github</a>.
+        </section>
+    </div>
+
+</aside>
+
+<meta itemprop="wordCount" content="2467">
+<meta itemprop="datePublished" content="2015-07-26">
+<meta itemprop="url" content="http://christiankvalheim.com/post/a_basic_introduction_to_mongodb/">
+
+
+<aside id=comments>
+    <div><h2> Comments </h2></div>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'christiankvalheimcom';
+    var disqus_identifier = 'http:\/\/christiankvalheim.com\/post\/a_basic_introduction_to_mongodb\/';
+    var disqus_title = 'A Basic introduction to Mongo DB';
+    var disqus_url = 'http:\/\/christiankvalheim.com\/post\/a_basic_introduction_to_mongodb\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</aside>
+
+<footer>
+  <div>
+    <p>
+    &copy; 2013-14 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Christian Amor Kvalheim.</span></span>
+    <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons Attribution">Some rights reserved</a>; 
+    please attribute properly and link back. <br>
+    Powered by <a href="http://hugo.spf13.com">Hugo</a>.
+        Original content created by Steve Francia <a href="http://http://spf13.com/">http://spf13.com/</a>, Derived from <a href="https://github.com/spf13/spf13.com">https://github.com/spf13/spf13.com</a>.
+    </p>
+  </div>
+</footer>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15251477-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script');
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 
+        'http://www') + '.google-analytics.com/ga.js';
+    ga.setAttribute('async', 'true');
+    document.documentElement.firstChild.appendChild(ga);
+  })();
+
+(function(){var j=function(a,b){return window.getComputedStyle?getComputedStyle(a).getPropertyValue(b):a.currentStyle[b]};var k=function(a,b,c){if(a.addEventListener)a.addEventListener(b,c,false);else a.attachEvent('on'+b,c)};var l=function(a,b){for(key in b)if(b.hasOwnProperty(key))a[key]=b[key];return a};window.fitText=function(d,e,f){var g=l({'minFontSize':-1/0,'maxFontSize':1/0},f);var h=function(a){var b=e||1;var c=function(){a.style.fontSize=Math.max(Math.min(a.clientWidth/(b*10),parseFloat(g.maxFontSize)),parseFloat(g.minFontSize))+'px'};c();k(window,'resize',c)};if(d.length)for(var i=0;i<d.length;i++)h(d[i]);else h(d);return d}})();
+fitText(document.getElementById('title'), 1)
+
+</script>
+</body>
+</html>
+

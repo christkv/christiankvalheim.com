@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Opensource on Christian Kvalheim </title>
+    <link>http://christiankvalheim.com/topics/opensource/</link>
+    <language>en-us</language>
+    <author>Christian Kvalheim</author>
+    <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
+    <updated>Tue, 10 Apr 2012 00:00:00 UTC</updated>
+    
+    <item>
+      <title>How does mongodb store my data</title>
+      <link>http://christiankvalheim.com/presentation/how_does_mongodb_store_my_data</link>
+      <pubDate>Tue, 10 Apr 2012 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://christiankvalheim.com/presentation/how_does_mongodb_store_my_data</guid>
+      <description>&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://christiankvalheim.com/media/fosdem2013.png&#34; alt=&#34;postgres con&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;p&gt;At FOSDEM 2013 I gave a talk about MongoDB internals, going through how the database physically stores data in memory and disk and why you should learn about the internals of the database you use in production to let you get the maximum performance out of it and to be better able to diagnose issues in production.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.slideshare.net/christkv/storage-talk&#34;&gt;&lt;strong&gt;How does mongodb store my data&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;embed slideshare&#34;&gt;
+&lt;iframe src=&#34;http://www.slideshare.net/slideshow/embed_code/16327480?rel=0&#34; width=&#34;599&#34; height=&#34;487&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px&#34; allowfullscreen webkitallowfullscreen mozallowfullscreen&gt; &lt;/iframe&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

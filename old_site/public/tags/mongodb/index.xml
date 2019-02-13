@@ -1,0 +1,2838 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Mongodb on Christian Kvalheim </title>
+    <link>http://localhost:1313/tags/mongodb/</link>
+    <language>en-us</language>
+    <author>Christian Kvalheim</author>
+    <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
+    <updated>Tue, 10 Apr 2012 00:00:00 UTC</updated>
+    
+    <item>
+      <title>How does mongodb store my data</title>
+      <link>http://localhost:1313/presentation/how_does_mongodb_store_my_data</link>
+      <pubDate>Tue, 10 Apr 2012 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/presentation/how_does_mongodb_store_my_data</guid>
+      <description>&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://localhost:1313/media/fosdem2013.png&#34; alt=&#34;postgres con&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;p&gt;At FOSDEM 2013 I gave a talk about MongoDB internals, going through how the database physically stores data in memory and disk and why you should learn about the internals of the database you use in production to let you get the maximum performance out of it and to be better able to diagnose issues in production.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.slideshare.net/christkv/storage-talk&#34;&gt;&lt;strong&gt;How does mongodb store my data&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;embed slideshare&#34;&gt;
+&lt;iframe src=&#34;http://www.slideshare.net/slideshow/embed_code/16327480?rel=0&#34; width=&#34;599&#34; height=&#34;487&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px&#34; allowfullscreen webkitallowfullscreen mozallowfullscreen&gt; &lt;/iframe&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>MongoDB Transactions vs Two-Phase commit</title>
+      <link>http://localhost:1313/post/mongodb_transactions_vs_two_phase_commit/</link>
+      <pubDate>Wed, 13 Feb 2019 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/mongodb_transactions_vs_two_phase_commit/</guid>
+      <description>&lt;p&gt;I just put the finishing touches on an article comparing &lt;code&gt;MongoDB 4.0.x&lt;/code&gt; transactions to using &lt;code&gt;Two-Phase&lt;/code&gt; commit for a simple bank account transfer pattern. Head on over to &lt;a href=&#34;http://learnmongodbthehardway.com/article/transactions/&#34;&gt;http://learnmongodbthehardway.com/article/transactions/&lt;/a&gt; to read all about it.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Mongo Driver and Mongo DB 2.6 Features</title>
+      <link>http://localhost:1313/post/an_introduction_to_1_4_and_2_6/</link>
+      <pubDate>Sun, 25 Oct 2015 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/an_introduction_to_1_4_and_2_6/</guid>
+      <description>
+
+&lt;h2 id=&#34;introduction:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll start with creating a new site with a very basic template. Then we&amp;rsquo;ll add in a few pages and posts. With small variations on that, you will be able to create many different types of web sites.&lt;/p&gt;
+
+&lt;p&gt;In this tutorial, commands that you enter will start with the &amp;ldquo;$&amp;rdquo; prompt. The output will follow. Lines that start with &amp;ldquo;#&amp;rdquo; are comments that I&amp;rsquo;ve added to explain a point. When I show updates to a file, the &amp;ldquo;:wq&amp;rdquo; on the last line means to save the file.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s an example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;## this is a comment
+$ echo this is a command
+this is a command
+
+## edit the file
+$vi foo.md
++++
+date = &amp;quot;2014-09-28&amp;quot;
+title = &amp;quot;creating a new theme&amp;quot;
++++
+
+bah and humbug
+:wq
+
+## show it
+$ cat foo.md
++++
+date = &amp;quot;2014-09-28&amp;quot;
+title = &amp;quot;creating a new theme&amp;quot;
++++
+
+bah and humbug
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;some-definitions:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Some Definitions&lt;/h2&gt;
+
+&lt;p&gt;There are a few concepts that you need to understand before creating a theme.&lt;/p&gt;
+
+&lt;h3 id=&#34;skins:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Skins&lt;/h3&gt;
+
+&lt;p&gt;Skins are the files responsible for the look and feel of your site. It’s the CSS that controls colors and fonts, it’s the Javascript that determines actions and reactions. It’s also the rules that Hugo uses to transform your content into the HTML that the site will serve to visitors.&lt;/p&gt;
+
+&lt;p&gt;You have two ways to create a skin. The simplest way is to create it in the &lt;code&gt;layouts/&lt;/code&gt; directory. If you do, then you don’t have to worry about configuring Hugo to recognize it. The first place that Hugo will look for rules and files is in the &lt;code&gt;layouts/&lt;/code&gt; directory so it will always find the skin.&lt;/p&gt;
+
+&lt;p&gt;Your second choice is to create it in a sub-directory of the &lt;code&gt;themes/&lt;/code&gt; directory. If you do, then you must always tell Hugo where to search for the skin. It’s extra work, though, so why bother with it?&lt;/p&gt;
+
+&lt;p&gt;The difference between creating a skin in &lt;code&gt;layouts/&lt;/code&gt; and creating it in &lt;code&gt;themes/&lt;/code&gt; is very subtle. A skin in &lt;code&gt;layouts/&lt;/code&gt; can’t be customized without updating the templates and static files that it is built from. A skin created in &lt;code&gt;themes/&lt;/code&gt;, on the other hand, can be and that makes it easier for other people to use it.&lt;/p&gt;
+
+&lt;p&gt;The rest of this tutorial will call a skin created in the &lt;code&gt;themes/&lt;/code&gt; directory a theme.&lt;/p&gt;
+
+&lt;p&gt;Note that you can use this tutorial to create a skin in the &lt;code&gt;layouts/&lt;/code&gt; directory if you wish to. The main difference will be that you won’t need to update the site’s configuration file to use a theme.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-home-page:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;The Home Page&lt;/h3&gt;
+
+&lt;p&gt;The home page, or landing page, is the first page that many visitors to a site see. It is the index.html file in the root directory of the web site. Since Hugo writes files to the public/ directory, our home page is public/index.html.&lt;/p&gt;
+
+&lt;h3 id=&#34;site-configuration-file:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Site Configuration File&lt;/h3&gt;
+
+&lt;p&gt;When Hugo runs, it looks for a configuration file that contains settings that override default values for the entire site. The file can use TOML, YAML, or JSON. I prefer to use TOML for my configuration files. If you prefer to use JSON or YAML, you’ll need to translate my examples. You’ll also need to change the name of the file since Hugo uses the extension to determine how to process it.&lt;/p&gt;
+
+&lt;p&gt;Hugo translates Markdown files into HTML. By default, Hugo expects to find Markdown files in your &lt;code&gt;content/&lt;/code&gt; directory and template files in your &lt;code&gt;themes/&lt;/code&gt; directory. It will create HTML files in your &lt;code&gt;public/&lt;/code&gt; directory. You can change this by specifying alternate locations in the configuration file.&lt;/p&gt;
+
+&lt;h3 id=&#34;content:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Content&lt;/h3&gt;
+
+&lt;p&gt;Content is stored in text files that contain two sections. The first section is the “front matter,” which is the meta-information on the content. The second section contains Markdown that will be converted to HTML.&lt;/p&gt;
+
+&lt;h4 id=&#34;front-matter:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Front Matter&lt;/h4&gt;
+
+&lt;p&gt;The front matter is information about the content. Like the configuration file, it can be written in TOML, YAML, or JSON. Unlike the configuration file, Hugo doesn’t use the file’s extension to know the format. It looks for markers to signal the type. TOML is surrounded by “&lt;code&gt;+++&lt;/code&gt;”, YAML by “&lt;code&gt;---&lt;/code&gt;”, and JSON is enclosed in curly braces. I prefer to use TOML, so you’ll need to translate my examples if you prefer YAML or JSON.&lt;/p&gt;
+
+&lt;p&gt;The information in the front matter is passed into the template before the content is rendered into HTML.&lt;/p&gt;
+
+&lt;h4 id=&#34;markdown:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Markdown&lt;/h4&gt;
+
+&lt;p&gt;Content is written in Markdown which makes it easier to create the content. Hugo runs the content through a Markdown engine to create the HTML which will be written to the output file.&lt;/p&gt;
+
+&lt;h3 id=&#34;template-files:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Template Files&lt;/h3&gt;
+
+&lt;p&gt;Hugo uses template files to render content into HTML. Template files are a bridge between the content and presentation. Rules in the template define what content is published, where it&amp;rsquo;s published to, and how it will rendered to the HTML file. The template guides the presentation by specifying the style to use.&lt;/p&gt;
+
+&lt;p&gt;There are three types of templates: single, list, and partial. Each type takes a bit of content as input and transforms it based on the commands in the template.&lt;/p&gt;
+
+&lt;p&gt;Hugo uses its knowledge of the content to find the template file used to render the content. If it can’t find a template that is an exact match for the content, it will shift up a level and search from there. It will continue to do so until it finds a matching template or runs out of templates to try. If it can’t find a template, it will use the default template for the site.&lt;/p&gt;
+
+&lt;p&gt;Please note that you can use the front matter to influence Hugo’s choice of templates.&lt;/p&gt;
+
+&lt;h4 id=&#34;single-template:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Single Template&lt;/h4&gt;
+
+&lt;p&gt;A single template is used to render a single piece of content. For example, an article or post would be a single piece of content and use a single template.&lt;/p&gt;
+
+&lt;h4 id=&#34;list-template:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;List Template&lt;/h4&gt;
+
+&lt;p&gt;A list template renders a group of related content. That could be a summary of recent postings or all articles in a category. List templates can contain multiple groups.&lt;/p&gt;
+
+&lt;p&gt;The homepage template is a special type of list template. Hugo assumes that the home page of your site will act as the portal for the rest of the content in the site.&lt;/p&gt;
+
+&lt;h4 id=&#34;partial-template:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Partial Template&lt;/h4&gt;
+
+&lt;p&gt;A partial template is a template that can be included in other templates. Partial templates must be called using the “partial” template command. They are very handy for rolling up common behavior. For example, your site may have a banner that all pages use. Instead of copying the text of the banner into every single and list template, you could create a partial with the banner in it. That way if you decide to change the banner, you only have to change the partial template.&lt;/p&gt;
+
+&lt;h2 id=&#34;create-a-new-site:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Create a New Site&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s use Hugo to create a new web site. I&amp;rsquo;m a Mac user, so I&amp;rsquo;ll create mine in my home directory, in the Sites folder. If you&amp;rsquo;re using Linux, you might have to create the folder first.&lt;/p&gt;
+
+&lt;p&gt;The &amp;ldquo;new site&amp;rdquo; command will create a skeleton of a site. It will give you the basic directory structure and a useable configuration file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hugo new site ~/Sites/zafta
+$ cd ~/Sites/zafta
+$ ls -l
+total 8
+drwxr-xr-x  7 quoha  staff  238 Sep 29 16:49 .
+drwxr-xr-x  3 quoha  staff  102 Sep 29 16:49 ..
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 archetypes
+-rw-r--r--  1 quoha  staff   82 Sep 29 16:49 config.toml
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 content
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 layouts
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 static
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Take a look in the content/ directory to confirm that it is empty.&lt;/p&gt;
+
+&lt;p&gt;The other directories (archetypes/, layouts/, and static/) are used when customizing a theme. That&amp;rsquo;s a topic for a different tutorial, so please ignore them for now.&lt;/p&gt;
+
+&lt;h3 id=&#34;generate-the-html-for-the-new-site:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Generate the HTML For the New Site&lt;/h3&gt;
+
+&lt;p&gt;Running the &lt;code&gt;hugo&lt;/code&gt; command with no options will read all the available content and generate the HTML files. It will also copy all static files (that&amp;rsquo;s everything that&amp;rsquo;s not content). Since we have an empty site, it won&amp;rsquo;t do much, but it will do it very quickly.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hugo --verbose
+INFO: 2014/09/29 Using config file: config.toml
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
+WARN: 2014/09/29 Unable to locate layout: [index.html _default/list.html _default/single.html]
+WARN: 2014/09/29 Unable to locate layout: [404.html]
+0 draft content 
+0 future content 
+0 pages created 
+0 tags created
+0 categories created
+in 2 ms
+$ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &amp;ldquo;&lt;code&gt;--verbose&lt;/code&gt;&amp;rdquo; flag gives extra information that will be helpful when we build the template. Every line of the output that starts with &amp;ldquo;INFO:&amp;rdquo; or &amp;ldquo;WARN:&amp;rdquo; is present because we used that flag. The lines that start with &amp;ldquo;WARN:&amp;rdquo; are warning messages. We&amp;rsquo;ll go over them later.&lt;/p&gt;
+
+&lt;p&gt;We can verify that the command worked by looking at the directory again.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ls -l
+total 8
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 archetypes
+-rw-r--r--  1 quoha  staff   82 Sep 29 16:49 config.toml
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 content
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 layouts
+drwxr-xr-x  4 quoha  staff  136 Sep 29 17:02 public
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 static
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;See that new public/ directory? Hugo placed all generated content there. When you&amp;rsquo;re ready to publish your web site, that&amp;rsquo;s the place to start. For now, though, let&amp;rsquo;s just confirm that we have what we&amp;rsquo;d expect from a site with no content.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ls -l public
+total 16
+-rw-r--r--  1 quoha  staff  416 Sep 29 17:02 index.xml
+-rw-r--r--  1 quoha  staff  262 Sep 29 17:02 sitemap.xml
+$ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hugo created two XML files, which is standard, but there are no HTML files.&lt;/p&gt;
+
+&lt;h3 id=&#34;test-the-new-site:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Test the New Site&lt;/h3&gt;
+
+&lt;p&gt;Verify that you can run the built-in web server. It will dramatically shorten your development cycle if you do. Start it by running the &amp;ldquo;server&amp;rdquo; command. If it is successful, you will see output similar to the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hugo server --verbose
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
+WARN: 2014/09/29 Unable to locate layout: [index.html _default/list.html _default/single.html]
+WARN: 2014/09/29 Unable to locate layout: [404.html]
+0 draft content 
+0 future content 
+0 pages created 
+0 tags created
+0 categories created
+in 2 ms
+Serving pages from /Users/quoha/Sites/zafta/public
+Web Server is available at http://localhost:1313
+Press Ctrl+C to stop
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Connect to the listed URL (it&amp;rsquo;s on the line that starts with &amp;ldquo;Web Server&amp;rdquo;). If everything is working correctly, you should get a page that shows the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;index.xml
+sitemap.xml
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That&amp;rsquo;s a listing of your public/ directory. Hugo didn&amp;rsquo;t create a home page because our site has no content. When there&amp;rsquo;s no index.html file in a directory, the server lists the files in the directory, which is what you should see in your browser.&lt;/p&gt;
+
+&lt;p&gt;Let’s go back and look at those warnings again.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;WARN: 2014/09/29 Unable to locate layout: [index.html _default/list.html _default/single.html]
+WARN: 2014/09/29 Unable to locate layout: [404.html]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That second warning is easier to explain. We haven’t created a template to be used to generate “page not found errors.” The 404 message is a topic for a separate tutorial.&lt;/p&gt;
+
+&lt;p&gt;Now for the first warning. It is for the home page. You can tell because the first layout that it looked for was “index.html.” That’s only used by the home page.&lt;/p&gt;
+
+&lt;p&gt;I like that the verbose flag causes Hugo to list the files that it&amp;rsquo;s searching for. For the home page, they are index.html, _default/list.html, and _default/single.html. There are some rules that we&amp;rsquo;ll cover later that explain the names and paths. For now, just remember that Hugo couldn&amp;rsquo;t find a template for the home page and it told you so.&lt;/p&gt;
+
+&lt;p&gt;At this point, you&amp;rsquo;ve got a working installation and site that we can build upon. All that’s left is to add some content and a theme to display it.&lt;/p&gt;
+
+&lt;h2 id=&#34;create-a-new-theme:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Create a New Theme&lt;/h2&gt;
+
+&lt;p&gt;Hugo doesn&amp;rsquo;t ship with a default theme. There are a few available (I counted a dozen when I first installed Hugo) and Hugo comes with a command to create new themes.&lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;re going to create a new theme called &amp;ldquo;zafta.&amp;rdquo; Since the goal of this tutorial is to show you how to fill out the files to pull in your content, the theme will not contain any CSS. In other words, ugly but functional.&lt;/p&gt;
+
+&lt;p&gt;All themes have opinions on content and layout. For example, Zafta uses &amp;ldquo;post&amp;rdquo; over &amp;ldquo;blog&amp;rdquo;. Strong opinions make for simpler templates but differing opinions make it tougher to use themes. When you build a theme, consider using the terms that other themes do.&lt;/p&gt;
+
+&lt;h3 id=&#34;create-a-skeleton:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Create a Skeleton&lt;/h3&gt;
+
+&lt;p&gt;Use the hugo &amp;ldquo;new&amp;rdquo; command to create the skeleton of a theme. This creates the directory structure and places empty files for you to fill out.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hugo new theme zafta
+
+$ ls -l
+total 8
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 archetypes
+-rw-r--r--  1 quoha  staff   82 Sep 29 16:49 config.toml
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 content
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 layouts
+drwxr-xr-x  4 quoha  staff  136 Sep 29 17:02 public
+drwxr-xr-x  2 quoha  staff   68 Sep 29 16:49 static
+drwxr-xr-x  3 quoha  staff  102 Sep 29 17:31 themes
+
+$ find themes -type f | xargs ls -l
+-rw-r--r--  1 quoha  staff  1081 Sep 29 17:31 themes/zafta/LICENSE.md
+-rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/archetypes/default.md
+-rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/layouts/_default/list.html
+-rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/layouts/_default/single.html
+-rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/layouts/index.html
+-rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/layouts/partials/footer.html
+-rw-r--r--  1 quoha  staff     0 Sep 29 17:31 themes/zafta/layouts/partials/header.html
+-rw-r--r--  1 quoha  staff    93 Sep 29 17:31 themes/zafta/theme.toml
+$ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The skeleton includes templates (the files ending in .html), license file, a description of your theme (the theme.toml file), and an empty archetype.&lt;/p&gt;
+
+&lt;p&gt;Please take a minute to fill out the theme.toml and LICENSE.md files. They&amp;rsquo;re optional, but if you&amp;rsquo;re going to be distributing your theme, it tells the world who to praise (or blame). It&amp;rsquo;s also nice to declare the license so that people will know how they can use the theme.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/theme.toml
+author = &amp;quot;michael d henderson&amp;quot;
+description = &amp;quot;a minimal working template&amp;quot;
+license = &amp;quot;MIT&amp;quot;
+name = &amp;quot;zafta&amp;quot;
+source_repo = &amp;quot;&amp;quot;
+tags = [&amp;quot;tags&amp;quot;, &amp;quot;categories&amp;quot;]
+:wq
+
+## also edit themes/zafta/LICENSE.md and change
+## the bit that says &amp;quot;YOUR_NAME_HERE&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that the the skeleton&amp;rsquo;s template files are empty. Don&amp;rsquo;t worry, we&amp;rsquo;ll be changing that shortly.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ find themes/zafta -name &#39;*.html&#39; | xargs ls -l
+-rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/_default/list.html
+-rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/_default/single.html
+-rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/index.html
+-rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/partials/footer.html
+-rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/partials/header.html
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;update-the-configuration-file-to-use-the-theme:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Update the Configuration File to Use the Theme&lt;/h3&gt;
+
+&lt;p&gt;Now that we&amp;rsquo;ve got a theme to work with, it&amp;rsquo;s a good idea to add the theme name to the configuration file. This is optional, because you can always add &amp;ldquo;-t zafta&amp;rdquo; on all your commands. I like to put it the configuration file because I like shorter command lines. If you don&amp;rsquo;t put it in the configuration file or specify it on the command line, you won&amp;rsquo;t use the template that you&amp;rsquo;re expecting to.&lt;/p&gt;
+
+&lt;p&gt;Edit the file to add the theme, add a title for the site, and specify that all of our content will use the TOML format.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi config.toml
+theme = &amp;quot;zafta&amp;quot;
+baseurl = &amp;quot;&amp;quot;
+languageCode = &amp;quot;en-us&amp;quot;
+title = &amp;quot;zafta - totally refreshing&amp;quot;
+MetaDataFormat = &amp;quot;toml&amp;quot;
+:wq
+
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;generate-the-site:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Generate the Site&lt;/h3&gt;
+
+&lt;p&gt;Now that we have an empty theme, let&amp;rsquo;s generate the site again.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hugo --verbose
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
+WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
+0 draft content 
+0 future content 
+0 pages created 
+0 tags created
+0 categories created
+in 2 ms
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Did you notice that the output is different? The warning message for the home page has disappeared and we have an additional information line saying that Hugo is syncing from the theme&amp;rsquo;s directory.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s check the public/ directory to see what Hugo&amp;rsquo;s created.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ls -l public
+total 16
+drwxr-xr-x  2 quoha  staff   68 Sep 29 17:56 css
+-rw-r--r--  1 quoha  staff    0 Sep 29 17:56 index.html
+-rw-r--r--  1 quoha  staff  407 Sep 29 17:56 index.xml
+drwxr-xr-x  2 quoha  staff   68 Sep 29 17:56 js
+-rw-r--r--  1 quoha  staff  243 Sep 29 17:56 sitemap.xml
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice four things:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Hugo created a home page. This is the file public/index.html.&lt;/li&gt;
+&lt;li&gt;Hugo created a css/ directory.&lt;/li&gt;
+&lt;li&gt;Hugo created a js/ directory.&lt;/li&gt;
+&lt;li&gt;Hugo claimed that it created 0 pages. It created a file and copied over static files, but didn&amp;rsquo;t create any pages. That&amp;rsquo;s because it considers a &amp;ldquo;page&amp;rdquo; to be a file created directly from a content file. It doesn&amp;rsquo;t count things like the index.html files that it creates automatically.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&#34;the-home-page-1:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;The Home Page&lt;/h4&gt;
+
+&lt;p&gt;Hugo supports many different types of templates. The home page is special because it gets its own type of template and its own template file. The file, layouts/index.html, is used to generate the HTML for the home page. The Hugo documentation says that this is the only required template, but that depends. Hugo&amp;rsquo;s warning message shows that it looks for three different templates:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;WARN: 2014/09/29 Unable to locate layout: [index.html _default/list.html _default/single.html]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If it can&amp;rsquo;t find any of these, it completely skips creating the home page. We noticed that when we built the site without having a theme installed.&lt;/p&gt;
+
+&lt;p&gt;When Hugo created our theme, it created an empty home page template. Now, when we build the site, Hugo finds the template and uses it to generate the HTML for the home page. Since the template file is empty, the HTML file is empty, too. If the template had any rules in it, then Hugo would have used them to generate the home page.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ find . -name index.html | xargs ls -l
+-rw-r--r--  1 quoha  staff  0 Sep 29 20:21 ./public/index.html
+-rw-r--r--  1 quoha  staff  0 Sep 29 17:31 ./themes/zafta/layouts/index.html
+$ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;the-magic-of-static:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;The Magic of Static&lt;/h4&gt;
+
+&lt;p&gt;Hugo does two things when generating the site. It uses templates to transform content into HTML and it copies static files into the site. Unlike content, static files are not transformed. They are copied exactly as they are.&lt;/p&gt;
+
+&lt;p&gt;Hugo assumes that your site will use both CSS and JavaScript, so it creates directories in your theme to hold them. Remember opinions? Well, Hugo&amp;rsquo;s opinion is that you&amp;rsquo;ll store your CSS in a directory named css/ and your JavaScript in a directory named js/. If you don&amp;rsquo;t like that, you can change the directory names in your theme directory or even delete them completely. Hugo&amp;rsquo;s nice enough to offer its opinion, then behave nicely if you disagree.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ find themes/zafta -type d | xargs ls -ld
+drwxr-xr-x  7 quoha  staff  238 Sep 29 17:38 themes/zafta
+drwxr-xr-x  3 quoha  staff  102 Sep 29 17:31 themes/zafta/archetypes
+drwxr-xr-x  5 quoha  staff  170 Sep 29 17:31 themes/zafta/layouts
+drwxr-xr-x  4 quoha  staff  136 Sep 29 17:31 themes/zafta/layouts/_default
+drwxr-xr-x  4 quoha  staff  136 Sep 29 17:31 themes/zafta/layouts/partials
+drwxr-xr-x  4 quoha  staff  136 Sep 29 17:31 themes/zafta/static
+drwxr-xr-x  2 quoha  staff   68 Sep 29 17:31 themes/zafta/static/css
+drwxr-xr-x  2 quoha  staff   68 Sep 29 17:31 themes/zafta/static/js
+$ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;the-theme-development-cycle:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;The Theme Development Cycle&lt;/h2&gt;
+
+&lt;p&gt;When you&amp;rsquo;re working on a theme, you will make changes in the theme&amp;rsquo;s directory, rebuild the site, and check your changes in the browser. Hugo makes this very easy:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Purge the public/ directory.&lt;/li&gt;
+&lt;li&gt;Run the built in web server in watch mode.&lt;/li&gt;
+&lt;li&gt;Open your site in a browser.&lt;/li&gt;
+&lt;li&gt;Update the theme.&lt;/li&gt;
+&lt;li&gt;Glance at your browser window to see changes.&lt;/li&gt;
+&lt;li&gt;Return to step 4.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I’ll throw in one more opinion: never work on a theme on a live site. Always work on a copy of your site. Make changes to your theme, test them, then copy them up to your site. For added safety, use a tool like Git to keep a revision history of your content and your theme. Believe me when I say that it is too easy to lose both your mind and your changes.&lt;/p&gt;
+
+&lt;p&gt;Check the main Hugo site for information on using Git with Hugo.&lt;/p&gt;
+
+&lt;h3 id=&#34;purge-the-public-directory:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Purge the public/ Directory&lt;/h3&gt;
+
+&lt;p&gt;When generating the site, Hugo will create new files and update existing ones in the &lt;code&gt;public/&lt;/code&gt; directory. It will not delete files that are no longer used. For example, files that were created in the wrong directory or with the wrong title will remain. If you leave them, you might get confused by them later. I recommend cleaning out your site prior to generating it.&lt;/p&gt;
+
+&lt;p&gt;Note: If you&amp;rsquo;re building on an SSD, you should ignore this. Churning on a SSD can be costly.&lt;/p&gt;
+
+&lt;h3 id=&#34;hugo-s-watch-option:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Hugo&amp;rsquo;s Watch Option&lt;/h3&gt;
+
+&lt;p&gt;Hugo&amp;rsquo;s &amp;ldquo;&lt;code&gt;--watch&lt;/code&gt;&amp;rdquo; option will monitor the content/ and your theme directories for changes and rebuild the site automatically.&lt;/p&gt;
+
+&lt;h3 id=&#34;live-reload:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Live Reload&lt;/h3&gt;
+
+&lt;p&gt;Hugo&amp;rsquo;s built in web server supports live reload. As pages are saved on the server, the browser is told to refresh the page. Usually, this happens faster than you can say, &amp;ldquo;Wow, that&amp;rsquo;s totally amazing.&amp;rdquo;&lt;/p&gt;
+
+&lt;h3 id=&#34;development-commands:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Development Commands&lt;/h3&gt;
+
+&lt;p&gt;Use the following commands as the basis for your workflow.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;## purge old files. hugo will recreate the public directory.
+##
+$ rm -rf public
+##
+## run hugo in watch mode
+##
+$ hugo server --watch --verbose
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here&amp;rsquo;s sample output showing Hugo detecting a change to the template for the home page. Once generated, the web browser automatically reloaded the page. I&amp;rsquo;ve said this before, it&amp;rsquo;s amazing.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ rm -rf public
+$ hugo server --watch --verbose
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
+WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
+0 draft content 
+0 future content 
+0 pages created 
+0 tags created
+0 categories created
+in 2 ms
+Watching for changes in /Users/quoha/Sites/zafta/content
+Serving pages from /Users/quoha/Sites/zafta/public
+Web Server is available at http://localhost:1313
+Press Ctrl+C to stop
+INFO: 2014/09/29 File System Event: [&amp;quot;/Users/quoha/Sites/zafta/themes/zafta/layouts/index.html&amp;quot;: MODIFY|ATTRIB]
+Change detected, rebuilding site
+
+WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
+0 draft content 
+0 future content 
+0 pages created 
+0 tags created
+0 categories created
+in 1 ms
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;update-the-home-page-template:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Update the Home Page Template&lt;/h2&gt;
+
+&lt;p&gt;The home page is one of a few special pages that Hugo creates automatically. As mentioned earlier, it looks for one of three files in the theme&amp;rsquo;s layout/ directory:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;index.html&lt;/li&gt;
+&lt;li&gt;_default/list.html&lt;/li&gt;
+&lt;li&gt;_default/single.html&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;We could update one of the default templates, but a good design decision is to update the most specific template available. That&amp;rsquo;s not a hard and fast rule (in fact, we&amp;rsquo;ll break it a few times in this tutorial), but it is a good generalization.&lt;/p&gt;
+
+&lt;h3 id=&#34;make-a-static-home-page:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Make a Static Home Page&lt;/h3&gt;
+
+&lt;p&gt;Right now, that page is empty because we don&amp;rsquo;t have any content and we don&amp;rsquo;t have any logic in the template. Let&amp;rsquo;s change that by adding some text to the template.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/index.html
+&amp;lt;!DOCTYPE html&amp;gt; 
+&amp;lt;html&amp;gt; 
+&amp;lt;body&amp;gt; 
+  &amp;lt;p&amp;gt;hugo says hello!&amp;lt;/p&amp;gt; 
+&amp;lt;/body&amp;gt; 
+&amp;lt;/html&amp;gt; 
+:wq
+
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Build the web site and then verify the results.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hugo --verbose
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
+WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
+0 draft content 
+0 future content 
+0 pages created 
+0 tags created
+0 categories created
+in 2 ms
+
+$ find public -type f -name &#39;*.html&#39; | xargs ls -l
+-rw-r--r--  1 quoha  staff  78 Sep 29 21:26 public/index.html
+
+$ cat public/index.html 
+&amp;lt;!DOCTYPE html&amp;gt; 
+&amp;lt;html&amp;gt; 
+&amp;lt;body&amp;gt; 
+  &amp;lt;p&amp;gt;hugo says hello!&amp;lt;/p&amp;gt; 
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;live-reload-1:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Live Reload&lt;/h4&gt;
+
+&lt;p&gt;Note: If you&amp;rsquo;re running the server with the &lt;code&gt;--watch&lt;/code&gt; option, you&amp;rsquo;ll see different content in the file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat public/index.html 
+&amp;lt;!DOCTYPE html&amp;gt; 
+&amp;lt;html&amp;gt; 
+&amp;lt;body&amp;gt; 
+  &amp;lt;p&amp;gt;hugo says hello!&amp;lt;/p&amp;gt; 
+&amp;lt;script&amp;gt;document.write(&#39;&amp;lt;script src=&amp;quot;http://&#39; 
+        + (location.host || &#39;localhost&#39;).split(&#39;:&#39;)[0] 
+    + &#39;:1313/livereload.js?mindelay=10&amp;quot;&amp;gt;&amp;lt;/&#39; 
+        + &#39;script&amp;gt;&#39;)&amp;lt;/script&amp;gt;&amp;lt;/body&amp;gt; 
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you use &lt;code&gt;--watch&lt;/code&gt;, the Live Reload script is added by Hugo. Look for live reload in the documentation to see what it does and how to disable it.&lt;/p&gt;
+
+&lt;h3 id=&#34;build-a-dynamic-home-page:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Build a &amp;ldquo;Dynamic&amp;rdquo; Home Page&lt;/h3&gt;
+
+&lt;p&gt;&amp;ldquo;Dynamic home page?&amp;rdquo; Hugo&amp;rsquo;s a static web site generator, so this seems an odd thing to say. I mean let&amp;rsquo;s have the home page automatically reflect the content in the site every time Hugo builds it. We&amp;rsquo;ll use iteration in the template to do that.&lt;/p&gt;
+
+&lt;h4 id=&#34;create-new-posts:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Create New Posts&lt;/h4&gt;
+
+&lt;p&gt;Now that we have the home page generating static content, let&amp;rsquo;s add some content to the site. We&amp;rsquo;ll display these posts as a list on the home page and on their own page, too.&lt;/p&gt;
+
+&lt;p&gt;Hugo has a command to generate a skeleton post, just like it does for sites and themes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ hugo --verbose new post/first.md
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 attempting to create  post/first.md of post
+INFO: 2014/09/29 curpath: /Users/quoha/Sites/zafta/themes/zafta/archetypes/default.md
+ERROR: 2014/09/29 Unable to Cast &amp;lt;nil&amp;gt; to map[string]interface{}
+
+$ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That wasn&amp;rsquo;t very nice, was it?&lt;/p&gt;
+
+&lt;p&gt;The &amp;ldquo;new&amp;rdquo; command uses an archetype to create the post file. Hugo created an empty default archetype file, but that causes an error when there&amp;rsquo;s a theme. For me, the workaround was to create an archetypes file specifically for the post type.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/archetypes/post.md
++++
+Description = &amp;quot;&amp;quot;
+Tags = []
+Categories = []
++++
+:wq
+
+$ find themes/zafta/archetypes -type f | xargs ls -l
+-rw-r--r--  1 quoha  staff   0 Sep 29 21:53 themes/zafta/archetypes/default.md
+-rw-r--r--  1 quoha  staff  51 Sep 29 21:54 themes/zafta/archetypes/post.md
+
+$ hugo --verbose new post/first.md
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 attempting to create  post/first.md of post
+INFO: 2014/09/29 curpath: /Users/quoha/Sites/zafta/themes/zafta/archetypes/post.md
+INFO: 2014/09/29 creating /Users/quoha/Sites/zafta/content/post/first.md
+/Users/quoha/Sites/zafta/content/post/first.md created
+
+$ hugo --verbose new post/second.md
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 attempting to create  post/second.md of post
+INFO: 2014/09/29 curpath: /Users/quoha/Sites/zafta/themes/zafta/archetypes/post.md
+INFO: 2014/09/29 creating /Users/quoha/Sites/zafta/content/post/second.md
+/Users/quoha/Sites/zafta/content/post/second.md created
+
+$ ls -l content/post
+total 16
+-rw-r--r--  1 quoha  staff  104 Sep 29 21:54 first.md
+-rw-r--r--  1 quoha  staff  105 Sep 29 21:57 second.md
+
+$ cat content/post/first.md 
++++
+Categories = []
+Description = &amp;quot;&amp;quot;
+Tags = []
+date = &amp;quot;2014-09-29T21:54:53-05:00&amp;quot;
+title = &amp;quot;first&amp;quot;
+
++++
+my first post
+
+$ cat content/post/second.md 
++++
+Categories = []
+Description = &amp;quot;&amp;quot;
+Tags = []
+date = &amp;quot;2014-09-29T21:57:09-05:00&amp;quot;
+title = &amp;quot;second&amp;quot;
+
++++
+my second post
+
+$ 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Build the web site and then verify the results.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ rm -rf public
+$ hugo --verbose
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 found taxonomies: map[string]string{&amp;quot;category&amp;quot;:&amp;quot;categories&amp;quot;, &amp;quot;tag&amp;quot;:&amp;quot;tags&amp;quot;}
+WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
+0 draft content 
+0 future content 
+2 pages created 
+0 tags created
+0 categories created
+in 4 ms
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The output says that it created 2 pages. Those are our new posts:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ find public -type f -name &#39;*.html&#39; | xargs ls -l
+-rw-r--r--  1 quoha  staff  78 Sep 29 22:13 public/index.html
+-rw-r--r--  1 quoha  staff   0 Sep 29 22:13 public/post/first/index.html
+-rw-r--r--  1 quoha  staff   0 Sep 29 22:13 public/post/index.html
+-rw-r--r--  1 quoha  staff   0 Sep 29 22:13 public/post/second/index.html
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The new files are empty because because the templates used to generate the content are empty. The homepage doesn&amp;rsquo;t show the new content, either. We have to update the templates to add the posts.&lt;/p&gt;
+
+&lt;h3 id=&#34;list-and-single-templates:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;List and Single Templates&lt;/h3&gt;
+
+&lt;p&gt;In Hugo, we have three major kinds of templates. There&amp;rsquo;s the home page template that we updated previously. It is used only by the home page. We also have &amp;ldquo;single&amp;rdquo; templates which are used to generate output for a single content file. We also have &amp;ldquo;list&amp;rdquo; templates that are used to group multiple pieces of content before generating output.&lt;/p&gt;
+
+&lt;p&gt;Generally speaking, list templates are named &amp;ldquo;list.html&amp;rdquo; and single templates are named &amp;ldquo;single.html.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;There are three other types of templates: partials, content views, and terms. We will not go into much detail on these.&lt;/p&gt;
+
+&lt;h3 id=&#34;add-content-to-the-homepage:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Add Content to the Homepage&lt;/h3&gt;
+
+&lt;p&gt;The home page will contain a list of posts. Let&amp;rsquo;s update its template to add the posts that we just created. The logic in the template will run every time we build the site.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/index.html 
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+  {{ range first 10 .Data.Pages }}
+    &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
+  {{ end }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+:wq
+
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hugo uses the Go template engine. That engine scans the template files for commands which are enclosed between &amp;ldquo;{{&amp;rdquo; and &amp;ldquo;}}&amp;rdquo;. In our template, the commands are:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;range&lt;/li&gt;
+&lt;li&gt;.Title&lt;/li&gt;
+&lt;li&gt;end&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The &amp;ldquo;range&amp;rdquo; command is an iterator. We&amp;rsquo;re going to use it to go through the first ten pages. Every HTML file that Hugo creates is treated as a page, so looping through the list of pages will look at every file that will be created.&lt;/p&gt;
+
+&lt;p&gt;The &amp;ldquo;.Title&amp;rdquo; command prints the value of the &amp;ldquo;title&amp;rdquo; variable. Hugo pulls it from the front matter in the Markdown file.&lt;/p&gt;
+
+&lt;p&gt;The &amp;ldquo;end&amp;rdquo; command signals the end of the range iterator. The engine loops back to the top of the iteration when it finds &amp;ldquo;end.&amp;rdquo; Everything between the &amp;ldquo;range&amp;rdquo; and &amp;ldquo;end&amp;rdquo; is evaluated every time the engine goes through the iteration. In this file, that would cause the title from the first ten pages to be output as heading level one.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s helpful to remember that some variables, like .Data, are created before any output files. Hugo loads every content file into the variable and then gives the template a chance to process before creating the HTML files.&lt;/p&gt;
+
+&lt;p&gt;Build the web site and then verify the results.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ rm -rf public
+$ hugo --verbose
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 found taxonomies: map[string]string{&amp;quot;tag&amp;quot;:&amp;quot;tags&amp;quot;, &amp;quot;category&amp;quot;:&amp;quot;categories&amp;quot;}
+WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
+0 draft content 
+0 future content 
+2 pages created 
+0 tags created
+0 categories created
+in 4 ms
+$ find public -type f -name &#39;*.html&#39; | xargs ls -l 
+-rw-r--r--  1 quoha  staff  94 Sep 29 22:23 public/index.html
+-rw-r--r--  1 quoha  staff   0 Sep 29 22:23 public/post/first/index.html
+-rw-r--r--  1 quoha  staff   0 Sep 29 22:23 public/post/index.html
+-rw-r--r--  1 quoha  staff   0 Sep 29 22:23 public/post/second/index.html
+$ cat public/index.html 
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+  
+    &amp;lt;h1&amp;gt;second&amp;lt;/h1&amp;gt;
+  
+    &amp;lt;h1&amp;gt;first&amp;lt;/h1&amp;gt;
+  
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Congratulations, the home page shows the title of the two posts. The posts themselves are still empty, but let&amp;rsquo;s take a moment to appreciate what we&amp;rsquo;ve done. Your template now generates output dynamically. Believe it or not, by inserting the range command inside of those curly braces, you&amp;rsquo;ve learned everything you need to know to build a theme. All that&amp;rsquo;s really left is understanding which template will be used to generate each content file and becoming familiar with the commands for the template engine.&lt;/p&gt;
+
+&lt;p&gt;And, if that were entirely true, this tutorial would be much shorter. There are a few things to know that will make creating a new template much easier. Don&amp;rsquo;t worry, though, that&amp;rsquo;s all to come.&lt;/p&gt;
+
+&lt;h3 id=&#34;add-content-to-the-posts:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Add Content to the Posts&lt;/h3&gt;
+
+&lt;p&gt;We&amp;rsquo;re working with posts, which are in the content/post/ directory. That means that their section is &amp;ldquo;post&amp;rdquo; (and if we don&amp;rsquo;t do something weird, their type is also &amp;ldquo;post&amp;rdquo;).&lt;/p&gt;
+
+&lt;p&gt;Hugo uses the section and type to find the template file for every piece of content. Hugo will first look for a template file that matches the section or type name. If it can&amp;rsquo;t find one, then it will look in the _default/ directory. There are some twists that we&amp;rsquo;ll cover when we get to categories and tags, but for now we can assume that Hugo will try post/single.html, then _default/single.html.&lt;/p&gt;
+
+&lt;p&gt;Now that we know the search rule, let&amp;rsquo;s see what we actually have available:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ find themes/zafta -name single.html | xargs ls -l
+-rw-r--r--  1 quoha  staff  132 Sep 29 17:31 themes/zafta/layouts/_default/single.html
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We could create a new template, post/single.html, or change the default. Since we don&amp;rsquo;t know of any other content types, let&amp;rsquo;s start with updating the default.&lt;/p&gt;
+
+&lt;p&gt;Remember, any content that we haven&amp;rsquo;t created a template for will end up using this template. That can be good or bad. Bad because I know that we&amp;rsquo;re going to be adding different types of content and we&amp;rsquo;re going to end up undoing some of the changes we&amp;rsquo;ve made. It&amp;rsquo;s good because we&amp;rsquo;ll be able to see immediate results. It&amp;rsquo;s also good to start here because we can start to build the basic layout for the site. As we add more content types, we&amp;rsquo;ll refactor this file and move logic around. Hugo makes that fairly painless, so we&amp;rsquo;ll accept the cost and proceed.&lt;/p&gt;
+
+&lt;p&gt;Please see the Hugo documentation on template rendering for all the details on determining which template to use. And, as the docs mention, if you&amp;rsquo;re building a single page application (SPA) web site, you can delete all of the other templates and work with just the default single page. That&amp;rsquo;s a refreshing amount of joy right there.&lt;/p&gt;
+
+&lt;h4 id=&#34;update-the-template-file:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Update the Template File&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/_default/single.html 
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;title&amp;gt;{{ .Title }}&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
+  {{ .Content }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+:wq
+
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Build the web site and verify the results.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ rm -rf public
+$ hugo --verbose
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 found taxonomies: map[string]string{&amp;quot;tag&amp;quot;:&amp;quot;tags&amp;quot;, &amp;quot;category&amp;quot;:&amp;quot;categories&amp;quot;}
+WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
+0 draft content 
+0 future content 
+2 pages created 
+0 tags created
+0 categories created
+in 4 ms
+
+$ find public -type f -name &#39;*.html&#39; | xargs ls -l
+-rw-r--r--  1 quoha  staff   94 Sep 29 22:40 public/index.html
+-rw-r--r--  1 quoha  staff  125 Sep 29 22:40 public/post/first/index.html
+-rw-r--r--  1 quoha  staff    0 Sep 29 22:40 public/post/index.html
+-rw-r--r--  1 quoha  staff  128 Sep 29 22:40 public/post/second/index.html
+
+$ cat public/post/first/index.html 
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;title&amp;gt;first&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;h1&amp;gt;first&amp;lt;/h1&amp;gt;
+  &amp;lt;p&amp;gt;my first post&amp;lt;/p&amp;gt;
+
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+
+$ cat public/post/second/index.html 
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;title&amp;gt;second&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;h1&amp;gt;second&amp;lt;/h1&amp;gt;
+  &amp;lt;p&amp;gt;my second post&amp;lt;/p&amp;gt;
+
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that the posts now have content. You can go to localhost:1313/post/first to verify.&lt;/p&gt;
+
+&lt;h3 id=&#34;linking-to-content:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Linking to Content&lt;/h3&gt;
+
+&lt;p&gt;The posts are on the home page. Let&amp;rsquo;s add a link from there to the post. Since this is the home page, we&amp;rsquo;ll update its template.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/index.html
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+  {{ range first 10 .Data.Pages }}
+    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;{{ .Permalink }}&amp;quot;&amp;gt;{{ .Title }}&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
+  {{ end }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Build the web site and verify the results.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ rm -rf public
+$ hugo --verbose
+INFO: 2014/09/29 Using config file: /Users/quoha/Sites/zafta/config.toml
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/themes/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 syncing from /Users/quoha/Sites/zafta/static/ to /Users/quoha/Sites/zafta/public/
+INFO: 2014/09/29 found taxonomies: map[string]string{&amp;quot;tag&amp;quot;:&amp;quot;tags&amp;quot;, &amp;quot;category&amp;quot;:&amp;quot;categories&amp;quot;}
+WARN: 2014/09/29 Unable to locate layout: [404.html theme/404.html]
+0 draft content 
+0 future content 
+2 pages created 
+0 tags created
+0 categories created
+in 4 ms
+
+$ find public -type f -name &#39;*.html&#39; | xargs ls -l
+-rw-r--r--  1 quoha  staff  149 Sep 29 22:44 public/index.html
+-rw-r--r--  1 quoha  staff  125 Sep 29 22:44 public/post/first/index.html
+-rw-r--r--  1 quoha  staff    0 Sep 29 22:44 public/post/index.html
+-rw-r--r--  1 quoha  staff  128 Sep 29 22:44 public/post/second/index.html
+
+$ cat public/index.html 
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+  
+    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;/post/second/&amp;quot;&amp;gt;second&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
+  
+    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;/post/first/&amp;quot;&amp;gt;first&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
+  
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+
+$
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;create-a-post-listing:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Create a Post Listing&lt;/h3&gt;
+
+&lt;p&gt;We have the posts displaying on the home page and on their own page. We also have a file public/post/index.html that is empty. Let&amp;rsquo;s make it show a list of all posts (not just the first ten).&lt;/p&gt;
+
+&lt;p&gt;We need to decide which template to update. This will be a listing, so it should be a list template. Let&amp;rsquo;s take a quick look and see which list templates are available.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ find themes/zafta -name list.html | xargs ls -l
+-rw-r--r--  1 quoha  staff  0 Sep 29 17:31 themes/zafta/layouts/_default/list.html
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As with the single post, we have to decide to update _default/list.html or create post/list.html. We still don&amp;rsquo;t have multiple content types, so let&amp;rsquo;s stay consistent and update the default list template.&lt;/p&gt;
+
+&lt;h2 id=&#34;creating-top-level-pages:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Creating Top Level Pages&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s add an &amp;ldquo;about&amp;rdquo; page and display it at the top level (as opposed to a sub-level like we did with posts).&lt;/p&gt;
+
+&lt;p&gt;The default in Hugo is to use the directory structure of the content/ directory to guide the location of the generated html in the public/ directory. Let&amp;rsquo;s verify that by creating an &amp;ldquo;about&amp;rdquo; page at the top level:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi content/about.md 
++++
+title = &amp;quot;about&amp;quot;
+description = &amp;quot;about this site&amp;quot;
+date = &amp;quot;2014-09-27&amp;quot;
+slug = &amp;quot;about time&amp;quot;
++++
+
+## about us
+
+i&#39;m speechless
+:wq
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Generate the web site and verify the results.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ find public -name &#39;*.html&#39; | xargs ls -l
+-rw-rw-r--  1 mdhender  staff   334 Sep 27 15:08 public/about-time/index.html
+-rw-rw-r--  1 mdhender  staff   527 Sep 27 15:08 public/index.html
+-rw-rw-r--  1 mdhender  staff   358 Sep 27 15:08 public/post/first-post/index.html
+-rw-rw-r--  1 mdhender  staff     0 Sep 27 15:08 public/post/index.html
+-rw-rw-r--  1 mdhender  staff   342 Sep 27 15:08 public/post/second-post/index.html
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that the page wasn&amp;rsquo;t created at the top level. It was created in a sub-directory named &amp;lsquo;about-time/&amp;rsquo;. That name came from our slug. Hugo will use the slug to name the generated content. It&amp;rsquo;s a reasonable default, by the way, but we can learn a few things by fighting it for this file.&lt;/p&gt;
+
+&lt;p&gt;One other thing. Take a look at the home page.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cat public/index.html
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;http://localhost:1313/post/theme/&amp;quot;&amp;gt;creating a new theme&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
+    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;http://localhost:1313/about-time/&amp;quot;&amp;gt;about&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
+    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;http://localhost:1313/post/second-post/&amp;quot;&amp;gt;second&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
+    &amp;lt;h1&amp;gt;&amp;lt;a href=&amp;quot;http://localhost:1313/post/first-post/&amp;quot;&amp;gt;first&amp;lt;/a&amp;gt;&amp;lt;/h1&amp;gt;
+&amp;lt;script&amp;gt;document.write(&#39;&amp;lt;script src=&amp;quot;http://&#39;
+        + (location.host || &#39;localhost&#39;).split(&#39;:&#39;)[0]
+        + &#39;:1313/livereload.js?mindelay=10&amp;quot;&amp;gt;&amp;lt;/&#39;
+        + &#39;script&amp;gt;&#39;)&amp;lt;/script&amp;gt;&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that the &amp;ldquo;about&amp;rdquo; link is listed with the posts? That&amp;rsquo;s not desirable, so let&amp;rsquo;s change that first.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/index.html
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;h1&amp;gt;posts&amp;lt;/h1&amp;gt;
+  {{ range first 10 .Data.Pages }}
+    {{ if eq .Type &amp;quot;post&amp;quot;}}
+      &amp;lt;h2&amp;gt;&amp;lt;a href=&amp;quot;{{ .Permalink }}&amp;quot;&amp;gt;{{ .Title }}&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;
+    {{ end }}
+  {{ end }}
+
+  &amp;lt;h1&amp;gt;pages&amp;lt;/h1&amp;gt;
+  {{ range .Data.Pages }}
+    {{ if eq .Type &amp;quot;page&amp;quot; }}
+      &amp;lt;h2&amp;gt;&amp;lt;a href=&amp;quot;{{ .Permalink }}&amp;quot;&amp;gt;{{ .Title }}&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;
+    {{ end }}
+  {{ end }}
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+:wq
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Generate the web site and verify the results. The home page has two sections, posts and pages, and each section has the right set of headings and links in it.&lt;/p&gt;
+
+&lt;p&gt;But, that about page still renders to about-time/index.html.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ find public -name &#39;*.html&#39; | xargs ls -l
+-rw-rw-r--  1 mdhender  staff    334 Sep 27 15:33 public/about-time/index.html
+-rw-rw-r--  1 mdhender  staff    645 Sep 27 15:33 public/index.html
+-rw-rw-r--  1 mdhender  staff    358 Sep 27 15:33 public/post/first-post/index.html
+-rw-rw-r--  1 mdhender  staff      0 Sep 27 15:33 public/post/index.html
+-rw-rw-r--  1 mdhender  staff    342 Sep 27 15:33 public/post/second-post/index.html
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Knowing that hugo is using the slug to generate the file name, the simplest solution is to change the slug. Let&amp;rsquo;s do it the hard way and change the permalink in the configuration file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi config.toml
+[permalinks]
+    page = &amp;quot;/:title/&amp;quot;
+    about = &amp;quot;/:filename/&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Generate the web site and verify that this didn&amp;rsquo;t work. Hugo lets &amp;ldquo;slug&amp;rdquo; or &amp;ldquo;URL&amp;rdquo; override the permalinks setting in the configuration file. Go ahead and comment out the slug in content/about.md, then generate the web site to get it to be created in the right place.&lt;/p&gt;
+
+&lt;h2 id=&#34;sharing-templates:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Sharing Templates&lt;/h2&gt;
+
+&lt;p&gt;If you&amp;rsquo;ve been following along, you probably noticed that posts have titles in the browser and the home page doesn&amp;rsquo;t. That&amp;rsquo;s because we didn&amp;rsquo;t put the title in the home page&amp;rsquo;s template (layouts/index.html). That&amp;rsquo;s an easy thing to do, but let&amp;rsquo;s look at a different option.&lt;/p&gt;
+
+&lt;p&gt;We can put the common bits into a shared template that&amp;rsquo;s stored in the themes/zafta/layouts/partials/ directory.&lt;/p&gt;
+
+&lt;h3 id=&#34;create-the-header-and-footer-partials:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Create the Header and Footer Partials&lt;/h3&gt;
+
+&lt;p&gt;In Hugo, a partial is a sugar-coated template. Normally a template reference has a path specified. Partials are different. Hugo searches for them along a TODO defined search path. This makes it easier for end-users to override the theme&amp;rsquo;s presentation.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/partials/header.html
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;title&amp;gt;{{ .Title }}&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+:wq
+
+$ vi themes/zafta/layouts/partials/footer.html
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+:wq
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;update-the-home-page-template-to-use-the-partials:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Update the Home Page Template to Use the Partials&lt;/h3&gt;
+
+&lt;p&gt;The most noticeable difference between a template call and a partials call is the lack of path:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{{ template &amp;quot;theme/partials/header.html&amp;quot; . }}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;versus
+&lt;code&gt;
+{{ partial &amp;quot;header.html&amp;quot; . }}
+&lt;/code&gt;
+Both pass in the context.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s change the home page template to use these new partials.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/index.html
+{{ partial &amp;quot;header.html&amp;quot; . }}
+
+  &amp;lt;h1&amp;gt;posts&amp;lt;/h1&amp;gt;
+  {{ range first 10 .Data.Pages }}
+    {{ if eq .Type &amp;quot;post&amp;quot;}}
+      &amp;lt;h2&amp;gt;&amp;lt;a href=&amp;quot;{{ .Permalink }}&amp;quot;&amp;gt;{{ .Title }}&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;
+    {{ end }}
+  {{ end }}
+
+  &amp;lt;h1&amp;gt;pages&amp;lt;/h1&amp;gt;
+  {{ range .Data.Pages }}
+    {{ if or (eq .Type &amp;quot;page&amp;quot;) (eq .Type &amp;quot;about&amp;quot;) }}
+      &amp;lt;h2&amp;gt;&amp;lt;a href=&amp;quot;{{ .Permalink }}&amp;quot;&amp;gt;{{ .Type }} - {{ .Title }} - {{ .RelPermalink }}&amp;lt;/a&amp;gt;&amp;lt;/h2&amp;gt;
+    {{ end }}
+  {{ end }}
+
+{{ partial &amp;quot;footer.html&amp;quot; . }}
+:wq
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Generate the web site and verify the results. The title on the home page is now &amp;ldquo;your title here&amp;rdquo;, which comes from the &amp;ldquo;title&amp;rdquo; variable in the config.toml file.&lt;/p&gt;
+
+&lt;h3 id=&#34;update-the-default-single-template-to-use-the-partials:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Update the Default Single Template to Use the Partials&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/_default/single.html
+{{ partial &amp;quot;header.html&amp;quot; . }}
+
+  &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
+  {{ .Content }}
+
+{{ partial &amp;quot;footer.html&amp;quot; . }}
+:wq
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Generate the web site and verify the results. The title on the posts and the about page should both reflect the value in the markdown file.&lt;/p&gt;
+
+&lt;h2 id=&#34;add-date-published-to-posts:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Add “Date Published” to Posts&lt;/h2&gt;
+
+&lt;p&gt;It&amp;rsquo;s common to have posts display the date that they were written or published, so let&amp;rsquo;s add that. The front matter of our posts has a variable named &amp;ldquo;date.&amp;rdquo; It&amp;rsquo;s usually the date the content was created, but let&amp;rsquo;s pretend that&amp;rsquo;s the value we want to display.&lt;/p&gt;
+
+&lt;h3 id=&#34;add-date-published-to-the-template:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Add “Date Published” to the Template&lt;/h3&gt;
+
+&lt;p&gt;We&amp;rsquo;ll start by updating the template used to render the posts. The template code will look like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{{ .Date.Format &amp;quot;Mon, Jan 2, 2006&amp;quot; }}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Posts use the default single template, so we&amp;rsquo;ll change that file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/_default/single.html
+{{ partial &amp;quot;header.html&amp;quot; . }}
+
+  &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
+  &amp;lt;h2&amp;gt;{{ .Date.Format &amp;quot;Mon, Jan 2, 2006&amp;quot; }}&amp;lt;/h2&amp;gt;
+  {{ .Content }}
+
+{{ partial &amp;quot;footer.html&amp;quot; . }}
+:wq
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Generate the web site and verify the results. The posts now have the date displayed in them. There&amp;rsquo;s a problem, though. The &amp;ldquo;about&amp;rdquo; page also has the date displayed.&lt;/p&gt;
+
+&lt;p&gt;As usual, there are a couple of ways to make the date display only on posts. We could do an &amp;ldquo;if&amp;rdquo; statement like we did on the home page. Another way would be to create a separate template for posts.&lt;/p&gt;
+
+&lt;p&gt;The &amp;ldquo;if&amp;rdquo; solution works for sites that have just a couple of content types. It aligns with the principle of &amp;ldquo;code for today,&amp;rdquo; too.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s assume, though, that we&amp;rsquo;ve made our site so complex that we feel we have to create a new template type. In Hugo-speak, we&amp;rsquo;re going to create a section template.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s restore the default single template before we forget.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ mkdir themes/zafta/layouts/post
+$ vi themes/zafta/layouts/_default/single.html
+{{ partial &amp;quot;header.html&amp;quot; . }}
+
+  &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
+  {{ .Content }}
+
+{{ partial &amp;quot;footer.html&amp;quot; . }}
+:wq
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we&amp;rsquo;ll update the post&amp;rsquo;s version of the single template. If you remember Hugo&amp;rsquo;s rules, the template engine will use this version over the default.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ vi themes/zafta/layouts/post/single.html
+{{ partial &amp;quot;header.html&amp;quot; . }}
+
+  &amp;lt;h1&amp;gt;{{ .Title }}&amp;lt;/h1&amp;gt;
+  &amp;lt;h2&amp;gt;{{ .Date.Format &amp;quot;Mon, Jan 2, 2006&amp;quot; }}&amp;lt;/h2&amp;gt;
+  {{ .Content }}
+
+{{ partial &amp;quot;footer.html&amp;quot; . }}
+:wq
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that we removed the date logic from the default template and put it in the post template. Generate the web site and verify the results. Posts have dates and the about page doesn&amp;rsquo;t.&lt;/p&gt;
+
+&lt;h3 id=&#34;don-t-repeat-yourself:1b6a7dc946fce959da12a6adaa6315c2&#34;&gt;Don&amp;rsquo;t Repeat Yourself&lt;/h3&gt;
+
+&lt;p&gt;DRY is a good design goal and Hugo does a great job supporting it. Part of the art of a good template is knowing when to add a new template and when to update an existing one. While you&amp;rsquo;re figuring that out, accept that you&amp;rsquo;ll be doing some refactoring. Hugo makes that easy and fast, so it&amp;rsquo;s okay to delay splitting up a template.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>A Basic introduction to Mongo DB</title>
+      <link>http://localhost:1313/post/a_basic_introduction_to_mongodb/</link>
+      <pubDate>Sun, 26 Jul 2015 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/a_basic_introduction_to_mongodb/</guid>
+      <description>
+
+&lt;h1 id=&#34;a-basic-introduction-to-mongo-db:1a71523213b4a585995d1ccbcc405a86&#34;&gt;A Basic introduction to Mongo DB&lt;/h1&gt;
+
+&lt;p&gt;Mongo DB has rapidly grown to become a popular database for web applications and is a perfect fit for Node.JS applications, letting you write Javascript for the client, backend and database layer. Its schemaless nature is a better match to our constantly evolving data structures in web applications, and the integrated support for location queries is a bonus that&amp;rsquo;s hard to ignore. Throw in Replica Sets for scaling, and we&amp;rsquo;re looking at really nice platform to grow your storage needs now and in the future.&lt;/p&gt;
+
+&lt;p&gt;Now to shamelessly plug my driver. It can be downloaded via npm, or fetched from the github repository. To install via npm, do the following:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;npm install mongodb&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;or go fetch it from github at &lt;a href=&#34;https://github.com/christkv/node-mongodb-native&#34;&gt;https://github.com/christkv/node-mongodb-native&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Once this business is taken care of, let&amp;rsquo;s move through the types available for the driver and then how to connect to your Mongo DB instance before facing the usage of some CRUD operations.&lt;/p&gt;
+
+&lt;h2 id=&#34;mongo-db-data-types:1a71523213b4a585995d1ccbcc405a86&#34;&gt;Mongo DB data types&lt;/h2&gt;
+
+&lt;p&gt;So there is an important thing to keep in mind when working with Mongo DB, and that is the slight mapping difference between types Mongo DB supports and native Javascript data types. Let&amp;rsquo;s have a look at the types supported out of the box and then how types are promoted by the driver to fit as close to native Javascript types as possible.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Float&lt;/strong&gt; is a 8 byte and is directly convertible to the Javascript type Number&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Double class&lt;/strong&gt; a special class representing a float value, this is especially useful when using capped collections where you need to ensure your values are always floats.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integers&lt;/strong&gt; is a bit trickier due to the fact that Javascript represents all Numbers as 64 bit floats meaning that the maximum integer value is at a 53 bit. Mongo has two types for integers, a 32 bit and a 64 bit. The driver will try to fit the value into 32 bits if it can and promote it to 64 bits if it has to. Similarly it will deserialize attempting to fit it into 53 bits if it can. If it cannot it will return an instance of &lt;strong&gt;Long&lt;/strong&gt; to avoid loosing precession.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Long class&lt;/strong&gt; a special class that let&amp;rsquo;s you store 64 bit integers and also let&amp;rsquo;s you operate on the 64 bits integers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Date&lt;/strong&gt; maps directly to a Javascript Date&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RegExp&lt;/strong&gt; maps directly to a Javascript RegExp&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;String&lt;/strong&gt; maps directly to a Javascript String (encoded in utf8)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Binary class&lt;/strong&gt; a special class that let&amp;rsquo;s you store data in Mongo DB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Code class&lt;/strong&gt; a special class that let&amp;rsquo;s you store javascript functions in Mongo DB, can also provide a scope to run the method in&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ObjectID class&lt;/strong&gt; a special class that holds a MongoDB document identifier (the equivalent to a Primary key)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DbRef class&lt;/strong&gt; a special class that let&amp;rsquo;s you include a reference in a document pointing to another object&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Symbol class&lt;/strong&gt; a special class that let&amp;rsquo;s you specify a symbol, not really relevant for javascript but for languages that supports the concept of symbols.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As we see the number type can be a little tricky due to the way integers are implemented in Javascript. The latest driver will do correct conversion up to 53 bit&amp;rsquo;s of complexity. If you need to handle big integers the recommendation is to use the Long class to operate on the numbers.&lt;/p&gt;
+
+&lt;h2 id=&#34;getting-that-connection-to-the-database:1a71523213b4a585995d1ccbcc405a86&#34;&gt;Getting that connection to the database&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;rsquo;s get around to setting up a connection with the Mongo DB database. Jumping straight into the code let&amp;rsquo;s do direct connection and then look at the code.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(!err) {
+    console.log(&amp;quot;We are connected&amp;quot;);
+  }
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s have a quick look at how the connection code works. The &lt;strong&gt;Db.connect&lt;/strong&gt;
+method let&amp;rsquo;s use use a uri to connect to the Mongo database, where
+&lt;strong&gt;localhost:27017&lt;/strong&gt; is the server host and port and &lt;strong&gt;exampleDb&lt;/strong&gt; the db
+we wish to connect to. After the url notice the hash containing the
+&lt;strong&gt;auto_reconnect&lt;/strong&gt; key. Auto reconnect tells the driver to retry sending
+a command to the server if there is a failure during it&amp;rsquo;s execution.&lt;/p&gt;
+
+&lt;p&gt;Another useful option you can pass in is&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;poolSize&lt;/strong&gt;, this allows you to control how many tcp connections are
+opened in parallel. The default value for this is 5 but you can set it
+as high as you want. The driver will use a round-robin strategy to
+dispatch and read from the tcp connection.&lt;/p&gt;
+
+&lt;p&gt;We are up and running with a connection to the database. Let&amp;rsquo;s move on
+and look at what collections are and how they work.&lt;/p&gt;
+
+&lt;h2 id=&#34;mongo-db-and-collections:1a71523213b4a585995d1ccbcc405a86&#34;&gt;Mongo DB and Collections&lt;/h2&gt;
+
+&lt;p&gt;Collections are the equivalent of tables in traditional databases and contain all your documents. A database can have many collections. So how do we go about defining and using collections. Well there are a couple of methods that we can use. Let&amp;rsquo;s jump straight into code and then look at the code.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  db.collection(&#39;test&#39;, function(err, collection) {});
+
+  db.collection(&#39;test&#39;, {w:1}, function(err, collection) {});
+
+  db.createCollection(&#39;test&#39;, function(err, collection) {});
+
+  db.createCollection(&#39;test&#39;, {w:1}, function(err, collection) {});
+
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Three different ways of creating a collection object but slightly different in behavior. Let&amp;rsquo;s go through them and see what they do&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;db.collection(&#39;test&#39;, function(err, collection) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This function will not actually create a collection on the database until you actually insert the first document.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;db.collection(&#39;test&#39;, {strict:true}, function(err, collection) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice the &lt;strong&gt;{strict:true}&lt;/strong&gt; option. This option will make the driver check if the collection exists and issue an error if it does not.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;db.createCollection(&#39;test&#39;, function(err, collection) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This command will create the collection on the Mongo DB database before returning the collection object. If the collection already exists it will ignore the creation of the collection.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;db.createCollection(&#39;test&#39;, {strict:true}, function(err, collection) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;strong&gt;{strict:true}&lt;/strong&gt; option will make the method return an error if the collection already exists.&lt;/p&gt;
+
+&lt;p&gt;With an open db connection and a collection defined we are ready to do some CRUD operation on the data.&lt;/p&gt;
+
+&lt;h2 id=&#34;and-then-there-was-crud:1a71523213b4a585995d1ccbcc405a86&#34;&gt;And then there was CRUD&lt;/h2&gt;
+
+&lt;p&gt;So let&amp;rsquo;s get dirty with the basic operations for Mongo DB. The Mongo DB wire protocol is built around 4 main operations &lt;strong&gt;insert/update/remove/query&lt;/strong&gt;. Most operations on the database are actually queries with special json objects defining the operation on the database. But I&amp;rsquo;m getting ahead of myself. Let&amp;rsquo;s go back and look at insert first and do it with some code.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection(&#39;test&#39;);
+  var doc1 = {&#39;hello&#39;:&#39;doc1&#39;};
+  var doc2 = {&#39;hello&#39;:&#39;doc2&#39;};
+  var lotsOfDocs = [{&#39;hello&#39;:&#39;doc3&#39;}, {&#39;hello&#39;:&#39;doc4&#39;}];
+
+  collection.insert(doc1);
+
+  collection.insert(doc2, {w:1}, function(err, result) {});
+
+  collection.insert(lotsOfDocs, {w:1}, function(err, result) {});
+
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A couple of variations on the theme of inserting a document as we can see. To understand why it&amp;rsquo;s important to understand how Mongo DB works during inserts of documents.&lt;/p&gt;
+
+&lt;p&gt;Mongo DB has asynchronous &lt;strong&gt;insert/update/remove&lt;/strong&gt; operations. This means that when you issue an &lt;strong&gt;insert&lt;/strong&gt; operation its a fire and forget operation where the database does not reply with the status of the insert operation. To retrieve the status of the operation you have to issue a query to retrieve the last error status of the connection. To make it simpler to the developer the driver implements the &lt;strong&gt;{w:1}&lt;/strong&gt; options so that this is done automatically when inserting the document. &lt;strong&gt;{w:1}&lt;/strong&gt; becomes especially important when you do &lt;strong&gt;update&lt;/strong&gt; or &lt;strong&gt;remove&lt;/strong&gt; as otherwise it&amp;rsquo;s not possible to determine the amount of documents modified or removed.&lt;/p&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s go through the different types of inserts shown in the code above.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.insert(doc1);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Taking advantage of the async behavior and not needing confirmation about the persisting of the data to Mongo DB we just fire off the insert (we are doing live analytics, loosing a couple of records does not matter).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.insert(doc2, {w:1}, function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That document needs to stick. Using the &lt;strong&gt;{w:1}&lt;/strong&gt; option ensure you get the error back if the document fails to insert correctly.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.insert(lotsOfDocs, {w:1}, function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A batch insert of document with any errors being reported. This is much more efficient if you need to insert large batches of documents as you incur a lot less overhead.&lt;/p&gt;
+
+&lt;p&gt;Right that&amp;rsquo;s the basics of insert&amp;rsquo;s ironed out. We got some documents in there but want to update them as we need to change the content of a field. Let&amp;rsquo;s have a look at a simple example and then we will dive into how Mongo DB updates work and how to do them efficiently.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection(&#39;test&#39;);
+  var doc = {mykey:1, fieldtoupdate:1};
+
+  collection.insert(doc, {w:1}, function(err, result) {
+    collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {w:1}, function(err, result) {});
+  });
+
+  var doc2 = {mykey:2, docs:[{doc1:1}]};
+
+  collection.insert(doc2, {w:1}, function(err, result) {
+    collection.update({mykey:2}, {$push:{docs:{doc2:1}}}, {w:1}, function(err, result) {});
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Alright before we look at the code we want to understand how document updates work and how to do the efficiently. The most basic and less efficient way is to replace the whole document, this is not really the way to go if you want to change just a field in your document. Luckily Mongo DB provides a whole set of operations that let you modify just pieces of the document &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Atomic+Operations&#34;&gt;Atomic operations documentation&lt;/a&gt;. Basically outlined below.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;$inc - increment a particular value by a certain amount&lt;/li&gt;
+&lt;li&gt;$set - set a particular value&lt;/li&gt;
+&lt;li&gt;$unset - delete a particular field (v1.3+)&lt;/li&gt;
+&lt;li&gt;$push - append a value to an array&lt;/li&gt;
+&lt;li&gt;$pushAll - append several values to an array&lt;/li&gt;
+&lt;li&gt;$addToSet - adds value to the array only if its not in the array already&lt;/li&gt;
+&lt;li&gt;$pop - removes the last element in an array&lt;/li&gt;
+&lt;li&gt;$pull - remove a value(s) from an existing array&lt;/li&gt;
+&lt;li&gt;$pullAll - remove several value(s) from an existing array&lt;/li&gt;
+&lt;li&gt;$rename - renames the field&lt;/li&gt;
+&lt;li&gt;$bit - bitwise operations&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now that the operations are outline let&amp;rsquo;s dig into the specific cases show in the code example.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.update({mykey:1}, {$set:{fieldtoupdate:2}}, {w:1}, function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Right so this update will look for the document that has a field &lt;strong&gt;mykey&lt;/strong&gt; equal to &lt;strong&gt;1&lt;/strong&gt; and apply an update to the field &lt;strong&gt;fieldtoupdate&lt;/strong&gt; setting the value to &lt;strong&gt;2&lt;/strong&gt;. Since we are using the &lt;strong&gt;{w:1}&lt;/strong&gt; option the result parameter in the callback will return the value &lt;strong&gt;1&lt;/strong&gt; indicating that 1 document was modified by the update statement.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.update({mykey:2}, {$push:{docs:{doc2:1}}}, {w:1}, function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This updates adds another document to the field &lt;strong&gt;docs&lt;/strong&gt; in the document identified by &lt;strong&gt;{mykey:2}&lt;/strong&gt; using the atomic operation &lt;strong&gt;$push&lt;/strong&gt;. This allows you to modify keep such structures as queues in Mongo DB.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s have a look at the remove operation for the driver. As before let&amp;rsquo;s start with a piece of code.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection(&#39;test&#39;);
+  var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
+
+  collection.insert(docs, {w:1}, function(err, result) {
+
+    collection.remove({mykey:1});
+
+    collection.remove({mykey:2}, {w:1}, function(err, result) {});
+
+    collection.remove();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s examine the 3 remove variants and what they do.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.remove({mykey:1});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This leverages the fact that Mongo DB is asynchronous and that it does not return a result for &lt;strong&gt;insert/update/remove&lt;/strong&gt; to allow for &lt;strong&gt;synchronous&lt;/strong&gt; style execution. This particular remove query will remove the document where &lt;strong&gt;mykey&lt;/strong&gt; equals &lt;strong&gt;1&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.remove({mykey:2}, {w:1}, function(err, result) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This remove statement removes the document where &lt;strong&gt;mykey&lt;/strong&gt; equals &lt;strong&gt;2&lt;/strong&gt; but since we are using &lt;strong&gt;{w:1}&lt;/strong&gt; it will back to Mongo DB to get the status of the remove operation and return the number of documents removed in the result variable.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.remove();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This last one will remove all documents in the collection.&lt;/p&gt;
+
+&lt;h2 id=&#34;time-to-query:1a71523213b4a585995d1ccbcc405a86&#34;&gt;Time to Query&lt;/h2&gt;
+
+&lt;p&gt;Queries is of course a fundamental part of interacting with a database and Mongo DB is no exception. Fortunately for us it has a rich query interface with cursors and close to SQL concepts for slicing and dicing your datasets. To build queries we have lots of operators to choose from &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Advanced+Queries&#34;&gt;Mongo DB advanced queries&lt;/a&gt;. There are literarily tons of ways to search and ways to limit the query. Let&amp;rsquo;s look at some simple code for dealing with queries in different ways.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;the requires and and other initializing stuff omitted for brevity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;// Retrieve
+var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+// Connect to the db
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/exampleDb&amp;quot;, function(err, db) {
+  if(err) { return console.dir(err); }
+
+  var collection = db.collection(&#39;test&#39;);
+  var docs = [{mykey:1}, {mykey:2}, {mykey:3}];
+
+  collection.insert(docs, {w:1}, function(err, result) {
+
+    collection.find().toArray(function(err, items) {});
+
+    var stream = collection.find({mykey:{$ne:2}}).stream();
+    stream.on(&amp;quot;data&amp;quot;, function(item) {});
+    stream.on(&amp;quot;end&amp;quot;, function() {});
+
+    collection.findOne({mykey:1}, function(err, item) {});
+
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Before we start picking apart the code there is one thing that needs to be understood, the &lt;strong&gt;find&lt;/strong&gt; method does not execute the actual query. It builds an instance of &lt;strong&gt;Cursor&lt;/strong&gt; that you then use to retrieve the data. This lets you manage how you retrieve the data from Mongo DB and keeps state about your current Cursor state on Mongo DB. Now let&amp;rsquo;s pick apart the queries we have here and look at what they do.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.find().toArray(function(err, items) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This query will fetch all the document in the collection and return them as an array of items. Be careful with the function &lt;strong&gt;toArray&lt;/strong&gt; as it might cause a lot of memory usage as it will instantiate all the document into memory before returning the final array of items. If you have a big resultset you could run into memory issues.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var stream = collection.find({mykey:{$ne:2}}).stream();
+stream.on(&amp;quot;data&amp;quot;, function(item) {});
+stream.on(&amp;quot;end&amp;quot;, function() {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is the preferred way if you have to retrieve a lot of data for streaming, as data is deserialized a &lt;strong&gt;data&lt;/strong&gt; event is emitted. This keeps the resident memory usage low as the documents are streamed to you. Very useful if you are pushing documents out via websockets or some other streaming socket protocol. Once there is no more document the driver will emit the &lt;strong&gt;end&lt;/strong&gt; event to notify the application that it&amp;rsquo;s done.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;collection.findOne({mykey:1}, function(err, item) {});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is special supported function to retrieve just one specific document bypassing the need for a cursor object.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s pretty much it for the quick intro on how to use the database. I have also included a list of links to where to go to find more information and also a sample crude location application I wrote using express JS and mongo DB.&lt;/p&gt;
+
+&lt;h2 id=&#34;links-and-stuff:1a71523213b4a585995d1ccbcc405a86&#34;&gt;Links and stuff&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/tree/master/examples&#34;&gt;The driver examples, good starting point for basic usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/tree/master/test&#34;&gt;All the integration tests, they have tons of different usage cases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.mongodb.org/display/DOCS/Advanced+Queries&#34;&gt;The Mongo DB wiki pages such as the advanced query link&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/christkv/mongodb-presentation&#34;&gt;A silly simple location based application using Express JS and Mongo DB&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>A primer for GridFS using the Mongo DB driver</title>
+      <link>http://localhost:1313/post/a_primer_for_gridfs_using_the_mongodb_driver/</link>
+      <pubDate>Thu, 25 Jun 2015 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/a_primer_for_gridfs_using_the_mongodb_driver/</guid>
+      <description>
+
+&lt;h1 id=&#34;mongo-driver-and-mongo-db-2-6-features:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;Mongo Driver and Mongo DB 2.6 Features&lt;/h1&gt;
+
+&lt;p&gt;MongoDB 2.6 introduces some new powerful features that are reflected in the 1.4 driver release. These include.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Aggregation cursors&lt;/li&gt;
+&lt;li&gt;Per query timeouts &lt;strong&gt;maxTimeMS&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Ordered and Unordered bulk operations&lt;/li&gt;
+&lt;li&gt;A parallelCollectionScan command for fast reading of an entire collection&lt;/li&gt;
+&lt;li&gt;Integrated text search in the query language&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Moreover the driver includes a whole slew of minor and major bug fixes and features. Some of the more noteworthy features include.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Better support for domains in node.js&lt;/li&gt;
+&lt;li&gt;Reconnect events for replicaset and mongos connections&lt;/li&gt;
+&lt;li&gt;Replicaset emits &amp;ldquo;joined&amp;rdquo; and &amp;ldquo;left&amp;rdquo; events when new server join or leave the set&lt;/li&gt;
+&lt;li&gt;Added &lt;strong&gt;bufferMaxEntries&lt;/strong&gt; entry to allow tuning on how long driver keeps waiting for servers to come back up (default is until memory exhaustion)&lt;/li&gt;
+&lt;li&gt;Upgraded BSON parser to rely on 0.2.6 returning to using &lt;strong&gt;nan&lt;/strong&gt; package&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at the main things in 2.6 features one by one.&lt;/p&gt;
+
+&lt;h2 id=&#34;aggregation-cursors:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;Aggregation cursors&lt;/h2&gt;
+
+&lt;p&gt;The addition off aggregation cursors to MongoDB 2.6 now means that applications can disregard the previous max result limit of 16MB. Let&amp;rsquo;s look at a simple use of the aggregation cursor.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get an aggregation cursor
+  var cursor = db.collection(&#39;data&#39;).aggregate([
+      {$match: {}}
+    ], {
+        allowDiskUsage: true
+      , cursor: {batchSize: 1000}   
+    });
+
+  // Use cursor as stream
+  cursor.on(&#39;data&#39;, function(data) {
+    console.dir(data);
+  });
+
+  cursor.on(&#39;end&#39;, function() {
+    db.close();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As one can see the cursor implements the &lt;strong&gt;Readable&lt;/strong&gt; stream interface for 0.10.X or higher. For 2.4 the driver will emulate the cursor behavior by wrapping the result document.&lt;/p&gt;
+
+&lt;h2 id=&#34;maxtimems:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;maxTimeMS&lt;/h2&gt;
+
+&lt;p&gt;One feature that has requested often is the ability to timeout individual queries. In MongoDB 2.6 it&amp;rsquo;s finally arrived and is known as the &lt;strong&gt;maxTimeMS&lt;/strong&gt; option. Let&amp;rsquo;s take a look at a simple usage of the property with a query.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get an aggregation cursor
+  var cursor = db.collection(&#39;data&#39;)
+    .find(&amp;quot;$where&amp;quot;: &amp;quot;sleep(1000) || true&amp;quot;)
+    .maxTimeMS(50);
+
+  // Get alll the items
+  cursor.toArray(function(err, items) {
+    console.dir(err);
+    console.dir(items);
+    db.close();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is a bit of a contrived example using sleep to force the query to wait a second. With the &lt;strong&gt;maxTimeMS&lt;/strong&gt; set to 50 milliseconds the query will be aborted before the full second is up.&lt;/p&gt;
+
+&lt;h2 id=&#34;ordered-unordered-bulk-operations:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;Ordered/Unordered bulk operations&lt;/h2&gt;
+
+&lt;p&gt;Under the covers MongoDB is moving away from the combination of a write operation + get last error (GLE) and towards a write commands api. These new commands allow for the execution of bulk insert/update/remove operations. The bulk api&amp;rsquo;s are abstractions on top of this that server to make it easy to build bulk operations. Bulk operations come in two main flavors.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Ordered bulk operations. These operations execute all the operation in order and error out on the first write error.&lt;/li&gt;
+&lt;li&gt;Unordered bulk operations. These operations execute all the operations in parallel and aggregates up all the errors. Unordered bulk operations do not guarantee order of execution.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at two simple examples using ordered and unordered operations.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get the collection
+  var col = db.collection(&#39;batch_write_ordered_ops&#39;);
+  // Initialize the Ordered Batch
+  var batch = col.initializeOrderedBulkOp();
+
+  // Add some operations to be executed in order
+  batch.insert({a:1});
+  batch.find({a:1}).updateOne({$set: {b:1}});
+  batch.find({a:2}).upsert().updateOne({$set: {b:2}});
+  batch.insert({a:3});
+  batch.find({a:3}).remove({a:3});
+
+  // Execute the operations
+  batch.execute(function(err, result) {
+    console.dir(err);
+    console.dir(result);    
+    db.close();
+  });
+});
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get the collection
+  var col = db.collection(&#39;batch_write_ordered_ops&#39;);
+  // Initialize the Ordered Batch
+  var batch = col.initializeUnorderedBulkOp();
+
+  // Add some operations to be executed in order
+  batch.insert({a:1});
+  batch.find({a:1}).updateOne({$set: {b:1}});
+  batch.find({a:2}).upsert().updateOne({$set: {b:2}});
+  batch.insert({a:3});
+  batch.find({a:3}).remove({a:3});
+
+  // Execute the operations
+  batch.execute(function(err, result) {
+    console.dir(err);
+    console.dir(result);    
+    db.close();
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For older servers than 2.6 the API will downconvert the operations. However it&amp;rsquo;s not possible to downconvert 100% so there might be slight edge cases where it cannot correctly report the right numbers.&lt;/p&gt;
+
+&lt;h2 id=&#34;parallelcollectionscan:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;parallelCollectionScan&lt;/h2&gt;
+
+&lt;p&gt;The &lt;strong&gt;parallelCollectionScan&lt;/strong&gt; command is a special command targeted at reading out an entire collection using &lt;strong&gt;numCursors&lt;/strong&gt; parallel cursors.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get an aggregation cursor
+  db.collection(&#39;data&#39;).parallelCollectionScan({numCursors:3}, function(err, cursors) {
+    var results = [];
+
+    for(var i = 0; i &amp;lt; cursors.length; i++) {
+      cursors[i].get(function(err, items) {
+        test.equal(err, null);
+
+        // Add docs to results array
+        results = results.concat(items);
+        numCursors = numCursors - 1;
+
+        // No more cursors let&#39;s ensure we got all results
+        if(numCursors == 0) {
+          test.equal(docs.length, results.length);
+
+          db.close();
+          test.done();
+        }
+      });
+    }
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This optimizes the IO throughput from a collection.&lt;/p&gt;
+
+&lt;h2 id=&#34;integrated-text-search-in-the-query-language:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;Integrated text search in the query language&lt;/h2&gt;
+
+&lt;p&gt;Text indexes are now integrated into the main query language and enabled by default. A simple example.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, function(err, db) {
+  // Get the collection
+  var collection = db.collection(&#39;textSearchWithSort&#39;);
+  collection.ensureIndex({s: &#39;text&#39;}, function(err, result) {
+    test.equal(null, err);
+
+    collection.insert([
+        {s: &#39;spam&#39;}
+      , {s: &#39;spam eggs and spam&#39;}
+      , {s: &#39;sausage and eggs&#39;}], function(err, result) {
+        test.equal(null, err);
+
+        collection.find(
+            {$text: {$search: &#39;spam&#39;}}
+          , {fields: {_id: false, s: true, score: {$meta: &#39;textScore&#39;}}}
+        ).sort({score: {$meta: &#39;textScore&#39;}}).toArray(function(err, items) {
+          test.equal(null, err);
+          test.equal(&amp;quot;spam eggs and spam&amp;quot;, items[0].s);
+          db.close();
+          test.done();
+        });
+      });
+  });      
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;emitting-reconnect-and-joined-left-events:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;Emitting Reconnect and Joined/Left events&lt;/h2&gt;
+
+&lt;p&gt;The Replicaset and Mongos now emits events for servers joining and leaving the replicaset. This let&amp;rsquo;s applications more easily monitor the changes in the driver over time. &lt;strong&gt;Reconnect&lt;/strong&gt; in the context of a Replicaset or Mongos means that the driver is starting to replay buffered operations.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017,localhost:27027/test&amp;quot;, function(err, db) {
+  db.serverConfig.on(&#39;joined&#39;, function(err, server) {
+    console.log(&amp;quot;server joined&amp;quot;);
+    console.dir(server);
+  });
+
+  db.serverConfig.on(&#39;left&#39;, function(err, server) {
+    console.log(&amp;quot;server left&amp;quot;);
+    console.dir(server);
+  });
+
+  db.serverConfig.on(&#39;reconnect&#39;, function() {
+    console.log(&amp;quot;server reconnected&amp;quot;);
+  }); 
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;buffermaxentries:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;bufferMaxEntries&lt;/h2&gt;
+
+&lt;p&gt;Buffered Max Entries allow for more fine grained control on how many operations that will be buffered before the driver errors out and stops attempting to reconnect.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/test&amp;quot;, {
+    db: {bufferMaxEntries:0},
+  }, function(err, db) {
+    db.close();
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This example disables the command buffering completely and errors out the moment there is no connection available. The default value (for backward compatibility) is to buffer until memory runs out. Be aware that by setting a very low value you can cause some problems in failover scenarios in Replicasets as it might take a little but of time before f.ex a new Primary is elected and steps up to accept writes. Setting &lt;strong&gt;bufferMaxEntries&lt;/strong&gt; to 0 in this case will cause the driver to error out instead of falling over correctly.&lt;/p&gt;
+
+&lt;h2 id=&#34;fsync-and-journal-write-concerns-note:b920dea5261c4471cc211b90deb5a7d3&#34;&gt;Fsync and journal Write Concerns note&lt;/h2&gt;
+
+&lt;p&gt;MongoDB from version 2.6 and higher disallows the combination of &lt;strong&gt;journal&lt;/strong&gt; and &lt;strong&gt;fsync&lt;/strong&gt;. Combining them will cause an error while on 2.4 &lt;strong&gt;fsync&lt;/strong&gt; was ignored when provided with &lt;strong&gt;journal&lt;/strong&gt;. The following semantics apply.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;j: If true block until write operations have been committed to the journal. Cannot be used in combination with &lt;code&gt;fsync&lt;/code&gt;. Prior to MongoDB 2.6 this option was ignored if the server was running without journaling. Starting with MongoDB 2.6 write operations will fail with an exception if this option is used when the server is running without journaling.&lt;/li&gt;
+&lt;li&gt;fsync: If true and the server is running without journaling, blocks until the server has synced all data files to disk. If the server is running with journaling, this acts the same as the &lt;code&gt;j&lt;/code&gt; option, blocking until write operations have been committed to the journal. Cannot be used in combination with &lt;code&gt;j&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Diagnosing driver installation problems</title>
+      <link>http://localhost:1313/post/an_introduction_to_1_4_and_2_6/</link>
+      <pubDate>Thu, 25 Sep 2014 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/an_introduction_to_1_4_and_2_6/</guid>
+      <description>
+
+&lt;h1 id=&#34;the-mongodb-driver-is-not-installing-correctly:cf9d2f89abcf189c7253a5fe5d47d5d6&#34;&gt;The MongoDB driver is not installing correctly&lt;/h1&gt;
+
+&lt;p&gt;Most of the problems are with the native BSON parser and there can be a multitude of reasons why it&amp;rsquo;s not installing correctly and the driver is falling back to the js implementation of the serializer. This post will hopefully help you track down what the problem is on your system. We will start looking at it from a checklist point of view.&lt;/p&gt;
+
+&lt;h2 id=&#34;build-essentials-linux-unix:cf9d2f89abcf189c7253a5fe5d47d5d6&#34;&gt;Build Essentials Linux/Unix&lt;/h2&gt;
+
+&lt;p&gt;If you don&amp;rsquo;t have the build essentials it won&amp;rsquo;t build. In the case of linux you will need gcc and g++, node.js with all the headers and python. The easiest way to figure out what&amp;rsquo;s missing is by trying to build the js-bson project. You can do this by performing the following steps.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/mongodb/js-bson.git
+cd js-bson
+npm install
+make test
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If all the steps complete you have the right toolchain installed. If you get node-gyp not found you need to install it globally by doing.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install -g node-gyp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If correctly compile and runs the tests you are golden. We can now try to install the mongod driver by performing the following command.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;cd yourproject
+npm install mongod
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If it still fails the next step is to examine the npm log. Rerun the command but in this case in verbose mode.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm --loglevel verbose install mongodb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will print out all the steps npm is performing while trying to install the module.&lt;/p&gt;
+
+&lt;h2 id=&#34;build-essentials-windows:cf9d2f89abcf189c7253a5fe5d47d5d6&#34;&gt;Build Essentials Windows&lt;/h2&gt;
+
+&lt;p&gt;In windows there are pre-compiled binaries for bson. &lt;strong&gt;However&lt;/strong&gt; these only work on 0.10.x or earlier as 0.11.x contains the completely breaking v8 API. So if you want to run 0.11.x you will have to set up your own build toolchain. So far I&amp;rsquo;ve only had luck with the following combination.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Visual Studio c++ 2010 (do not use higher versions)
+Windows 7 64bit SDK
+Python 2.7 or higher
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Unfortunately you cannot easily use the make file under windows (I have not been able to do so correctly using MinGw).&lt;/p&gt;
+
+&lt;p&gt;Open visual studio command prompt. Ensure node.exe is in your path and install node-gyp.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install -g node-gyp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next you will have to build the project manually to test it. Use any tool you use with git and grab the repo.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/mongodb/js-bson.git
+cd js-bson
+npm install
+node-gyp rebuild
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This should rebuild the driver successfully if you have everything set up correctly.&lt;/p&gt;
+
+&lt;h2 id=&#34;other-possible-issues:cf9d2f89abcf189c7253a5fe5d47d5d6&#34;&gt;Other possible issues&lt;/h2&gt;
+
+&lt;p&gt;Your python installation might be hosed making gyp break. I always recommend that you test your deployment environment first by trying to build node itself on the server in question as this should unearth any issues with broken packages (and there are a lot of broken packages out there).&lt;/p&gt;
+
+&lt;p&gt;Another thing is to ensure your user has write permission to wherever the node modules are being installed.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The New Bulk API</title>
+      <link>http://localhost:1313/post/the_new_bulk_api/</link>
+      <pubDate>Thu, 25 Sep 2014 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/the_new_bulk_api/</guid>
+      <description>
+
+&lt;h1 id=&#34;the-new-bulk-api:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The New Bulk API&lt;/h1&gt;
+
+&lt;p&gt;One of the core new features in MongoDB 2.6 is the new bulk write operations. All the drivers include a new bulk api that allows applications to leverage these new operations using a fluid style API. Let&amp;rsquo;s explore the API and how it&amp;rsquo;s implemented in the Node.js driver.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-api:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The API&lt;/h2&gt;
+
+&lt;p&gt;The API have two core concepts. The &lt;strong&gt;ordered&lt;/strong&gt; and the &lt;strong&gt;unordered&lt;/strong&gt; bulk operation. The main difference is in the way the operations in a bulk are executed. In the case of an &lt;strong&gt;ordered&lt;/strong&gt; bulk operation every operation will be executed in the order they are added to the bulk operation. In the case of an &lt;strong&gt;unordered&lt;/strong&gt; bulk operation however there is no guarantee what order the operations are executed. Later we will look at how they both are implemented.&lt;/p&gt;
+
+&lt;h2 id=&#34;operations:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Operations&lt;/h2&gt;
+
+&lt;p&gt;You can initialize an &lt;strong&gt;ordered&lt;/strong&gt; or &lt;strong&gt;unordered&lt;/strong&gt; bulk operation in the following way.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var ordered = db.collection(&#39;documents&#39;).initializeOrderedBulkOp();
+var unordered = db.collection(&#39;documents&#39;).initializeUnorderedBulkOp();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once you have a bulk operation you can start adding operations to the bulk. The following operations are valid.&lt;/p&gt;
+
+&lt;h3 id=&#34;updateone-update-first-matching-document:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;updateOne (update first matching document)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 1 }).updateOne({$inc : {x : 1}});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;update-update-all-matching-documents:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;update (update all matching documents)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 1 }).update({$inc : {x : 2}});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;replaceone-replace-entire-document:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;replaceOne (replace entire document)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 1 }).replaceOne({ x : 2});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;updateone-or-upsert-update-first-existing-document-or-upsert:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;updateOne or upsert (update first existing document or upsert)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 2 }).upsert().updateOne({ $inc : { x : 1}});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;update-or-upsert-update-all-or-upsert:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;update or upsert (update all or upsert)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 2 }).upsert().update({ $inc : { x : 2}});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;replace-or-upsert-replace-first-document-or-upsert:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;replace or upsert (replace first document or upsert)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 2 }).upsert().replaceOne({ x : 3 });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;removeone-remove-the-first-document-matching:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;removeOne (remove the first document matching)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 2 }).removeOne();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;remove-remove-all-documents-matching:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;remove (remove all documents matching)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.find({ a : 1 }).remove();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;insert:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;insert&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;ordered.insert({ a : 5});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So what happens under the covers when you do start adding operations to a bulk operation. Let&amp;rsquo;s take a look at the new write operations.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-new-write-operations:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The New Write Operations&lt;/h2&gt;
+
+&lt;p&gt;MongoDB 2.6 introduces a completely new set of write operations. Before 2.6 all write operations where done using wire protocol messages at the socket level. From 2.6 this changes to using commands. So what does these commands look like.&lt;/p&gt;
+
+&lt;h3 id=&#34;insert-write-command:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Insert Write Command&lt;/h3&gt;
+
+&lt;p&gt;The insert write commands allow an application insert batches of documents. Let&amp;rsquo;s take a look at the command and it&amp;rsquo;s options.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    insert: &#39;collection name&#39;
+  , documents: [{ a : 1}, ...]
+  , writeConcern: {
+    w: 1, j: true, wtimeout: 1000
+  }
+  , ordered: true/false
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A couple of things to note. The &lt;strong&gt;documents&lt;/strong&gt; field contains an array of all the documents that are to be inserted. The &lt;strong&gt;writeConcern&lt;/strong&gt; field specifies what would have previously been a &lt;strong&gt;getLastError&lt;/strong&gt; command that would follow the pre 2.6 write operations. In other words there is always a response from a write operation in 2.6. This means that &lt;strong&gt;w:0&lt;/strong&gt; has different semantics than what one is used to in pre 2.6. In the context &lt;strong&gt;w:0&lt;/strong&gt; basically means only return an &lt;strong&gt;ack&lt;/strong&gt; without any information about the &lt;strong&gt;success&lt;/strong&gt; or &lt;strong&gt;failure&lt;/strong&gt; of insert operations.&lt;/p&gt;
+
+&lt;p&gt;Now let&amp;rsquo;s quickly look at the update and remove write commands before we take a look at the results that are returned when executing these operations against 2.6.&lt;/p&gt;
+
+&lt;h3 id=&#34;update-write-command:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Update Write Command&lt;/h3&gt;
+
+&lt;p&gt;There are some slight differences in the update write command in comparison to the insert write command. Let&amp;rsquo;s take a look.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    update: &#39;collection name&#39;
+  , updates: [{ 
+        q: { a : 1 }
+      , u: { $inc : { x : 1}}
+      , multi: true/false
+      , upsert: true/false
+    }, ...]
+  , writeConcern: {
+    w: 1, j: true, wtimeout: 1000
+  }
+  , ordered: true/false
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We notice that the main difference here is that the updates array is an array of update operations where each entry in the array contains the &lt;strong&gt;q&lt;/strong&gt; field that specifies the selector for the update. The &lt;strong&gt;u&lt;/strong&gt; contains the update operation. &lt;strong&gt;multi&lt;/strong&gt; specifies if we will updateOne or updateAll documents that matches the selection. Finally &lt;strong&gt;upsert&lt;/strong&gt; tells the server if it will perform an upsert if the document is not found. Finally let&amp;rsquo;s look at the remove write command.&lt;/p&gt;
+
+&lt;h3 id=&#34;remove-write-command:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Remove Write Command&lt;/h3&gt;
+
+&lt;p&gt;The remove write command is very similar to the update write command. Let&amp;rsquo;s take a look at it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    delete: &#39;collection name&#39;
+  , deletes: [{ 
+        q: { a : 1 }
+      , limit: 0/1
+    }, ...]
+  , writeConcern: {
+    w: 1, j: true, wtimeout: 1000
+  }
+  , ordered: true/false
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Just an for updates we can see that the entries in the &lt;strong&gt;deletes&lt;/strong&gt; array contain documents with specific fields. The &lt;strong&gt;q&lt;/strong&gt; field is the selector that will match which documents will be removed. The &lt;strong&gt;limit&lt;/strong&gt; field sets the number of elements to be remove. Currently &lt;strong&gt;limit&lt;/strong&gt; only supports two values, 0 and 1. The value 0 for &lt;strong&gt;limit&lt;/strong&gt; removes all documents that match the selector. A value of 1 for &lt;strong&gt;limit&lt;/strong&gt; removes the first matching document only.&lt;/p&gt;
+
+&lt;p&gt;So how does the response look when executing the commands against the server.&lt;/p&gt;
+
+&lt;h3 id=&#34;write-command-results:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Write Command Results&lt;/h3&gt;
+
+&lt;p&gt;One of the best new aspects of the new write commands is that they can return information about each individual operation error in the batch. To avoid not having to transmit more information than necessary only information about errors are returned as well as the aggregated counts of successful operations. Let&amp;rsquo;s look at what a &lt;strong&gt;comprehensive&lt;/strong&gt;* result could look like.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;ok&amp;quot; : 1,
+  &amp;quot;n&amp;quot; : 0,
+  &amp;quot;nModified&amp;quot;: 1, (Applies only to update)
+  &amp;quot;nRemoved&amp;quot;: 1, (Applies only to removes)
+  &amp;quot;writeErrors&amp;quot; : [
+    {
+      &amp;quot;index&amp;quot; : 0,
+      &amp;quot;code&amp;quot; : 11000,
+      &amp;quot;errmsg&amp;quot; : &amp;quot;insertDocument :: caused by :: 11000 E11000 duplicate key error index: t1.t.$a_1  dup key: { : 1.0 }&amp;quot;
+    }
+  ],
+  writeConcernError: {
+    code : 22,
+    errInfo: { wtimeout : true },
+    errmsg: &amp;quot;Could not replicate operation within requested timeout&amp;quot;
+  }      
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The two most interesting fields here are &lt;strong&gt;writeErrors&lt;/strong&gt; and &lt;strong&gt;writeConcernError&lt;/strong&gt;. If we take a look at &lt;strong&gt;writeErrors&lt;/strong&gt; we can see how it&amp;rsquo;s an array of objects that include an &lt;strong&gt;index&lt;/strong&gt; field as well as a &lt;strong&gt;code&lt;/strong&gt; and &lt;strong&gt;errmsg&lt;/strong&gt;. The &lt;strong&gt;field&lt;/strong&gt; references the position of the failing document in the original &lt;strong&gt;documents&lt;/strong&gt;, &lt;strong&gt;updates&lt;/strong&gt; or &lt;strong&gt;deletes&lt;/strong&gt; array allowing the application to identify the original batch document that failed.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-effect-of-ordered-true-false:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The Effect of Ordered (true/false)&lt;/h3&gt;
+
+&lt;p&gt;The effect of setting &lt;strong&gt;ordered&lt;/strong&gt; to true or false have a direct implication on how a write command is processed. Most importantly if &lt;strong&gt;ordered&lt;/strong&gt; is set to &lt;strong&gt;true&lt;/strong&gt; the write operation will fail on the first write error (meaning the first error that fails to apply the operation to memory). If one sets &lt;strong&gt;ordered&lt;/strong&gt; to false however the operation will continue until all operations have been executed (potentially in parallel) and finally return all the results. &lt;strong&gt;writeConcernError&lt;/strong&gt; on the other hand does not stop the processing of a bulk operation as the document did not fail to be written to MongoDB, the writeConcern could not be applied.&lt;/p&gt;
+
+&lt;p&gt;It helps to think of &lt;strong&gt;writeErrors&lt;/strong&gt; as &lt;strong&gt;hard&lt;/strong&gt; errors and &lt;strong&gt;writeConcernError&lt;/strong&gt; as a soft error.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-special-case-of-w-0:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The Special Case of w:0&lt;/h3&gt;
+
+&lt;p&gt;The semantics for &lt;strong&gt;w:0&lt;/strong&gt; changed for the write commands over the old style pre 2.6 write operations that are a combination of a write wire message and a &lt;strong&gt;getLastError&lt;/strong&gt; command afterwards. In the old style &lt;strong&gt;w:0&lt;/strong&gt; just meant that the driver would not send a &lt;strong&gt;getLastError&lt;/strong&gt; command after the write operation. However all write commands respond and thus the old semantics for &lt;strong&gt;w:0&lt;/strong&gt; are not possible to retain. The compromise is to make &lt;strong&gt;w:0&lt;/strong&gt; mean I don&amp;rsquo;t care about the results of the command just send me an &lt;strong&gt;Ack&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;So if you execute.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+    insert: &#39;collection name&#39;
+  , documents: [{ a : 1}, ...]
+  , writeConcern: {
+    w: 0
+  }
+  , ordered: true/false
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All you receive from the server is the result&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{ok : 1}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;the-implication-for-the-bulk-api:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;The Implication For The Bulk API&lt;/h2&gt;
+
+&lt;p&gt;There are some implications to the fact that write commands are not mixed operations but either insert/update or removes. The Bulk API lets you mix operations and then merges the results back into a single result that simulates a mixed operations command in MongoDB. What does that mean in practice. Well let&amp;rsquo;s look at how node.js implements &lt;strong&gt;ordered&lt;/strong&gt; and &lt;strong&gt;unordered&lt;/strong&gt; bulk operations. Let&amp;rsquo;s use examples to show what happens.&lt;/p&gt;
+
+&lt;h3 id=&#34;ordered-operations:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Ordered Operations&lt;/h3&gt;
+
+&lt;p&gt;Let&amp;rsquo;s take the following set off operations performed on a bulk&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var ordered = db.collection(&#39;documents&#39;).initializeOrderedBulkOp();
+ordered.insert({ a : 1 });
+ordered.find({ a : 1 }).update({ $inc: { x : 1 }});
+ordered.insert({ a: 2 });
+ordered.find({ a : 2 }).remove();
+ordered.insert({ a: 3 });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When running in ordered mode the bulk API guarantees the ordering of the operations and thus will execute this as 5 operations one after the other.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;insert bulk operation
+update bulk operation
+insert bulk operation
+remove bulk operation
+insert bulk operation
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We have now reduced the bulk API to performing single operations and your throughput suffers accordingly.&lt;/p&gt;
+
+&lt;p&gt;If we re-order our bulk operations in the following way.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var ordered = db.collection(&#39;documents&#39;).initializeOrderedBulkOp();
+ordered.insert({ a : 1 });
+ordered.insert({ a: 2 });
+ordered.insert({ a: 3 });
+ordered.find({ a : 1 }).update({ $inc: { x : 1 }});
+ordered.find({ a : 2 }).remove();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The execution is reduced to the following operations one after the other.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;insert bulk operation
+update bulk operation
+remove bulk operation
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Thus for ordered bulk operations the ordered of operations will impact the number of write commands that need to be executed and thus the throughput possible.&lt;/p&gt;
+
+&lt;h3 id=&#34;unordered-operations:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Unordered Operations&lt;/h3&gt;
+
+&lt;p&gt;Unordered operations have not guarantee about the execution order of operations. Let&amp;rsquo;s take the operations example from above.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var ordered = db.collection(&#39;documents&#39;).initializeOrderedBulkOp();
+ordered.insert({ a : 1 });
+ordered.find({ a : 1 }).update({ $inc: { x : 1 }});
+ordered.insert({ a: 2 });
+ordered.find({ a : 2 }).remove();
+ordered.insert({ a: 3 });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Node.js driver will collect the operations into separate type specific operations. So we get.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;insert bulk operation
+update bulk operation
+remove bulk operation
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In difference to the &lt;strong&gt;ordered&lt;/strong&gt; operation these bulks all get executed in parallel in Node.js and the results then merged when they have all finished.&lt;/p&gt;
+
+&lt;h2 id=&#34;takeaway:7f924eff2bd78f4c348c32bf152bfd51&#34;&gt;Takeaway&lt;/h2&gt;
+
+&lt;p&gt;Due to MongoDb not currently implementing a mixed write operations command it&amp;rsquo;s important to keep this in mind when performing &lt;strong&gt;ordered&lt;/strong&gt; bulk operations to avoid the scenario above and take a hit on the write throughput. In the case of &lt;strong&gt;unordered&lt;/strong&gt; operations the missing mixed operations command does not impact the throughput.&lt;/p&gt;
+
+&lt;p&gt;One thing to note. Although the Bulk API actually supports downconversion to 2.4 the performance impact is considerable as all operations are reduced to single write operations with a &lt;strong&gt;getLastError&lt;/strong&gt;. It&amp;rsquo;s recommended to leverage this API primarily with 2.6 or higher.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Lessons from 4 years of driver development</title>
+      <link>http://localhost:1313/presentation/four_years_of_node_and_mongodb/</link>
+      <pubDate>Tue, 01 Oct 2013 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/presentation/four_years_of_node_and_mongodb/</guid>
+      <description>&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://localhost:1313/media/jsconf2013.jpg&#34; alt=&#34;postgres con&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;p&gt;I gave the presentation “Lessons from 4 years of driver develoment“ at JSConf EU 2013 in Berlin. The presentation is a summary of my four years of experience writing a successful open source project and all the good and bad experiences I&amp;rsquo;ve had over the last years in relation to this.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.slideshare.net/christkv/lessons-from-4-years-of-driver-develoment&#34;&gt;&lt;strong&gt;Lessons from 4 years of driver develoment&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;embed slideshare&#34;&gt;
+&lt;iframe src=&#34;http://www.slideshare.net/slideshow/embed_code/25310612?rel=0&#34; width=&#34;599&#34; height=&#34;487&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px&#34; allowfullscreen webkitallowfullscreen mozallowfullscreen&gt; &lt;/iframe&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The video is also available&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.youtube.com/watch?v=F9EQ8p5Jw9Q&#34;&gt;&lt;strong&gt;Lessons from 4 years of driver develoment&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;embed video-player&#34;&gt;
+&lt;iframe class=&#34;youtube-player&#34; type=&#34;text/html&#34; width=&#34;640&#34; height=&#34;385&#34; src=&#34;http://www.youtube.com/embed/F9EQ8p5Jw9Q&#34; allowfullscreen frameborder=&#34;0&#34;&gt;
+&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>MongoDB Native: The Official Node.js MongoDB driver</title>
+      <link>http://localhost:1313/project/mongodb-native/</link>
+      <pubDate>Wed, 01 Sep 2010 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/project/mongodb-native/</guid>
+      <description>
+
+&lt;p&gt;The Node.js MongoDB driver was started in 2009 and has grown to become one of the most popular database drivers for the Node.js Platform.&lt;/p&gt;
+
+&lt;p&gt;MongoDB is a document database that allows the storage of documents in json format. It&amp;rsquo;s main benefits come from it&amp;rsquo;s ability to store unstructured data while maintaining traditional databases ability to query and index the document efficiently. MongoDb also provides a whole scaling up path.&lt;/p&gt;
+
+&lt;p&gt;A whole ecosystem has sprung out on top of the driver including ODM mappers such as Mongoose and whole frameworks such as Meteor (a fantastic real time framework). The driver is constantly evolving and there are some future spin-off projects planned around the driver.&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;what&lt;/th&gt;
+&lt;th&gt;where&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;documentation&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://mongodb.github.io/node-mongodb-native/&#34;&gt;http://mongodb.github.io/node-mongodb-native/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;apidoc&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://mongodb.github.io/node-mongodb-native/&#34;&gt;http://mongodb.github.io/node-mongodb-native/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;source&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native&#34;&gt;https://github.com/mongodb/node-mongodb-native&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;mongodb&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://www.mongodb.org/&#34;&gt;http://www.mongodb.org/&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&#34;bugs-feature-requests:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Bugs / Feature Requests&lt;/h3&gt;
+
+&lt;p&gt;Think you’ve found a bug? Want to see a new feature in node-mongodb-native? Please open a
+case in our issue management tool, JIRA:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Create an account and login &lt;a href=&#34;https://jira.mongodb.org&#34;&gt;https://jira.mongodb.org&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Navigate to the NODE project &lt;a href=&#34;https://jira.mongodb.org/browse/NODE&#34;&gt;https://jira.mongodb.org/browse/NODE&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Click &lt;strong&gt;Create Issue&lt;/strong&gt; - Please provide as much information as possible about the issue type and how to reproduce it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bug reports in JIRA for all driver projects (i.e. NODE, PYTHON, CSHARP, JAVA) and the
+Core Server (i.e. SERVER) project are &lt;strong&gt;public&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;questions-and-bug-reports:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Questions and Bug Reports&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;mailing list: &lt;a href=&#34;https://groups.google.com/forum/#!forum/node-mongodb-native&#34;&gt;https://groups.google.com/forum/#!forum/node-mongodb-native&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;jira: &lt;a href=&#34;http://jira.mongodb.org/&#34;&gt;http://jira.mongodb.org/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;change-log:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Change Log&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://jira.mongodb.org/browse/NODE&#34;&gt;http://jira.mongodb.org/browse/NODE&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;install:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Install&lt;/h2&gt;
+
+&lt;p&gt;To install the most recent release from npm, run:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install mongodb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That may give you a warning telling you that bugs[&amp;lsquo;web&amp;rsquo;] should be bugs[&amp;lsquo;url&amp;rsquo;], it would be safe to ignore it (this has been fixed in the development version)&lt;/p&gt;
+
+&lt;p&gt;To install the latest from the repository, run::&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;npm install path/to/node-mongodb-native
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;live-examples:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Live Examples&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://runnable.com/node-mongodb-native&#34; target=&#34;_blank&#34;&gt;&lt;img src=&#34;https://runnable.com/external/styles/assets/runnablebtn.png&#34; style=&#34;width:67px;height:25px;&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;introduction:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;This is a node.js driver for MongoDB. It&amp;rsquo;s a port (or close to a port) of the library for ruby at &lt;a href=&#34;http://github.com/mongodb/mongo-ruby-driver/&#34;&gt;http://github.com/mongodb/mongo-ruby-driver/&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A simple example of inserting a document.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, function(err, db) {
+    if(err) throw err;
+
+    var collection = db.collection(&#39;test_insert&#39;);
+    collection.insert({a:2}, function(err, docs) {
+      
+      collection.count(function(err, count) {
+        console.log(format(&amp;quot;count = %s&amp;quot;, count));
+      });
+
+      // Locate all the entries using find
+      collection.find().toArray(function(err, results) {
+        console.dir(results);
+        // Let&#39;s close the db
+        db.close();
+      });
+    });
+  })
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;data-types:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Data types&lt;/h2&gt;
+
+&lt;p&gt;To store and retrieve the non-JSON MongoDb primitives (&lt;a href=&#34;http://www.mongodb.org/display/DOCS/Object+IDs&#34;&gt;ObjectID&lt;/a&gt;, Long, Binary, &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Timestamp+data+type&#34;&gt;Timestamp&lt;/a&gt;, &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Database+References#DatabaseReferences-DBRef&#34;&gt;DBRef&lt;/a&gt;, Code).&lt;/p&gt;
+
+&lt;p&gt;In particular, every document has a unique &lt;code&gt;_id&lt;/code&gt; which can be almost any type, and by default a 12-byte ObjectID is created. ObjectIDs can be represented as 24-digit hexadecimal strings, but you must convert the string back into an ObjectID before you can use it in the database. For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;  // Get the objectID type
+  var ObjectID = require(&#39;mongodb&#39;).ObjectID;
+
+  var idString = &#39;4e4e1638c85e808431000003&#39;;
+  collection.findOne({_id: new ObjectID(idString)}, console.log)  // ok
+  collection.findOne({_id: idString}, console.log)  // wrong! callback gets undefined
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here are the constructors the non-Javascript BSON primitive types:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;  // Fetch the library
+  var mongo = require(&#39;mongodb&#39;);
+  // Create new instances of BSON types
+  new mongo.Long(numberString)
+  new mongo.ObjectID(hexString)
+  new mongo.Timestamp()  // the actual unique number is generated on insert.
+  new mongo.DBRef(collectionName, id, dbName)
+  new mongo.Binary(buffer)  // takes a string or Buffer
+  new mongo.Code(code, [context])
+  new mongo.Symbol(string)
+  new mongo.MinKey()
+  new mongo.MaxKey()
+  new mongo.Double(number)  // Force double storage
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;the-c-c-bson-parser-serializer:2d4bed8c133910cf12f420f60fbee804&#34;&gt;The C/C++ bson parser/serializer&lt;/h3&gt;
+
+&lt;p&gt;If you are running a version of this library has the C/C++ parser compiled, to enable the driver to use the C/C++ bson parser pass it the option native_parser:true like below&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;  // using native_parser:
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;
+    , {db: {native_parser: true}}, function(err, db) {})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The C++ parser uses the js objects both for serialization and deserialization.&lt;/p&gt;
+
+&lt;h2 id=&#34;github-information:2d4bed8c133910cf12f420f60fbee804&#34;&gt;GitHub information&lt;/h2&gt;
+
+&lt;p&gt;The source code is available at &lt;a href=&#34;http://github.com/mongodb/node-mongodb-native&#34;&gt;http://github.com/mongodb/node-mongodb-native&lt;/a&gt;.
+You can either clone the repository or download a tarball of the latest release.&lt;/p&gt;
+
+&lt;p&gt;Once you have the source you can test the driver by running&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ make test
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;in the main directory. You will need to have a mongo instance running on localhost for the integration tests to pass.&lt;/p&gt;
+
+&lt;h2 id=&#34;examples:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Examples&lt;/h2&gt;
+
+&lt;p&gt;For examples look in the examples/ directory. You can execute the examples using node.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd examples
+$ node queries.js
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;gridstore:2d4bed8c133910cf12f420f60fbee804&#34;&gt;GridStore&lt;/h2&gt;
+
+&lt;p&gt;The GridStore class allows for storage of binary files in mongoDB using the mongoDB defined files and chunks collection definition.&lt;/p&gt;
+
+&lt;p&gt;For more information have a look at &lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/blob/master/docs/gridfs.md&#34;&gt;Gridstore&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;replicasets:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Replicasets&lt;/h2&gt;
+
+&lt;p&gt;For more information about how to connect to a replicaset have a look at the extensive documentation &lt;a href=&#34;http://mongodb.github.com/node-mongodb-native/&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;primary-key-factories:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Primary Key Factories&lt;/h3&gt;
+
+&lt;p&gt;Defining your own primary key factory allows you to generate your own series of id&amp;rsquo;s
+(this could f.ex be to use something like ISBN numbers). The generated the id needs to be a 12 byte long &amp;ldquo;string&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Simple example below&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;    
+
+  // Custom factory (need to provide a 12 byte array);
+  CustomPKFactory = function() {}
+  CustomPKFactory.prototype = new Object();
+  CustomPKFactory.createPk = function() {
+    return new ObjectID(&amp;quot;aaaaaaaaaaaa&amp;quot;);
+  }
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, {&#39;pkFactory&#39;:CustomPKFactory}, function(err, db) {
+    if(err) throw err;
+
+    db.dropDatabase(function(err, done) {
+      
+      db.createCollection(&#39;test_custom_key&#39;, function(err, collection) {
+        
+        collection.insert({&#39;a&#39;:1}, function(err, docs) {
+          
+          collection.find({&#39;_id&#39;:new ObjectID(&amp;quot;aaaaaaaaaaaa&amp;quot;)}).toArray(function(err, items) {
+            console.dir(items);
+            // Let&#39;s close the db
+            db.close();
+          });
+        });
+      });
+    });
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;documentation:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Documentation&lt;/h2&gt;
+
+&lt;p&gt;If this document doesn&amp;rsquo;t answer your questions, see the source of
+&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/blob/master/lib/mongodb/collection.js&#34;&gt;Collection&lt;/a&gt;
+or &lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/blob/master/lib/mongodb/cursor.js&#34;&gt;Cursor&lt;/a&gt;,
+or the documentation at MongoDB for query and update formats.&lt;/p&gt;
+
+&lt;h3 id=&#34;find:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Find&lt;/h3&gt;
+
+&lt;p&gt;The find method is actually a factory method to create
+Cursor objects. A Cursor lazily uses the connection the first time
+you call &lt;code&gt;nextObject&lt;/code&gt;, &lt;code&gt;each&lt;/code&gt;, or &lt;code&gt;toArray&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The basic operation on a cursor is the &lt;code&gt;nextObject&lt;/code&gt; method
+that fetches the next matching document from the database. The convenience
+methods &lt;code&gt;each&lt;/code&gt; and &lt;code&gt;toArray&lt;/code&gt; call &lt;code&gt;nextObject&lt;/code&gt; until the cursor is exhausted.&lt;/p&gt;
+
+&lt;p&gt;Signatures:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;  var cursor = collection.find(query, [fields], options);
+  cursor.sort(fields).limit(n).skip(m).
+
+  cursor.nextObject(function(err, doc) {});
+  cursor.each(function(err, doc) {});
+  cursor.toArray(function(err, docs) {});
+
+  cursor.rewind()  // reset the cursor to its initial state.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Useful chainable methods of cursor. These can optionally be options of &lt;code&gt;find&lt;/code&gt; instead of method calls:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;.limit(n).skip(m)&lt;/code&gt; to control paging.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.sort(fields)&lt;/code&gt; Order by the given fields. There are several equivalent syntaxes:&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.sort({field1: -1, field2: 1})&lt;/code&gt; descending by field1, then ascending by field2.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.sort([[&#39;field1&#39;, &#39;desc&#39;], [&#39;field2&#39;, &#39;asc&#39;]])&lt;/code&gt; same as above&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.sort([[&#39;field1&#39;, &#39;desc&#39;], &#39;field2&#39;])&lt;/code&gt; same as above&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;.sort(&#39;field1&#39;)&lt;/code&gt; ascending by field1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Other options of &lt;code&gt;find&lt;/code&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;fields&lt;/code&gt; the fields to fetch (to avoid transferring the entire document)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tailable&lt;/code&gt; if true, makes the cursor &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Tailable+Cursors&#34;&gt;tailable&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;batchSize&lt;/code&gt; The number of the subset of results to request the database
+to return for every request. This should initially be greater than 1 otherwise
+the database will automatically close the cursor. The batch size can be set to 1
+with &lt;code&gt;batchSize(n, function(err){})&lt;/code&gt; after performing the initial query to the database.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hint&lt;/code&gt; See &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Optimization#Optimization-Hint&#34;&gt;Optimization: hint&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;explain&lt;/code&gt; turns this into an explain query. You can also call
+&lt;code&gt;explain()&lt;/code&gt; on any cursor to fetch the explanation.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;snapshot&lt;/code&gt; prevents documents that are updated while the query is active
+from being returned multiple times. See more
+&lt;a href=&#34;http://www.mongodb.org/display/DOCS/How+to+do+Snapshotted+Queries+in+the+Mongo+Database&#34;&gt;details about query snapshots&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;timeout&lt;/code&gt; if false, asks MongoDb not to time out this cursor after an
+inactivity period.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For information on how to create queries, see the
+&lt;a href=&#34;http://www.mongodb.org/display/DOCS/Querying&#34;&gt;MongoDB section on querying&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;    
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, function(err, db) {
+    if(err) throw err;
+
+    var collection = db
+      .collection(&#39;test&#39;)
+      .find({})
+      .limit(10)
+      .toArray(function(err, docs) {
+        console.dir(docs);
+    });
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;insert:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Insert&lt;/h3&gt;
+
+&lt;p&gt;Signature:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;  collection.insert(docs, options, [callback]);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;where &lt;code&gt;docs&lt;/code&gt; can be a single document or an array of documents.&lt;/p&gt;
+
+&lt;p&gt;Useful options:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;safe:true&lt;/code&gt; Should always set if you have a callback.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;See also: &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Inserting&#34;&gt;MongoDB docs for insert&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;    
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, function(err, db) {
+    if(err) throw err;
+    
+    db.collection(&#39;test&#39;).insert({hello: &#39;world&#39;}, {w:1}, function(err, objects) {
+      if (err) console.warn(err.message);
+      if (err &amp;amp;&amp;amp; err.message.indexOf(&#39;E11000 &#39;) !== -1) {
+        // this _id was already inserted in the database
+      }
+    });
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that there&amp;rsquo;s no reason to pass a callback to the insert or update commands
+unless you use the &lt;code&gt;safe:true&lt;/code&gt; option. If you don&amp;rsquo;t specify &lt;code&gt;safe:true&lt;/code&gt;, then
+your callback will be called immediately.&lt;/p&gt;
+
+&lt;h3 id=&#34;update-update-and-insert-upsert:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Update: update and insert (upsert)&lt;/h3&gt;
+
+&lt;p&gt;The update operation will update the first document that matches your query
+(or all documents that match if you use &lt;code&gt;multi:true&lt;/code&gt;).
+If &lt;code&gt;safe:true&lt;/code&gt;, &lt;code&gt;upsert&lt;/code&gt; is not set, and no documents match, your callback will return 0 documents updated.&lt;/p&gt;
+
+&lt;p&gt;See the &lt;a href=&#34;http://www.mongodb.org/display/DOCS/Updating&#34;&gt;MongoDB docs&lt;/a&gt; for
+the modifier (&lt;code&gt;$inc&lt;/code&gt;, &lt;code&gt;$set&lt;/code&gt;, &lt;code&gt;$push&lt;/code&gt;, etc.) formats.&lt;/p&gt;
+
+&lt;p&gt;Signature:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;  collection.update(criteria, objNew, options, [callback]);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Useful options:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;safe:true&lt;/code&gt; Should always set if you have a callback.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;multi:true&lt;/code&gt; If set, all matching documents are updated, not just the first.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;upsert:true&lt;/code&gt; Atomically inserts the document if no documents matched.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Example for &lt;code&gt;update&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;    
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, function(err, db) {
+    if(err) throw err;
+
+    db.collection(&#39;test&#39;).update({hi: &#39;here&#39;}, {$set: {hi: &#39;there&#39;}}, {w:1}, function(err) {
+      if (err) console.warn(err.message);
+      else console.log(&#39;successfully updated&#39;);
+    });
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;find-and-modify:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Find and modify&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;findAndModify&lt;/code&gt; is like &lt;code&gt;update&lt;/code&gt;, but it also gives the updated document to
+your callback. But there are a few key differences between findAndModify and
+update:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The signatures differ.&lt;/li&gt;
+&lt;li&gt;You can only findAndModify a single item, not multiple items.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Signature:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;    collection.findAndModify(query, sort, update, options, callback)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The sort parameter is used to specify which object to operate on, if more than
+one document matches. It takes the same format as the cursor sort (see
+Connection.find above).&lt;/p&gt;
+
+&lt;p&gt;See the
+&lt;a href=&#34;http://www.mongodb.org/display/DOCS/findAndModify+Command&#34;&gt;MongoDB docs for findAndModify&lt;/a&gt;
+for more details.&lt;/p&gt;
+
+&lt;p&gt;Useful options:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;remove:true&lt;/code&gt; set to a true to remove the object before returning&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;new:true&lt;/code&gt; set to true if you want to return the modified object rather than the original. Ignored for remove.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;upsert:true&lt;/code&gt; Atomically inserts the document if no documents matched.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Example for &lt;code&gt;findAndModify&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;  var MongoClient = require(&#39;mongodb&#39;).MongoClient
+    , format = require(&#39;util&#39;).format;    
+
+  MongoClient.connect(&#39;mongodb://127.0.0.1:27017/test&#39;, function(err, db) {
+    if(err) throw err;
+    db.collection(&#39;test&#39;).findAndModify({hello: &#39;world&#39;}, [[&#39;_id&#39;,&#39;asc&#39;]], {$set: {hi: &#39;there&#39;}}, {}, function(err, object) {
+      if (err) console.warn(err.message);
+      else console.dir(object);  // undefined if no matching object exists.
+    });
+  });
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;save:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Save&lt;/h3&gt;
+
+&lt;p&gt;The &lt;code&gt;save&lt;/code&gt; method is a shorthand for upsert if the document contains an
+&lt;code&gt;_id&lt;/code&gt;, or an insert if there is no &lt;code&gt;_id&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;release-notes:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Release Notes&lt;/h2&gt;
+
+&lt;p&gt;See HISTORY&lt;/p&gt;
+
+&lt;h2 id=&#34;credits:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Credits&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://github.com/mongodb/mongo-ruby-driver/&#34;&gt;10gen&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://code.google.com/closure/library/&#34;&gt;Google Closure Library&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://jsfromhell.com/classes/binary-parser&#34;&gt;Jonas Raoni Soares Silva&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;contributors:2d4bed8c133910cf12f420f60fbee804&#34;&gt;Contributors&lt;/h2&gt;
+
+&lt;p&gt;Aaron Heckmann, Christoph Pojer, Pau Ramon Revilla, Nathan White, Emmerman, Seth LaForge, Boris Filipov, Stefan Schärmeli, Tedde Lundgren, renctan, Sergey Ukustov, Ciaran Jessup, kuno, srimonti, Erik Abele, Pratik Daga, Slobodan Utvic, Kristina Chodorow, Yonathan Randolph, Brian Noguchi, Sam Epstein, James Harrison Fisher, Vladimir Dronnikov, Ben Hockey, Henrik Johansson, Simon Weare, Alex Gorbatchev, Shimon Doodkin, Kyle Mueller, Eran Hammer-Lahav, Marcin Ciszak, François de Metz, Vinay Pulim, nstielau, Adam Wiggins, entrinzikyl, Jeremy Selier, Ian Millington, Public Keating, andrewjstone, Christopher Stott, Corey Jewett, brettkiefer, Rob Holland, Senmiao Liu, heroic, gitfy&lt;/p&gt;
+
+&lt;h2 id=&#34;license:2d4bed8c133910cf12f420f60fbee804&#34;&gt;License&lt;/h2&gt;
+
+&lt;p&gt;Copyright 2009 - 2013 MongoDb Inc.&lt;/p&gt;
+
+&lt;p&gt;Licensed under the Apache License, Version 2.0 (the &amp;ldquo;License&amp;rdquo;);
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;   http://www.apache.org/licenses/LICENSE-2.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an &amp;ldquo;AS IS&amp;rdquo; BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The wonderful world of GEO spatial indexes in MongoDB</title>
+      <link>http://localhost:1313/post/the_wonderful_world_of_geo_spatial_indexes_in_mongo/</link>
+      <pubDate>Tue, 26 Jan 2016 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/post/the_wonderful_world_of_geo_spatial_indexes_in_mongo/</guid>
+      <description>
+
+&lt;h1 id=&#34;the-wonderful-world-of-geo-spatial-indexes-in-mongodb:6c3a90b3b9dad37c26767ca6ddeef193&#34;&gt;The wonderful world of GEO spatial indexes in MongoDB&lt;/h1&gt;
+
+&lt;p&gt;MongoDB has native support for geospatial indexes and extensions to the query language to
+support a lot of different ways of querying your geo spatial documents. We will touch on a
+all of the available features of the MongoDB geospatial support point by point as outlined
+below.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Query $near a point with a maximum distance around that point&lt;/li&gt;
+&lt;li&gt;Set the minimum and maximum range for the 2d space letting you map any data to the space&lt;/li&gt;
+&lt;li&gt;GeoNear command lets you return the distance from each point found&lt;/li&gt;
+&lt;li&gt;$within query lets you set a shape for you query letting you use a circle, box or arbitrary polygon, letting you map complex geo queries such as congressional districts or post code zones.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But first let&amp;rsquo;s cover the basics of getting you up and running starting with what a document needs to look like
+for the indexing to work.&lt;/p&gt;
+
+&lt;h2 id=&#34;geospatialize-your-documents:6c3a90b3b9dad37c26767ca6ddeef193&#34;&gt;Geospatialize your documents&lt;/h2&gt;
+
+&lt;p&gt;Somehow we need to tell MongoDB what fields represent our geospatial coordinates. Luckily for us this is very simple. Lets take a simple sample document representing the best imaginative Burger place in the world.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var document = {
+  name: &amp;quot;Awesome burger bar&amp;quot;      
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Not we need know that it&amp;rsquo;s located on the fictitious planet (Burgoria) and more specifically at the coordinates
+[50, 50]. So how do we add this to the document so we can look it up using geospatial searches ? Well it&amp;rsquo;s very
+simple just add it as a field as shown below.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var document = {
+  name: &amp;quot;Awesome burger bar&amp;quot;,
+  loc: [50, 50]      
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Easy right? The only thing you have to ensure is that the first coordinate is the &lt;strong&gt;x&lt;/strong&gt; coordinate and the second one is the &lt;strong&gt;y&lt;/strong&gt; coordinate &lt;strong&gt;[x, y]&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s go ahead and connect to the database and insert the document&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+var document = {
+  name: &amp;quot;Awesome burger bar&amp;quot;,
+  loc: [50, 50]      
+}
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/geodb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err)
+
+  db.collection(&#39;places&#39;).insert(document, {w:1}, function(err, result) {
+    if(err) return console.dir(err)
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So now we have a document in our collection. We now need to tell MongoDB to index our collection and create a 2D index on our loc attribute so we can avail us of the awesome geospatial features. This turns out to be easy as well. Let&amp;rsquo;s modify the code to ensure we have the index on startup.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+var document = {
+  name: &amp;quot;Awesome burger bar&amp;quot;,
+  loc: [50, 50]      
+}
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/geodb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err)
+  var collection = db.collection(&#39;places&#39;);
+
+  collection.ensureIndex({loc: &amp;quot;2d&amp;quot;}, {min: -500, max: 500, w:1}, function(err, result) {
+    if(err) return console.dir(err);
+
+    collection.insert(document, {w:1}, function(err, result) {
+      if(err) return console.dir(err)
+    });
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;ensureIndex&lt;/strong&gt; does the trick creating the index if it does not already exist. By specifying &lt;strong&gt;{loc: &amp;ldquo;2d&amp;rdquo;}&lt;/strong&gt; MongoDB will index the array contained in every document under the field name &lt;strong&gt;loc&lt;/strong&gt;. The &lt;strong&gt;min&lt;/strong&gt; and &lt;strong&gt;max&lt;/strong&gt; defines the boundaries of our (Burgoria) and means that points outside -500 and 500 will throw an error as it&amp;rsquo;s not on the planet.&lt;/p&gt;
+
+&lt;h2 id=&#34;basic-queries-for-your-geospatial-documents:6c3a90b3b9dad37c26767ca6ddeef193&#34;&gt;Basic queries for your geospatial documents&lt;/h2&gt;
+
+&lt;p&gt;Since we now have a geospatial index on our collection let&amp;rsquo;s play around with the query methods and learn how we can work with the data. First however let&amp;rsquo;s add some more documents so we can see the effects of the different boundaries.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient;
+
+var documents = [
+    {name: &amp;quot;Awesome burger bar&amp;quot;, loc: [50, 50]}
+  , {name: &amp;quot;Not an Awesome burger bar&amp;quot;, loc: [10, 10]}
+  , {name: &amp;quot;More or less an Awesome burger bar&amp;quot;, loc: [45, 45]}
+]
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/geodb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err)
+  var collection = db.collection(&#39;places&#39;);
+
+  collection.ensureIndex({loc: &amp;quot;2d&amp;quot;}, {min: -500, max: 500, w:1}, function(err, result) {
+    if(err) return console.dir(err);
+
+    collection.insert(documents, {w:1}, function(err, result) {
+      if(err) return console.dir(err)
+    });
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Right from now one for brevities sake we are going to assume we have the documents stored in the collection and the index created so we can work on queries without the boilerplate insert and index creation code. The first thing we are going to do is locate all the documents that&amp;rsquo;s a distance of 10 away from 50, 50.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient,
+  assert = require(&#39;assert&#39;);
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/geodb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err)
+
+  db.collection(&#39;places&#39;).find({loc: {$near: [50,50], $maxDistance: 10}}).toArray(function(err, docs) {
+    if(err) return console.dir(err)
+
+    assert.equal(docs.length, 2);
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This returns the following results (ignore the _id it will be different as it&amp;rsquo;s a collection assigned key).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{ &amp;quot;_id&amp;quot; : 509a47337d6ab61b2871ee8e, &amp;quot;name&amp;quot; : &amp;quot;Awesome burger bar&amp;quot;, &amp;quot;loc&amp;quot; : [ 50, 50 ] }
+{ &amp;quot;_id&amp;quot; : 509a47337d6ab61b2871ee90, &amp;quot;name&amp;quot; : &amp;quot;More or less an Awesome burger bar&amp;quot;, &amp;quot;loc&amp;quot; : [ 45
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at the query. &lt;strong&gt;$near&lt;/strong&gt; specifies the center point for the geospatial query and &lt;strong&gt;$maxDistance&lt;/strong&gt; the radius of the search circle. Given this the query will return the two documents at &lt;strong&gt;[50, 50]&lt;/strong&gt; and &lt;strong&gt;[10, 10]&lt;/strong&gt;. Now this is a nice feature but what if we need to know the distance from each of the found documents to the originating center for our query. Luckily we have a command that support that called &lt;strong&gt;geoNear&lt;/strong&gt;. Let&amp;rsquo;s execute it and look at the results.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient,
+  assert = require(&#39;assert&#39;);
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/geodb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err)
+
+  db.collection(&#39;places&#39;).geoNear(50, 50, {$maxDistance:10}, function(err, result) {
+    if(err) return console.dir(err)
+
+    assert.equal(result.results, 2);
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;rsquo;s look at the results returned by the query.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{
+  &amp;quot;ns&amp;quot; : &amp;quot;test.places&amp;quot;,
+  &amp;quot;near&amp;quot; : &amp;quot;1100000011110000111100001111000011110000111100001111&amp;quot;,
+  &amp;quot;results&amp;quot; : [
+    {
+      &amp;quot;dis&amp;quot; : 0,
+      &amp;quot;obj&amp;quot; : {
+        &amp;quot;_id&amp;quot; : 509a47337d6ab61b2871ee8e,
+        &amp;quot;name&amp;quot; : &amp;quot;Awesome burger bar&amp;quot;,
+        &amp;quot;loc&amp;quot; : [
+          50,
+          50
+        ]
+      }
+    },
+    {
+      &amp;quot;dis&amp;quot; : 7.0710678118654755,
+      &amp;quot;obj&amp;quot; : {
+        &amp;quot;_id&amp;quot; : 509a47337d6ab61b2871ee90,
+        &amp;quot;name&amp;quot; : &amp;quot;More or less an Awesome burger bar&amp;quot;,
+        &amp;quot;loc&amp;quot; : [
+          45,
+          45
+        ]
+      }
+    }
+  ],
+  &amp;quot;stats&amp;quot; : {
+    &amp;quot;time&amp;quot; : 0,
+    &amp;quot;btreelocs&amp;quot; : 0,
+    &amp;quot;nscanned&amp;quot; : 2,
+    &amp;quot;objectsLoaded&amp;quot; : 2,
+    &amp;quot;avgDistance&amp;quot; : 3.5355339059327378,
+    &amp;quot;maxDistance&amp;quot; : 7.071128503792992
+  },
+  &amp;quot;ok&amp;quot; : 1
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Notice that &lt;strong&gt;geoNear&lt;/strong&gt; is a command not a find query so it returns a single document with the results in the results field of the returned document. As we can see from the results each returned result has a field called &lt;strong&gt;dis&lt;/strong&gt; that is the distance of the document from the center point of our search. Cool we&amp;rsquo;ve now covered the basics of geospatial search so let&amp;rsquo;s move onto more advanced queries.&lt;/p&gt;
+
+&lt;h2 id=&#34;advanced-queries-for-your-geospatial-documents:6c3a90b3b9dad37c26767ca6ddeef193&#34;&gt;Advanced queries for your geospatial documents&lt;/h2&gt;
+
+&lt;p&gt;So besides these simple queries we can also do &lt;strong&gt;bounds queries&lt;/strong&gt;. With bounds queries we mean we can look for points of interest inside a defined boundary. This can be useful if you have such things as a post code area, congressional district or any sort of bounding box that is not a pure circle (say look for all restaurants in the west village in new york). Let&amp;rsquo;s go through the basics.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-magical-boundry-box-query:6c3a90b3b9dad37c26767ca6ddeef193&#34;&gt;The magical boundry box query&lt;/h3&gt;
+
+&lt;p&gt;Our country Whopper on Burgoria is a perfectly bound box (imagine that). Our application wants to restrict our searches to only burger bars in Burgonia. The boundaries for Burgonia are defined by (30, 30) -&amp;gt; (30, 60) and (30, 60) -&amp;gt; (60, 60). Great let&amp;rsquo;s peform a box bounded query.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient,
+  assert = require(&#39;assert&#39;);
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/geodb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err)
+  var box = [[30, 30], [60, 60]];
+
+  db.collection(&#39;places&#39;).find({loc: {$within: {$box: box}}).toArray(function(err, docs) {
+    if(err) return console.dir(err)
+
+    assert.equal(docs.length, 2);
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The results returned are.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{ &amp;quot;_id&amp;quot; : 509a47337d6ab61b2871ee8e, &amp;quot;name&amp;quot; : &amp;quot;Awesome burger bar&amp;quot;, &amp;quot;loc&amp;quot; : [ 50, 50 ] }
+{ &amp;quot;_id&amp;quot; : 509a47337d6ab61b2871ee90, &amp;quot;name&amp;quot; : &amp;quot;More or less an Awesome burger bar&amp;quot;, &amp;quot;loc&amp;quot; : [ 45
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;a-polygon-to-far:6c3a90b3b9dad37c26767ca6ddeef193&#34;&gt;A polygon to far&lt;/h3&gt;
+
+&lt;p&gt;Awesome we can now do a query by our perfectly boxed country. Inside Whopper the country is split into triangles where triangle one is made up of three points (40, 40), (40, 50), (45, 45). We want to look for points that are only inside this triangle. Let&amp;rsquo;s have a look at the query.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var MongoClient = require(&#39;mongodb&#39;).MongoClient,
+  assert = require(&#39;assert&#39;);
+
+MongoClient.connect(&amp;quot;mongodb://localhost:27017/geodb&amp;quot;, function(err, db) {
+  if(err) return console.dir(err)
+  var triangle = [[40, 40], [40, 50], [45, 45]];
+
+  db.collection(&#39;places&#39;).find({loc: {$within: {$polygon: triangle}}).toArray(function(err, docs) {
+    if(err) return console.dir(err)
+
+    assert.equal(docs.length, 2);
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The results returned are.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;{ &amp;quot;_id&amp;quot; : ObjectId(&amp;quot;509a47337d6ab61b2871ee90&amp;quot;), &amp;quot;name&amp;quot; : &amp;quot;More or less an Awesome burger bar&amp;quot;, &amp;quot;loc&amp;quot; : [ 45, 45 ] }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cool things you can use this with is f.ex with the data at &lt;a href=&#34;https://nycopendata.socrata.com/browse?tags=geographic&#34;&gt;https://nycopendata.socrata.com/browse?tags=geographic&lt;/a&gt; you can create queries slicing new york into areas and look for data points inside those areas. So we&amp;rsquo;ve seen how we can query geo spatially in a lot of different ways. In closing we want to mention some simple ideas to get your mind churning.&lt;/p&gt;
+
+&lt;h2 id=&#34;geospatial-interesting-tidbits:6c3a90b3b9dad37c26767ca6ddeef193&#34;&gt;Geospatial interesting tidbits&lt;/h2&gt;
+
+&lt;p&gt;So geospatial is what we mostly promote the features as but at some point you&amp;rsquo;ll realize that it&amp;rsquo;s a generic set of 2d indexes that can be used to index and &lt;strong&gt;x,y&lt;/strong&gt; data. You could consider indexing any data points that fit into a 2d space and using the geo query functionality to retrieve subsets of that data. Say if you map price vs apartment size and want to say giving an apartment find me everything that is &amp;ldquo;close&amp;rdquo; to the ideal price and size that I&amp;rsquo;m looking for. The limit here is your fantasy but as you can see it&amp;rsquo;s a pretty general and very powerful feature once you get over looking at the feature as a pure geographical function. With that I leave you to experiment and have fun with the features we have introduced.&lt;/p&gt;
+
+&lt;h2 id=&#34;links-and-stuff:6c3a90b3b9dad37c26767ca6ddeef193&#34;&gt;Links and stuff&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/tree/master/examples&#34;&gt;The driver examples, good starting point for basic usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mongodb/node-mongodb-native/tree/master/test&#34;&gt;All the integration tests, they have tons of different usage cases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.mongodb.org/display/DOCS/Geospatial+Indexing&#34;&gt;MongoDB geospatial pages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.mongodb.org/display/DOCS/Geospatial+Haystack+Indexing&#34;&gt;More specialized geo haystack indexing&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

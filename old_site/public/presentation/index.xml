@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+      <title>Presentations on Christian Kvalheim </title>
+    <link>http://localhost:1313/presentation/</link>
+    <language>en-us</language>
+    <author>Christian Kvalheim</author>
+    <rights>Copyright (c) 2011 - 2014, Christian Kvalheim; all rights reserved.</rights>
+    <updated>Tue, 10 Apr 2012 00:00:00 UTC</updated>
+    
+    <item>
+      <title>How does mongodb store my data</title>
+      <link>http://localhost:1313/presentation/how_does_mongodb_store_my_data</link>
+      <pubDate>Tue, 10 Apr 2012 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/presentation/how_does_mongodb_store_my_data</guid>
+      <description>&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://localhost:1313/media/fosdem2013.png&#34; alt=&#34;postgres con&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;p&gt;At FOSDEM 2013 I gave a talk about MongoDB internals, going through how the database physically stores data in memory and disk and why you should learn about the internals of the database you use in production to let you get the maximum performance out of it and to be better able to diagnose issues in production.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.slideshare.net/christkv/storage-talk&#34;&gt;&lt;strong&gt;How does mongodb store my data&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;embed slideshare&#34;&gt;
+&lt;iframe src=&#34;http://www.slideshare.net/slideshow/embed_code/16327480?rel=0&#34; width=&#34;599&#34; height=&#34;487&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px&#34; allowfullscreen webkitallowfullscreen mozallowfullscreen&gt; &lt;/iframe&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Lessons from 4 years of driver development</title>
+      <link>http://localhost:1313/presentation/four_years_of_node_and_mongodb/</link>
+      <pubDate>Tue, 01 Oct 2013 00:00:00 UTC</pubDate>
+      <author>Christian Kvalheim</author>
+      <guid>http://localhost:1313/presentation/four_years_of_node_and_mongodb/</guid>
+      <description>&lt;p&gt;
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://localhost:1313/media/jsconf2013.jpg&#34; alt=&#34;postgres con&#34; /&gt;
+    
+    
+&lt;/figure&gt;
+
+&lt;/p&gt;
+
+&lt;p&gt;I gave the presentation “Lessons from 4 years of driver develoment“ at JSConf EU 2013 in Berlin. The presentation is a summary of my four years of experience writing a successful open source project and all the good and bad experiences I&amp;rsquo;ve had over the last years in relation to this.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.slideshare.net/christkv/lessons-from-4-years-of-driver-develoment&#34;&gt;&lt;strong&gt;Lessons from 4 years of driver develoment&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;embed slideshare&#34;&gt;
+&lt;iframe src=&#34;http://www.slideshare.net/slideshow/embed_code/25310612?rel=0&#34; width=&#34;599&#34; height=&#34;487&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px&#34; allowfullscreen webkitallowfullscreen mozallowfullscreen&gt; &lt;/iframe&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;The video is also available&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.youtube.com/watch?v=F9EQ8p5Jw9Q&#34;&gt;&lt;strong&gt;Lessons from 4 years of driver develoment&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;embed video-player&#34;&gt;
+&lt;iframe class=&#34;youtube-player&#34; type=&#34;text/html&#34; width=&#34;640&#34; height=&#34;385&#34; src=&#34;http://www.youtube.com/embed/F9EQ8p5Jw9Q&#34; allowfullscreen frameborder=&#34;0&#34;&gt;
+&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

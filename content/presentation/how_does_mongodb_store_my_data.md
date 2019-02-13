@@ -1,34 +1,18 @@
-{
-	"disqus_url" : "http://christiankvalheim.com/presentation/how_does_mongodb_store_my_data/",
-	"disqus_identifier" : "1408 http://christiankvalheim.com/?p=1408",
-	"disqus_title" : "How does mongodb store my data",
-	"Title": "How does mongodb store my data",
-	"Description": "",
-	"Keywords": [
-		"Architecture",
-		"Development",
-		"MongoDB",
-		"opensource",
-		"Presentations",
-		"mongodb",
-	],
-	"Tags": [
-		"opensource",
-		"mongodb",
-	],
-	"Pubdate": "2012-04-10",
-	"Topics": [
-		"Architecture",
-		"Development",
-		"OpenSource",
-		"MongoDB",
-		"Presentations"
-	],
-	"Url": "presentation/how_does_mongodb_store_my_data",
-	"Slug": "how_does_mongodb_store_my_data",
-	"Section": "presentation",
-	"Thumbnail": "/media/fosdem2013.png"
-}
+---
+disqus_url: "http://christiankvalheim.com/presentation/how_does_mongodb_store_my_data/"
+disqus_identifier: "1408 http://christiankvalheim.com/?p=1408"
+disqus_title: "How does mongodb store my data"
+title: "How does mongodb store my data"
+description: ""
+keywords: ["Architecture", "Development", "MongoDB", "opensource", "Presentations", "mongodb"]
+tags: ["opensource", "mongodb"]
+pubdate: "2012-04-10"
+topics: ["Architecture", "Development", "OpenSource", "MongoDB", "Presentations"]
+url: "presentation/how_does_mongodb_store_my_data"
+slug: "how_does_mongodb_store_my_data"
+section: "presentation"
+thumbnail: "/media/fosdem2013.png"
+---
 
 {{% img src="/media/fosdem2013.png" alt="postgres con" %}}
 

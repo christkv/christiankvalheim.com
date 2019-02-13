@@ -18,14 +18,7 @@
 		"node.js",
 		"mongodb"
 	],
-	"Slug": "mongodb-native",
-    "project_url": "https://github.com/mongodb/node-mongodb-native/"
-    "project_name": "node-mongodb-native"
-    "project_description": "The Official Node.js MongoDB driver"
-    "official_url": "http://mongodb.github.io/node-mongodb-native/"
-    "download_url": "http://npmjs.org"
-    "version": "1.4"
-    "release_date": "2014-04-21"
+	"Slug": "mongodb-native"
 }
 
 The Node.js MongoDB driver was started in 2009 and has grown to become one of the most popular database drivers for the Node.js Platform.

@@ -11,12 +11,12 @@
 		"opensource",
 		"node.js",
 		"Presentations",
-		"mongodb",
+		"mongodb"
 	],
 	"Tags": [
 		"opensource",
 		"mongodb",
-		"node.js",
+		"node.js"
 	],
 	"Pubdate": "2013-10-01",
 	"Topics": [
